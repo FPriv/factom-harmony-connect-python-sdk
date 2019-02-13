@@ -47,5 +47,5 @@ ENV/
 env.bak/
 venv.bak/
 
-.idea/
+cover/
 .idea
