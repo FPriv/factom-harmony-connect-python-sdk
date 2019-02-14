@@ -33,7 +33,6 @@ class RequestHandler:
             verify=True
         )
         response.raise_for_status()
-        print(response.json())
         try:
             return response.json()
         except ValueError:
