@@ -4,24 +4,24 @@ import base58
 import ed25519
 import base64
 
-private_prefix_bytes = bytearray([0x03, 0x45, 0xf3, 0xd0, 0xd6])
-public_prefix_bytes = bytearray([0x03, 0x45, 0xef, 0x9d, 0xe0])
-base64_encode = 'base64'
-utf8_encode = 'utf-8'
+PRIVATE_PREFIX_BYTES = bytearray([0x03, 0x45, 0xf3, 0xd0, 0xd6])
+PUBLIC_PREFIX_BYTES = bytearray([0x03, 0x45, 0xef, 0x9d, 0xe0])
+BASE64_ENCODE = 'base64'
+UTF8_ENCODE = 'utf-8'
 
 
 class KeyUtil:
     @staticmethod
     def create_key_pair():
         private_key_bytes = os.urandom(32)
-        tmp = hashlib.sha256(hashlib.sha256(private_prefix_bytes + private_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(PRIVATE_PREFIX_BYTES + private_key_bytes).digest()).digest()
         check_sum = tmp[:4]
-        private_key = base58.b58encode(bytes(private_prefix_bytes + private_key_bytes + check_sum))
+        private_key = base58.b58encode(bytes(PRIVATE_PREFIX_BYTES + private_key_bytes + check_sum))
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
-        tmp = hashlib.sha256(hashlib.sha256(public_prefix_bytes + public_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
         check_sum = tmp[:4]
-        public_key = base58.b58encode(bytes(public_prefix_bytes + public_key_bytes + check_sum))
+        public_key = base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum))
         return {
             "private_key": private_key,
             "public_key": public_key
@@ -81,9 +81,9 @@ class KeyUtil:
         private_key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_private_key"]})
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
-        tmp = hashlib.sha256(hashlib.sha256(public_prefix_bytes + public_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
         check_sum = tmp[:4]
-        return base58.b58encode(bytes(public_prefix_bytes + public_key_bytes + check_sum))
+        return base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum))
 
     @staticmethod
     def sign_content(params: dict = {}):
@@ -95,7 +95,7 @@ class KeyUtil:
             raise Exception("message is required.")
         private_key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_private_key"]})
         secret_key = ed25519.SigningKey(private_key_bytes)
-        message_bytes = params["message"].encode("utf-8")
+        message_bytes = params["message"].encode(UTF8_ENCODE)
         return base64.b64encode(secret_key.sign(message_bytes))
 
     @staticmethod
@@ -109,7 +109,7 @@ class KeyUtil:
         if "message" not in params:
             raise Exception("message is required.")
         signature_bytes = base64.b64decode(params["signature"])
-        message_bytes = params["message"].encode("utf-8")
+        message_bytes = params["message"].encode(UTF8_ENCODE)
         key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_public_key"]})
         verify_key = ed25519.VerifyingKey(key_bytes)
         try:

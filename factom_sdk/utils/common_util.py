@@ -56,8 +56,12 @@ class CommonUtil:
     @staticmethod
     def is_empty_string(value):
         _type = type(value).__name__
-        return (_type == "string" and value.strip() == "") or _type != "string"
+        return (_type == "str" and value.strip() == "") or _type != "str"
 
     @staticmethod
     def is_empty_arr(arr):
         return type(arr).__name__ == "list" and len(arr) == 0
+
+    @staticmethod
+    def is_array(arr):
+        return type(arr).__name__ == "list"

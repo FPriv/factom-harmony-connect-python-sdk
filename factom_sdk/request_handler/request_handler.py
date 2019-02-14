@@ -1,6 +1,7 @@
 from urllib.parse import urljoin
 import requests
 import validators
+from factom_sdk.utils.common_util import CommonUtil
 
 
 class RequestHandler:
@@ -16,7 +17,6 @@ class RequestHandler:
         self.app_id = app_id
         self.app_key = app_key
 
-    # pylint: disable=too-many-arguments
     def _generic_request(self, request_type, endpoint, payload: dict = None,
                          params: dict = None, json: dict = None):
         headers = {
@@ -25,7 +25,7 @@ class RequestHandler:
             'app_key': self.app_key
         }
         response = request_type(
-            urljoin(self.base_url, endpoint),
+            "/".join(map(lambda x: str(x).rstrip('/'), [self.base_url, endpoint])),
             headers=headers,
             params=params,
             data=payload,
@@ -34,7 +34,7 @@ class RequestHandler:
         )
         response.raise_for_status()
         try:
-            return response.json()
+            return CommonUtil.decode_response(response.json())
         except ValueError:
             return {}
 
