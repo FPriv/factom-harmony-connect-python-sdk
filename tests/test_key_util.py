@@ -14,11 +14,14 @@ class TestKeyUtil(TestCase):
         """Check validate checksum"""
         key_passing = KeyUtil.validate_check_sum()
         assert_false(key_passing)
+
         key_bytes_length_match = KeyUtil.validate_check_sum({"signer_key": "idpub2"})
         assert_false(key_bytes_length_match)
+
         key_valid = KeyUtil.validate_check_sum(
             {"signer_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zH12"})
         assert_false(key_valid)
+
         key_valid = KeyUtil.validate_check_sum(
             {"signer_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9"})
         assert_true(key_valid)
@@ -27,6 +30,7 @@ class TestKeyUtil(TestCase):
         """Check get invalid keys"""
         missing_key = KeyUtil.get_invalid_keys()
         assert_equal(missing_key, [])
+
         errors = [
             {
                 "key": "123",
@@ -39,6 +43,7 @@ class TestKeyUtil(TestCase):
         ]
         errors_key = KeyUtil.get_invalid_keys({"signer_keys": ["123", "123"]})
         assert_equal(errors_key, errors)
+
         errors_key = KeyUtil.get_invalid_keys(
             {"signer_keys":
                  ["idpub2FEZg6PwVuDXfsxEMinnqVfgjuNS2GzMSQwJgTdmUFQaoYpTnv",
@@ -50,6 +55,7 @@ class TestKeyUtil(TestCase):
         """Check get duplicate keys"""
         missing_keys = KeyUtil.get_duplicate_keys();
         assert_equal(missing_keys, [])
+
         errors = [
             {
                 "key": "123",
@@ -63,7 +69,8 @@ class TestKeyUtil(TestCase):
         """Check get key bytes from key"""
         with assert_raises(Exception) as cm:
             KeyUtil.get_key_bytes_from_key({"signer_key": ""})
-            assert_true("key is invalid." in str(cm.exception))
+        assert_true("key is invalid." in str(cm.exception))
+
         valid_key_bytes = KeyUtil.get_key_bytes_from_key(
             {"signer_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9"})
         assert_true(isinstance(valid_key_bytes, bytes))
@@ -72,7 +79,8 @@ class TestKeyUtil(TestCase):
         """Check get public key from private key"""
         with assert_raises(Exception) as cm:
             KeyUtil.get_public_key_from_private_key({"signer_private_key": "idsec2"})
-            assert_true("signer_private_key is invalid." in str(cm.exception))
+        assert_true("signer_private_key is invalid." in str(cm.exception))
+
         public_key = KeyUtil.get_public_key_from_private_key(
             {"signer_private_key": "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6"})
         assert_equal(public_key, b"idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9")
@@ -81,14 +89,17 @@ class TestKeyUtil(TestCase):
         """Check sign content"""
         with assert_raises(Exception) as cm:
             KeyUtil.sign_content()
-            assert_true("signer_private_key is required." in str(cm.exception))
+        assert_true("signer_private_key is required." in str(cm.exception))
+
         with assert_raises(Exception) as cm:
             KeyUtil.sign_content({"signer_private_key": "idsec2"})
-            assert_true("signer_private_key is invalid." in str(cm.exception))
+        assert_true("signer_private_key is invalid." in str(cm.exception))
+
         with assert_raises(Exception) as cm:
             KeyUtil.sign_content(
                 {"signer_private_key": "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6"})
-            assert_true("message is required." in str(cm.exception))
+        assert_true("message is required." in str(cm.exception))
+
         signature = KeyUtil.sign_content(
             {"signer_private_key": "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
              "message": "Abc"})
@@ -99,26 +110,31 @@ class TestKeyUtil(TestCase):
         """Check validate signature"""
         with assert_raises(Exception) as cm:
             KeyUtil.validate_signature()
-            assert_true("signer_public_key is required." in str(cm.exception))
+        assert_true("signer_public_key is required." in str(cm.exception))
+
         with assert_raises(Exception) as cm:
             KeyUtil.validate_signature({"signer_public_key": "idpub2"})
-            assert_true("signer_public_key is invalid." in str(cm.exception))
+        assert_true("signer_public_key is invalid." in str(cm.exception))
+
         with assert_raises(Exception) as cm:
             KeyUtil.validate_signature(
                 {"signer_public_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9"})
-            assert_true("signature is required." in str(cm.exception))
+        assert_true("signature is required." in str(cm.exception))
+
         with assert_raises(Exception) as cm:
             KeyUtil.validate_signature(
                 {"signer_public_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
                  "signature": "D+lzNLb88IKXQk2BglvP7o6yK/DNAsO1B9qXdqArvrotTqSCI4Y4d8J8bwbfAyCvJT9tLYj9Ll7grCnyDWVtCg=="
                  })
-            assert_true("message is required." in str(cm.exception))
+        assert_true("message is required." in str(cm.exception))
+
         valid_signature = KeyUtil.validate_signature(
             {"signer_public_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
              "signature": "Z4qvla16B9+gW/IFyng+5Q0njgwT2aRr5kmYMARRbT8+nivUiQO74O/y3MOH42R9cqTdkXkETLDitUO48DviBw==",
              "message": "Abc"
              })
         assert_true(valid_signature)
+
         invalid_signature = KeyUtil.validate_signature(
             {"signer_public_key": "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
              "signature": "Z4qvla16B9+gW/IFyng+5Q0njgwT2aRr5kmYMARRbT8+nivUiQO74O/y3MOH42R9cqTdkXkETLDitUO48DviBw==",

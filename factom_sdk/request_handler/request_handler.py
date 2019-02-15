@@ -1,4 +1,3 @@
-from urllib.parse import urljoin
 import requests
 import validators
 from factom_sdk.utils.common_util import CommonUtil
