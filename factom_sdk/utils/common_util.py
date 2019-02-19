@@ -22,13 +22,13 @@ class CommonUtil:
                                         elif idx == 4:
                                             decoded.append(base64.b64decode(val).hex())
                                         else:
-                                            decoded.append(base64.b64decode(val))
+                                            decoded.append("".join(chr(x) for x in base64.b64decode(val)))
                                 else:
                                     for val in item[arr]:
-                                        decoded.append(base64.b64decode(val))
+                                        decoded.append("".join(chr(x) for x in base64.b64decode(val)))
                                 item[arr] = decoded
                             else:
-                                item[arr] = base64.b64decode(item[arr])
+                                item[arr] = "".join(chr(x) for x in base64.b64decode(item[arr]))
             else:
                 for arr in array_decode:
                     if arr in response["data"]:
@@ -44,13 +44,13 @@ class CommonUtil:
                                     elif idx == 4:
                                         decoded.append(base64.b64decode(val).hex())
                                     else:
-                                        decoded.append(base64.b64decode(val))
+                                        decoded.append("".join(chr(x) for x in base64.b64decode(val)))
                             else:
                                 for val in response["data"][arr]:
-                                    decoded.append(base64.b64decode(val))
+                                    decoded.append("".join(chr(x) for x in base64.b64decode(val)))
                             response["data"][arr] = decoded
                         else:
-                            response["data"][arr] = base64.b64decode(response["data"][arr])
+                            response["data"][arr] = "".join(chr(x) for x in base64.b64decode(response["data"][arr]))
         return response
 
     @staticmethod

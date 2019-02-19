@@ -83,7 +83,7 @@ class KeyUtil:
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
         tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
         check_sum = tmp[:4]
-        return base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum))
+        return "".join(chr(x) for x in base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum)))
 
     @staticmethod
     def sign_content(params: dict = {}):
@@ -96,7 +96,7 @@ class KeyUtil:
         private_key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_private_key"]})
         secret_key = ed25519.SigningKey(private_key_bytes)
         message_bytes = params["message"].encode(UTF8_ENCODE)
-        return base64.b64encode(secret_key.sign(message_bytes))
+        return "".join(chr(x) for x in base64.b64encode(secret_key.sign(message_bytes)))
 
     @staticmethod
     def validate_signature(params: dict = {}):

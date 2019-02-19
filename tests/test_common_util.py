@@ -35,12 +35,12 @@ class TestCommonUtil:
                 'chain_id': '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
                 'all_keys_href': '/v1/identities/<chain_id>/keys',
                 'external_ids': [
-                    b'SignedEntry',
+                    'SignedEntry',
                     '0x01',
-                    b'171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
-                    b'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
+                    '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
+                    'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
                     '779229d23cdb7380869e63e5156a5497170bceec139b37e7af2a4d1aae14d053d19f7626e08d4bbb003d4b05d941f43402f1288af2ff0391a2dee4abf0919b07',
-                    b'2019-01-18T14:17:50Z',
+                    '2019-01-18T14:17:50Z',
                 ],
             }],
         }
@@ -73,12 +73,12 @@ class TestCommonUtil:
                 "chain_id": '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
                 "all_keys_href": '/v1/identities/<chain_id>/keys',
                 "external_ids": [
-                    b'SignedEntry',
+                    'SignedEntry',
                     '0x01',
-                    b'171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
-                    b'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
+                    '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
+                    'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
                     '779229d23cdb7380869e63e5156a5497170bceec139b37e7af2a4d1aae14d053d19f7626e08d4bbb003d4b05d941f43402f1288af2ff0391a2dee4abf0919b07',
-                    b'2019-01-18T14:17:50Z',
+                    '2019-01-18T14:17:50Z',
                 ],
             },
         }
@@ -103,7 +103,7 @@ class TestCommonUtil:
                 "created_height": 118460,
                 "chain_id": '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
                 "all_keys_href": '/v1/identities/<chain_id>/keys',
-                "name": b'EMPLOYEE',
+                "name": 'EMPLOYEE',
             },
         }
         response = CommonUtil.decode_response(data)

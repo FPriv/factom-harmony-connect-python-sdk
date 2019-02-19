@@ -67,8 +67,7 @@ class IdentityClient:
     def get_identity(self, params: dict = {}):
         if "identity_chain_id" not in params or CommonUtil.is_empty_string(params["identity_chain_id"]):
             raise Exception("identity_chain_id is required.")
-        return self.request_handler.get("/".join(
-            map(lambda x: str(x).rstrip('/'), [IDENTITY_URL, params["identity_chain_id"]])))
+        return self.request_handler.get("/".join([IDENTITY_URL, params["identity_chain_id"]]))
 
     def get_all_identity_keys(self, params: dict = {}):
         if "identity_chain_id" not in params or CommonUtil.is_empty_string(params["identity_chain_id"]):
@@ -86,8 +85,7 @@ class IdentityClient:
             if type(params["offset"]).__name__ != "int":
                 raise Exception("offset must be an integer.")
             data["offset"] = params["offset"]
-        return self.request_handler.get("/".join(
-            map(lambda x: str(x).rstrip('/'), [IDENTITY_URL, params["identity_chain_id"], KEYS_STRING])), data)
+        return self.request_handler.get("/".join([IDENTITY_URL, params["identity_chain_id"], KEYS_STRING]), data)
 
     def create_identity_key_replacement(self, params: dict = {}):
         if "identity_chain_id" not in params or CommonUtil.is_empty_string(params["identity_chain_id"]):
@@ -123,5 +121,4 @@ class IdentityClient:
             data["callback_url"] = params["callback_url"]
         if "callback_stages" in params and CommonUtil.is_array(params["callback_stages"]):
             data["callback_stages"] = params["callback_stages"]
-        return self.request_handler.post("/".join(
-            map(lambda x: str(x).rstrip('/'), [IDENTITY_URL, params["identity_chain_id"], KEYS_STRING])), data)
+        return self.request_handler.post("/".join([IDENTITY_URL, params["identity_chain_id"], KEYS_STRING]), data)
