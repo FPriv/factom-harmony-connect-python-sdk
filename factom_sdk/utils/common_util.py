@@ -6,62 +6,34 @@ class CommonUtil:
     def decode_response(response={}):
         if "data" in response:
             array_decode = ["external_ids", "content", "name"]
-            if type(response["data"]).__name__ == "list":
+            if isinstance(response["data"], list):
                 for item in response["data"]:
                     for arr in array_decode:
                         if arr in item:
-                            if type(item[arr]).__name__ == "list":
-                                decoded = []
-                                if arr == "external_ids" and len(item[arr]) >= 6 \
-                                        and (base64.b64decode(item[arr][0]) == b"SignedChain"
-                                             or base64.b64decode(item[arr][0]) == b"SignedEntry") \
-                                        and base64.b64decode(item[arr][1]).hex() == "01":
-                                    for idx, val in enumerate(item[arr]):
-                                        if idx == 1:
-                                            decoded.append("0x" + base64.b64decode(val).hex())
-                                        elif idx == 4:
-                                            decoded.append(base64.b64decode(val).hex())
-                                        else:
-                                            decoded.append("".join(chr(x) for x in base64.b64decode(val)))
-                                else:
-                                    for val in item[arr]:
-                                        decoded.append("".join(chr(x) for x in base64.b64decode(val)))
-                                item[arr] = decoded
-                            else:
-                                item[arr] = "".join(chr(x) for x in base64.b64decode(item[arr]))
+                            item[arr] = CommonUtil.decode(arr, item[arr])
             else:
                 for arr in array_decode:
                     if arr in response["data"]:
-                        if type(response["data"][arr]).__name__ == "list":
-                            decoded = []
-                            if arr == "external_ids" and len(response["data"][arr]) >= 6 \
-                                    and (base64.b64decode(response["data"][arr][0]) == b"SignedChain"
-                                         or base64.b64decode(response["data"][arr][0]) == b"SignedEntry") \
-                                    and base64.b64decode(response["data"][arr][1]).hex() == "01":
-                                for idx, val in enumerate(response["data"][arr]):
-                                    if idx == 1:
-                                        decoded.append("0x" + base64.b64decode(val).hex())
-                                    elif idx == 4:
-                                        decoded.append(base64.b64decode(val).hex())
-                                    else:
-                                        decoded.append("".join(chr(x) for x in base64.b64decode(val)))
-                            else:
-                                for val in response["data"][arr]:
-                                    decoded.append("".join(chr(x) for x in base64.b64decode(val)))
-                            response["data"][arr] = decoded
-                        else:
-                            response["data"][arr] = "".join(chr(x) for x in base64.b64decode(response["data"][arr]))
+                        response["data"][arr] = CommonUtil.decode(arr, response["data"][arr])
         return response
 
     @staticmethod
-    def is_empty_string(value):
-        _type = type(value).__name__
-        return (_type == "str" and value.strip() == "") or _type != "str"
-
-    @staticmethod
-    def is_empty_arr(arr):
-        return type(arr).__name__ == "list" and len(arr) == 0
-
-    @staticmethod
-    def is_array(arr):
-        return type(arr).__name__ == "list"
+    def decode(name: str, data):
+        if isinstance(data, list):
+            decoded = []
+            if name == "external_ids" and len(data) >= 6 \
+                    and (base64.b64decode(data[0]) == b"SignedChain"
+                         or base64.b64decode(data[0]) == b"SignedEntry") \
+                    and base64.b64decode(data[1]).hex() == "01":
+                for idx, val in enumerate(data):
+                    if idx == 1:
+                        decoded.append("0x" + base64.b64decode(val).hex())
+                    elif idx == 4:
+                        decoded.append(base64.b64decode(val).hex())
+                    else:
+                        decoded.append("".join(chr(x) for x in base64.b64decode(val)))
+            else:
+                decoded = ["".join(chr(x) for x in base64.b64decode(val)) for val in data]
+            return decoded
+        else:
+            return "".join(chr(x) for x in base64.b64decode(data))

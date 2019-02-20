@@ -6,8 +6,8 @@ import base64
 
 PRIVATE_PREFIX_BYTES = bytearray([0x03, 0x45, 0xf3, 0xd0, 0xd6])
 PUBLIC_PREFIX_BYTES = bytearray([0x03, 0x45, 0xef, 0x9d, 0xe0])
-BASE64_ENCODE = 'base64'
-UTF8_ENCODE = 'utf-8'
+BASE64_ENCODE = "base64"
+UTF8_ENCODE = "utf-8"
 
 
 class KeyUtil:
@@ -15,102 +15,101 @@ class KeyUtil:
     def create_key_pair():
         private_key_bytes = os.urandom(32)
         tmp = hashlib.sha256(hashlib.sha256(PRIVATE_PREFIX_BYTES + private_key_bytes).digest()).digest()
-        check_sum = tmp[:4]
-        private_key = base58.b58encode(bytes(PRIVATE_PREFIX_BYTES + private_key_bytes + check_sum))
+        checksum = tmp[:4]
+        private_key = base58.b58encode(bytes(PRIVATE_PREFIX_BYTES + private_key_bytes + checksum))
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
         tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
-        check_sum = tmp[:4]
-        public_key = base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum))
+        checksum = tmp[:4]
+        public_key = base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + checksum))
         return {
             "private_key": private_key,
             "public_key": public_key
         }
 
     @staticmethod
-    def validate_check_sum(params: dict = {}):
-        if "signer_key" not in params:
+    def validate_checksum(signer_key: str):
+        if not signer_key:
             return False
-        signer_key_bytes = base58.b58decode(params["signer_key"])
+        signer_key_bytes = base58.b58decode(signer_key)
         if len(signer_key_bytes) != 41:
             return False
         prefix_bytes = signer_key_bytes[:5]
         key_bytes = signer_key_bytes[5:37]
-        check_sum = signer_key_bytes[37:]
+        checksum = signer_key_bytes[37:]
         tmp = hashlib.sha256(hashlib.sha256(prefix_bytes + key_bytes).digest()).digest()
-        tmp_check_sum = tmp[:4]
-        if check_sum != tmp_check_sum:
+        tmp_checksum = tmp[:4]
+        if checksum != tmp_checksum:
             return False
         return True
 
     @staticmethod
-    def get_invalid_keys(params: dict = {}):
-        if "signer_keys" not in params:
+    def get_invalid_keys(signer_keys: list):
+        if not signer_keys:
             return []
-        errors = []
-        for key in params["signer_keys"]:
-            if not KeyUtil.validate_check_sum({"signer_key": key}):
-                errors.append({"key": key, "error": "key is invalid"})
-        return errors
+        return [{"key": key, "error": "key is invalid"} for key in signer_keys if not KeyUtil.validate_checksum(key)]
 
     @staticmethod
-    def get_duplicate_keys(params: dict = {}):
-        if "signer_keys" not in params:
+    def get_duplicate_keys(signer_keys: list):
+        if not signer_keys:
             return []
+
+        seen = {}
         duplicates = []
-        unique = []
-        for key in params["signer_keys"]:
-            if key not in unique:
-                unique.append(key)
+        for key in signer_keys:
+            if key not in seen:
+                seen[key] = 1
             else:
-                if len([item for item in duplicates if item["key"] == key]) == 0:
+                if seen[key] == 1:
                     duplicates.append({"key": key, "error": "key is duplicated, keys must be unique."})
+                seen[key] += 1
+
         return duplicates
 
     @staticmethod
-    def get_key_bytes_from_key(params: dict = {}):
-        if not KeyUtil.validate_check_sum({"signer_key": params["signer_key"]}):
-            raise Exception('key is invalid.')
-        signer_key_bytes = base58.b58decode(params["signer_key"])
+    def get_key_bytes_from_key(signer_key: str):
+        if not KeyUtil.validate_checksum(signer_key):
+            raise Exception("key is invalid.")
+        signer_key_bytes = base58.b58decode(signer_key)
         return signer_key_bytes[5:37]
 
     @staticmethod
-    def get_public_key_from_private_key(params: dict = {}):
-        if not KeyUtil.validate_check_sum({"signer_key": params["signer_private_key"]}):
-            raise Exception('signer_private_key is invalid.')
-        private_key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_private_key"]})
+    def get_public_key_from_private_key(signer_private_key: str):
+        if not KeyUtil.validate_checksum(signer_private_key):
+            raise Exception("signer_private_key is invalid.")
+        private_key_bytes = KeyUtil.get_key_bytes_from_key(signer_private_key)
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
         tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
-        check_sum = tmp[:4]
-        return "".join(chr(x) for x in base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + check_sum)))
+        checksum = tmp[:4]
+        return "".join(chr(x) for x in base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + checksum)))
 
     @staticmethod
-    def sign_content(params: dict = {}):
-        if "signer_private_key" not in params:
+    def sign_content(signer_private_key: str, message: str):
+        if not signer_private_key:
             raise Exception("signer_private_key is required.")
-        if not KeyUtil.validate_check_sum({"signer_key": params["signer_private_key"]}):
-            raise Exception('signer_private_key is invalid.')
-        if "message" not in params:
+        if not KeyUtil.validate_checksum(signer_private_key):
+            raise Exception("signer_private_key is invalid.")
+        if not message:
             raise Exception("message is required.")
-        private_key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_private_key"]})
+        private_key_bytes = KeyUtil.get_key_bytes_from_key(signer_private_key)
         secret_key = ed25519.SigningKey(private_key_bytes)
-        message_bytes = params["message"].encode(UTF8_ENCODE)
+        message_bytes = message.encode(UTF8_ENCODE)
         return "".join(chr(x) for x in base64.b64encode(secret_key.sign(message_bytes)))
 
     @staticmethod
-    def validate_signature(params: dict = {}):
-        if "signer_public_key" not in params:
+    def validate_signature(signer_public_key: str, signature: str, message: str):
+        if not signer_public_key:
             raise Exception("signer_public_key is required.")
-        if not KeyUtil.validate_check_sum({"signer_key": params["signer_public_key"]}):
-            raise Exception('signer_public_key is invalid.')
-        if "signature" not in params:
+        if not KeyUtil.validate_checksum(signer_public_key):
+            raise Exception("signer_public_key is invalid.")
+        if not signature:
             raise Exception("signature is required.")
-        if "message" not in params:
+        if not message:
             raise Exception("message is required.")
-        signature_bytes = base64.b64decode(params["signature"])
-        message_bytes = params["message"].encode(UTF8_ENCODE)
-        key_bytes = KeyUtil.get_key_bytes_from_key({"signer_key": params["signer_public_key"]})
+        signature_bytes = base64.b64decode(signature)
+        message_bytes = message.encode(UTF8_ENCODE)
+        key_bytes = KeyUtil.get_key_bytes_from_key(signer_public_key)
         verify_key = ed25519.VerifyingKey(key_bytes)
         try:
             verify_key.verify(signature_bytes, message_bytes)

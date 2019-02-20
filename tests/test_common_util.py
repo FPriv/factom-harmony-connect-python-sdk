@@ -1,9 +1,10 @@
-from nose.tools import *
+from nose.tools import assert_equal
 from factom_sdk.utils.common_util import CommonUtil
 
 
 class TestCommonUtil:
     """Test Request Handler Params"""
+
     def test_decode_response(self):
         """Check decode response successfully"""
         # should return empty object.
@@ -108,27 +109,3 @@ class TestCommonUtil:
         }
         response = CommonUtil.decode_response(data)
         assert_equal(response, encoded_data)
-
-    def test_is_empty_string(self):
-        """Check is empty string successfully"""
-        # should return True.
-        assert_equal(CommonUtil.is_empty_string(1), True)
-
-        # should return False.
-        assert_equal(CommonUtil.is_empty_string('1'), False)
-
-    def test_is_empty_array(self):
-        """Check is empty array successfully"""
-        # should return True.
-        assert_equal(CommonUtil.is_empty_arr([]), True)
-
-        # should return False.
-        assert_equal(CommonUtil.is_empty_arr(['1']), False)
-
-    def test_is_array(self):
-        """Check is array successfully"""
-        # should return True.
-        assert_equal(CommonUtil.is_array([]), True)
-
-        # should return False.
-        assert_equal(CommonUtil.is_array(1), False)
