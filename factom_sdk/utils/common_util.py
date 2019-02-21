@@ -39,3 +39,9 @@ class CommonUtil:
             return decoded
         else:
             return "".join(chr(x) for x in base64.b64decode(data))
+
+    @staticmethod
+    def base64_encode(value):
+        if isinstance(value, str):
+            return "".join(chr(x) for x in base64.b64encode(value.encode("utf-8")))
+        return "".join(chr(x) for x in base64.b64encode(value))

@@ -16,7 +16,7 @@ function onSimulation() {
                   <p class="font-weight-bold">Public Key ${index + 1}</p>
                 </div>
                 <div class="col s10">
-                  <p>${item.publicKey}</p>
+                  <p>${item.public_key}</p>
                 </div>
               </div>`,
       }).appendTo('#generatePublicKeys');
@@ -102,9 +102,11 @@ function onSimulation() {
     //Validate Stored Document
     $('#vs_Document').prop('href', data.documentAfter.link);
     $('#vs_DocumentHash').html(data.documentAfter.hash);
-    $('#vf_BlockchainDocument').html(data.entryWValidation.entryContentJSON.document_hash);
+    debugger
+    var entryContentJSON = JSON.parse(data.entryWValidation.entryContentJSON);
+    $('#vf_BlockchainDocument').html(entryContentJSON.document_hash);
     $('#vf_DocumentHash').html(data.documentAfter.hash);
-    var hashMatch = data.documentAfter.hash === data.entryWValidation.entryContentJSON.document_hash ? 'Valid' : 'Invalid';
+    var hashMatch = data.documentAfter.hash === entryContentJSON.document_hash ? 'Valid' : 'Invalid';
     $('#vf_HashValidation').html(hashMatch);
 
     //Proactive Security
@@ -115,7 +117,7 @@ function onSimulation() {
                   <p class="font-weight-bold">New Public Key ${index + 1}</p>
                 </div>
                 <div class="col s10">
-                  <p>${item.publicKey}</p>
+                  <p>${item.public_key}</p>
                 </div>
               </div>`,
       }).appendTo('#newPublicKeys');

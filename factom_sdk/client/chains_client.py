@@ -1,15 +1,14 @@
 import codecs
 import validators
 import datetime
-import base64
 from factom_sdk.utils.key_util import KeyUtil
 from factom_sdk.request_handler.request_handler import RequestHandler
+from factom_sdk.utils.common_util import CommonUtil
 
 CHAINS_URL = "chains"
 SEARCH_URL = "search"
 IDENTITIES_URL = "identities"
 KEYS_STRING = "keys"
-UTF8_ENCODE = "utf-8"
 
 
 class ChainsClient:
@@ -46,10 +45,12 @@ class ChainsClient:
             signature = codecs.encode(codecs.decode(external_ids[4], "hex"), "base64").decode()
             time_stamp = external_ids[5]
             data = {}
-            if "dblock" in chain["data"] and "height" in chain["data"]["dblock"]:
+            if "dblock" in chain["data"] \
+                    and chain["data"]["dblock"] is not None \
+                    and "height" in chain["data"]["dblock"]:
                 data["active_at_height"] = chain["data"]["dblock"]["height"]
             key_response = self.request_handler.get("/".join([IDENTITIES_URL, signer_chain_id, KEYS_STRING]), data)
-            if len([item for item in key_response if item["key"] == signer_public_key]) == 0:
+            if len([item for item in key_response["data"] if item["key"] == signer_public_key]) == 0:
                 status = "inactive_key"
             else:
                 message = signer_chain_id + chain["data"]["content"] + time_stamp
@@ -95,17 +96,17 @@ class ChainsClient:
             message = signer_chain_id + content + time_stamp
             signature = KeyUtil.sign_content(signer_private_key, message)
             signer_public_key = KeyUtil.get_public_key_from_private_key(signer_private_key)
-            ids_base64.append(base64.b64encode("SignedChain".encode(UTF8_ENCODE)))
-            ids_base64.append(base64.b64encode(bytes([0x01])))
-            ids_base64.append(base64.b64encode(signer_chain_id.encode(UTF8_ENCODE)))
-            ids_base64.append(base64.b64encode(signer_public_key.encode(UTF8_ENCODE)))
+            ids_base64.append(CommonUtil.base64_encode("SignedChain"))
+            ids_base64.append(CommonUtil.base64_encode(bytes([0x01])))
+            ids_base64.append(CommonUtil.base64_encode(signer_chain_id))
+            ids_base64.append(CommonUtil.base64_encode(signer_public_key))
             ids_base64.append(signature)
-            ids_base64.append(base64.b64encode(time_stamp.encode(UTF8_ENCODE)))
+            ids_base64.append(CommonUtil.base64_encode(time_stamp))
         for val in external_ids:
-            ids_base64.append(base64.b64encode(val.encode(UTF8_ENCODE)))
+            ids_base64.append(CommonUtil.base64_encode(val))
         data = {
             "external_ids": ids_base64,
-            "content": base64.b64encode(content.encode(UTF8_ENCODE))
+            "content": CommonUtil.base64_encode(content)
         }
         if callback_url:
             data["callback_url"] = callback_url
@@ -148,6 +149,6 @@ class ChainsClient:
                 url += "&offset=" + str(offset)
             else:
                 url += "?offset=" + str(offset)
-        ids_base64 = [base64.b64encode(val.encode(UTF8_ENCODE)) for val in external_ids]
+        ids_base64 = [CommonUtil.base64_encode(val) for val in external_ids]
         data = {"external_ids": ids_base64}
         return self.request_handler.post(url, data)

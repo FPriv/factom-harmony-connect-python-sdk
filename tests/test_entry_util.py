@@ -56,18 +56,22 @@ class TestEntryUtil(TestCase):
         }
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
-            json = [{
-                "key": "123"
-            }]
+            json = {
+                "data": [{
+                    "key": "123"
+                }]
+            }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
             response = EntryUtil.validate_signature(entry, self.request_handler)
             assert_is_not_none(response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
-            json = [{
-                "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
-            }]
+            json = {
+                "data": [{
+                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
+                }]
+            }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
             response = EntryUtil.validate_signature(entry, self.request_handler)

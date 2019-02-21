@@ -1,1 +1,1 @@
-from factom_sdk.client.identity_client import IdentityClient
+from factom_sdk.client.factom_client import FactomClient

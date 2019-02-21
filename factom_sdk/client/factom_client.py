@@ -7,7 +7,7 @@ from factom_sdk.utils.key_util import KeyUtil
 
 
 class FactomClient:
-    def __init__(self, base_url: str, app_id: str, app_key: str, automatic_signing=None):
+    def __init__(self, base_url: str, app_id: str, app_key: str, automatic_signing: bool = True):
         if not isinstance(automatic_signing, bool):
             automatic_signing = True
         self.base_url = base_url
@@ -21,8 +21,9 @@ class FactomClient:
         self._entries = None
 
     def chain(self, chain_id: str, signature_validation=None):
-        return ChainClient(self.base_url, self.app_id, self.app_key, self.automatic_signing, chain_id,
-                           signature_validation)
+        _chain = ChainClient(self.base_url, self.app_id, self.app_key, self.automatic_signing, chain_id,
+                             signature_validation)
+        return _chain
 
     @property
     def identity(self):

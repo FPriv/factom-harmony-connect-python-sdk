@@ -35,10 +35,12 @@ class ChainClient:
             signature = codecs.encode(codecs.decode(external_ids[4], "hex"), "base64").decode()
             time_stamp = external_ids[5]
             data = {}
-            if "dblock" in chain["data"] and "height" in chain["data"]["dblock"]:
+            if "dblock" in chain["data"] \
+                    and chain["data"]["dblock"] is not None \
+                    and "height" in chain["data"]["dblock"]:
                 data["active_at_height"] = chain["data"]["dblock"]["height"]
             key_response = self.request_handler.get("/".join([IDENTITIES_URL, signer_chain_id, KEYS_STRING]), data)
-            if len([item for item in key_response if item["key"] == signer_public_key]) == 0:
+            if len([item for item in key_response["data"] if item["key"] == signer_public_key]) == 0:
                 status = "inactive_key"
             else:
                 message = signer_chain_id + chain["data"]["content"] + time_stamp

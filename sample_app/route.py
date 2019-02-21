@@ -1,9 +1,9 @@
-from bottle import get, static_file, route, run
 # import module located on a parent folder, when you don't have a standard package structure
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+from bottle import get, static_file, route, run
 from sample_app.simulate_notary import simulate_notary
 
 
@@ -23,7 +23,7 @@ def js(file_path):
     return static_file(file_path, root="./static/assets/js")
 
 
-@route('/download')
+@route('/document')
 def download(file_name='Factom_Whitepaper_v1.2.pdf'):
     return static_file(file_name, root='./static/', download=file_name)
 
