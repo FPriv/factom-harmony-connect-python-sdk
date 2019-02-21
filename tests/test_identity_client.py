@@ -137,7 +137,7 @@ class TestIdentityClient(TestCase):
             "calculated bytes of name and keys is 16931. It must be less than 10240, use less/shorter name or less keys." in str(
                 cm.exception))
 
-        with patch("factom_sdk.request_handler.request_handler.requests.post") as mock_post:
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = self.identity_client.create_identity(
                 ["123"],
@@ -157,7 +157,7 @@ class TestIdentityClient(TestCase):
             self.identity_client.get_identity("")
         assert_true("identity_chain_id is required." in str(cm.exception))
 
-        with patch("factom_sdk.request_handler.request_handler.requests.get") as mock_get:
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = self.identity_client.get_identity("123")
             assert_is_not_none(response)
@@ -180,7 +180,7 @@ class TestIdentityClient(TestCase):
             self.identity_client.get_all_identity_keys("123", 123, 123, "123")
         assert_true("offset must be an integer." in str(cm.exception))
 
-        with patch("factom_sdk.request_handler.request_handler.requests.get") as mock_get:
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = self.identity_client.get_all_identity_keys("123", 123, 123, 123)
             assert_is_not_none(response)
@@ -236,7 +236,7 @@ class TestIdentityClient(TestCase):
                                                                  "io.com", ["factom"])
         assert_true("callback_url is an invalid url format." in str(cm.exception))
 
-        with patch("factom_sdk.request_handler.request_handler.requests.post") as mock_post:
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = self.identity_client.create_identity_key_replacement("123",
                                                                             "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",

@@ -13,10 +13,11 @@ class IdentityClient:
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
     def create_identity_key_pair(self, number_of_key_pair: int = 3):
-        result = [KeyUtil.create_key_pair() for i in list(range(number_of_key_pair))]
-        return result
+        return [KeyUtil.create_key_pair() for _ in range(number_of_key_pair)]
 
-    def create_identity(self, name: list, keys: list, callback_url: str = "", callback_stages: list = []):
+    def create_identity(self, name: list, keys: list, callback_url: str = "", callback_stages: list = None):
+        if callback_stages is None:
+            callback_stages = []
         if not name:
             raise Exception("name is required.")
         if not isinstance(name, list):
@@ -51,12 +52,12 @@ class IdentityClient:
             data["callback_url"] = callback_url
         if callback_stages:
             data["callback_stages"] = callback_stages
-        return self.request_handler.request("POST", IDENTITY_URL, {"data": data})
+        return self.request_handler.post(IDENTITY_URL, data)
 
-    def get_identity(self, identity_chain_id: str, ):
+    def get_identity(self, identity_chain_id: str):
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
-        return self.request_handler.request("GET", "/".join([IDENTITY_URL, identity_chain_id]))
+        return self.request_handler.get("/".join([IDENTITY_URL, identity_chain_id]))
 
     def get_all_identity_keys(self, identity_chain_id: str, active_at_height: int = -1, limit: int = -1,
                               offset: int = -1):
@@ -75,11 +76,12 @@ class IdentityClient:
             raise Exception("offset must be an integer.")
         if offset > -1:
             data["offset"] = offset
-        return self.request_handler.request("GET", "/".join([IDENTITY_URL, identity_chain_id, KEYS_STRING]),
-                                            {"params": data})
+        return self.request_handler.get("/".join([IDENTITY_URL, identity_chain_id, KEYS_STRING]), data)
 
     def create_identity_key_replacement(self, identity_chain_id: str, old_public_key: str, new_public_key: str,
-                                        signer_private_key: str, callback_url: str = "", callback_stages: list = []):
+                                        signer_private_key: str, callback_url: str = "", callback_stages: list = None):
+        if callback_stages is None:
+            callback_stages = []
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         if not old_public_key:
@@ -111,5 +113,4 @@ class IdentityClient:
             data["callback_url"] = callback_url
         if callback_stages:
             data["callback_stages"] = callback_stages
-        return self.request_handler.request("POST", "/".join([IDENTITY_URL, identity_chain_id, KEYS_STRING]),
-                                            {"data": data})
+        return self.request_handler.post("/".join([IDENTITY_URL, identity_chain_id, KEYS_STRING]), data)

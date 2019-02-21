@@ -5,12 +5,12 @@ from factom_sdk.utils.common_util import CommonUtil
 class TestCommonUtil:
     """Test Request Handler Params"""
 
-    def test_decode_response(self):
-        """Check decode response successfully"""
-        # should return empty object.
+    def test_decode_empty_object(self):
+        """Check decode response empty"""
         assert_equal(CommonUtil.decode_response(), {})
 
-        # should return data with external_ids has been decoded with data is array.
+    def test_decode_data_array(self):
+        """Check decode response data array"""
         data = {
             "data": [{
                 "version": 1,
@@ -54,7 +54,8 @@ class TestCommonUtil:
         response = CommonUtil.decode_response(data)
         assert_equal(response, decoded_data)
 
-        # should return data with external_ids has been decoded with data is object.
+    def test_decode_data_object(self):
+        """Check decode response data object"""
         data = {
             "data": {
                 "version": 1,
@@ -92,7 +93,6 @@ class TestCommonUtil:
         response = CommonUtil.decode_response(data)
         assert_equal(response, decoded_data)
 
-        # should return data with name has been decoded.
         data = {
             "data": {
                 "version": 1,

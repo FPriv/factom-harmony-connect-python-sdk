@@ -3,7 +3,9 @@ import base64
 
 class CommonUtil:
     @staticmethod
-    def decode_response(response={}):
+    def decode_response(response=None):
+        if response is None:
+            response = {}
         if "data" in response:
             array_decode = ["external_ids", "content", "name"]
             if isinstance(response["data"], list):
