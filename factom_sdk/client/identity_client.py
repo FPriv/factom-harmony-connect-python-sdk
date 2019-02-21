@@ -12,8 +12,9 @@ class IdentityClient:
     def __init__(self, base_url: str, app_id: str, app_key: str):
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
+    # noinspection PyMethodMayBeStatic
     def create_identity_key_pair(self, number_of_key_pair: int = 3):
-        return [KeyUtil.create_key_pair() for _ in range(number_of_key_pair)]
+        return [KeyUtil.create_key_pair() for _ in list(range(number_of_key_pair))]
 
     def create_identity(self, name: list, keys: list, callback_url: str = "", callback_stages: list = None):
         if callback_stages is None:

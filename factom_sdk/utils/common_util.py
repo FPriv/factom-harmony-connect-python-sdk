@@ -3,7 +3,7 @@ import base64
 
 class CommonUtil:
     @staticmethod
-    def decode_response(response=None):
+    def decode_response(response: dict = None):
         if response is None:
             response = {}
         if "data" in response:
