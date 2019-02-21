@@ -1,4 +1,4 @@
-from nose.tools import *
+from nose.tools import assert_true, assert_is_not_none
 from unittest import TestCase
 from unittest.mock import patch
 from factom_sdk.client.entries_client import EntriesClient
