@@ -27,8 +27,11 @@ class TestCommonUtil:
                     "MjAxOS0wMS0xOFQxNDoxNzo1MFo=",
                 ],
             }],
+            "offset": 0,
+            "limit": 15,
+            "count": 1,
         }
-        encoded_data = {
+        decoded_data = {
             "data": [{
                 "version": 1,
                 "stage": "anchored",
@@ -44,9 +47,12 @@ class TestCommonUtil:
                     "2019-01-18T14:17:50Z",
                 ],
             }],
+            "offset": 0,
+            "limit": 15,
+            "count": 1,
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, encoded_data)
+        assert_equal(response, decoded_data)
 
         # should return data with external_ids has been decoded with data is object.
         data = {
@@ -66,7 +72,7 @@ class TestCommonUtil:
                 ],
             },
         }
-        encoded_data = {
+        decoded_data = {
             "data": {
                 "version": 1,
                 "stage": "anchored",
@@ -84,7 +90,7 @@ class TestCommonUtil:
             },
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, encoded_data)
+        assert_equal(response, decoded_data)
 
         # should return data with name has been decoded.
         data = {
@@ -97,7 +103,7 @@ class TestCommonUtil:
                 "name": "RU1QTE9ZRUU=",
             },
         }
-        encoded_data = {
+        decoded_data = {
             "data": {
                 "version": 1,
                 "stage": "anchored",
@@ -108,4 +114,4 @@ class TestCommonUtil:
             },
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, encoded_data)
+        assert_equal(response, decoded_data)

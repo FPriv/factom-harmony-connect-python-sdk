@@ -49,3 +49,4 @@ venv.bak/
 
 cover/
 .idea
+.DS_Store
