@@ -44,7 +44,12 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            nosetests
+            nosetests > test-reports 2>&1
+      - run:
+          name: run linter
+          command: |
+            . venv/bin/activate
+            flake8 factom_sdk --output-file test-reports
 
       - store_artifacts:
           path: test-reports
