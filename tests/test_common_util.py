@@ -1,13 +1,13 @@
-from nose.tools import assert_equal
+from unittest import TestCase
 from factom_sdk.utils.common_util import CommonUtil
 
 
-class TestCommonUtil:
+class TestCommonUtil(TestCase):
     """Test Request Handler Params"""
 
     def test_decode_empty_object(self):
         """Check decode response empty"""
-        assert_equal(CommonUtil.decode_response(), {})
+        self.assertEqual(CommonUtil.decode_response(), {})
 
     def test_decode_data_array(self):
         """Check decode response data array"""
@@ -52,7 +52,7 @@ class TestCommonUtil:
             "count": 1,
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, decoded_data)
+        self.assertEqual(response, decoded_data)
 
     def test_decode_data_object(self):
         """Check decode response data object"""
@@ -91,7 +91,7 @@ class TestCommonUtil:
             },
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, decoded_data)
+        self.assertEqual(response, decoded_data)
 
         data = {
             "data": {
@@ -114,4 +114,4 @@ class TestCommonUtil:
             },
         }
         response = CommonUtil.decode_response(data)
-        assert_equal(response, decoded_data)
+        self.assertEqual(response, decoded_data)
