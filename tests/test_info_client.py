@@ -1,4 +1,3 @@
-from nose.tools import assert_true, assert_is_not_none
 from unittest import TestCase
 from unittest.mock import patch
 from factom_sdk.client.info_client import InfoClient
@@ -14,11 +13,11 @@ class TestInfoClient(TestCase):
 
     def test_init(self):
         """Check init identity client"""
-        assert_true(isinstance(self.info_client.request_handler, RequestHandler))
+        self.assertTrue(isinstance(self.info_client.request_handler, RequestHandler))
 
     def test_get_info(self):
         """Check get info"""
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = self.info_client.get_info()
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
