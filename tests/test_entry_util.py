@@ -1,4 +1,3 @@
-from nose.tools import assert_true, assert_raises, assert_is_not_none
 from unittest import TestCase
 from unittest.mock import patch
 from factom_sdk.utils.entry_util import EntryUtil
@@ -14,18 +13,18 @@ class TestEntryUtil(TestCase):
 
     def test_get_entry_info(self):
         """Check get entry info"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entry_info("", "", False, self.request_handler)
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entry_info("123", "", False, self.request_handler)
-        assert_true("entry_hash is required." in str(cm.exception))
+        self.assertTrue("entry_hash is required." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = EntryUtil.get_entry_info("123", "123", False, self.request_handler)
-            assert_is_not_none(response)
+            self.assertIsNotNone(response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
@@ -34,7 +33,7 @@ class TestEntryUtil(TestCase):
                 return "valid_signature"
 
             response = EntryUtil.get_entry_info("123", "123", signature_validation, self.request_handler)
-            assert_is_not_none(response)
+            self.assertIsNotNone(response)
 
     def test_validate_signature(self):
         """Check validate signature"""
@@ -64,7 +63,7 @@ class TestEntryUtil(TestCase):
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
             response = EntryUtil.validate_signature(entry, self.request_handler)
-            assert_is_not_none(response)
+            self.assertIsNotNone(response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             json = {
@@ -75,143 +74,143 @@ class TestEntryUtil(TestCase):
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
             response = EntryUtil.validate_signature(entry, self.request_handler)
-            assert_is_not_none(response)
+            self.assertIsNotNone(response)
 
     def test_create_entry(self):
         """Check create entry"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("", False, "")
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "")
-        assert_true("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", "123")
-        assert_true("external_ids must be an array." in str(cm.exception))
+        self.assertTrue("external_ids must be an array." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", ["123"], "idsec")
-        assert_true("signer_chain_id is required when passing a signer_private_key." in str(cm.exception))
+        self.assertTrue("signer_chain_id is required when passing a signer_private_key." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", ["123"], "idsec", "123")
-        assert_true("signer_private_key is invalid." in str(cm.exception))
+        self.assertTrue("signer_private_key is invalid." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", ["123"], "", "123")
-        assert_true("signer_private_key is required when passing a signer_chain_id." in str(cm.exception))
+        self.assertTrue("signer_private_key is required when passing a signer_chain_id." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", ["123"])
-        assert_true("content is required." in str(cm.exception))
+        self.assertTrue("content is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "", "123", "idsec", "123")
-        assert_true("external_ids must be an array." in str(cm.exception))
+        self.assertTrue("external_ids must be an array." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "", ["123"], "", "")
-        assert_true("signer_private_key is required." in str(cm.exception))
+        self.assertTrue("signer_private_key is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "", ["123"], "idsec", "")
-        assert_true("signer_private_key is invalid." in str(cm.exception))
+        self.assertTrue("signer_private_key is invalid." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "", ["123"], "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6", "")
-        assert_true("signer_chain_id is required." in str(cm.exception))
+        self.assertTrue("signer_chain_id is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "123", ["123"], "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
                                    "123", "google")
-        assert_true("callback_url is an invalid url format." in str(cm.exception))
+        self.assertTrue("callback_url is an invalid url format." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", True, "123", ["123"], "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
                                    "123", "", "123")
-        assert_true("callback_stages must be an array." in str(cm.exception))
+        self.assertTrue("callback_stages must be an array." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = EntryUtil.create_entry("123", True, "123", ["123"], "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
                                    "123", "http://google.com", ["123"], self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
 
     def test_get_entries(self):
         """Check get entries"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entries("")
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entries("123", "1")
-        assert_true("limit must be an integer." in str(cm.exception))
+        self.assertTrue("limit must be an integer." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entries("123", 1, "1")
-        assert_true("offset must be an integer." in str(cm.exception))
+        self.assertTrue("offset must be an integer." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_entries("123", 1, 1, "1")
-        assert_true("stages must be an array." in str(cm.exception))
+        self.assertTrue("stages must be an array." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = EntryUtil.get_entries("123", 1, 1, ["1"], self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
 
     def test_get_first_entry(self):
         """Check get first entry"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_first_entry("")
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = EntryUtil.get_first_entry("123", self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
 
     def test_get_last_entry(self):
         """Check get last entry"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.get_last_entry("")
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             response = EntryUtil.get_last_entry("123", self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
 
     def test_search_entries(self):
         """Check search entries"""
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("", [])
-        assert_true("chain_id is required." in str(cm.exception))
+        self.assertTrue("chain_id is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", [])
-        assert_true("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", "123")
-        assert_true("external_ids must be an array." in str(cm.exception))
+        self.assertTrue("external_ids must be an array." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", ["1"], "1")
-        assert_true("limit must be an integer." in str(cm.exception))
+        self.assertTrue("limit must be an integer." in str(cm.exception))
 
-        with assert_raises(Exception) as cm:
+        with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", ["1"], 1, "1")
-        assert_true("offset must be an integer." in str(cm.exception))
+        self.assertTrue("offset must be an integer." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = EntryUtil.search_entries("123", ["1"], 1, 1, self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = EntryUtil.search_entries("123", ["1"], -1, 1, self.request_handler)
-        assert_is_not_none(response)
+        self.assertIsNotNone(response)
