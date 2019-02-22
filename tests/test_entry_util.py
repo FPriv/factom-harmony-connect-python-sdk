@@ -84,7 +84,7 @@ class TestEntryUtil(TestCase):
 
         with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "")
-        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_id is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             EntryUtil.create_entry("123", False, "", "123")
@@ -191,7 +191,7 @@ class TestEntryUtil(TestCase):
 
         with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", [])
-        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_id is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             EntryUtil.search_entries("123", "123")

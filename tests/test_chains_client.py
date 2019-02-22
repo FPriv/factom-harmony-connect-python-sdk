@@ -89,7 +89,7 @@ class TestChainsClientWithoutSigning(TestCase):
 
         with self.assertRaises(Exception) as cm:
             self.chains_client.create_chain("123")
-        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_id is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.chains_client.create_chain("123", "1")
@@ -143,7 +143,7 @@ class TestChainsClientWithoutSigning(TestCase):
         """Check search chains"""
         with self.assertRaises(Exception) as cm:
             self.chains_client.search_chains([])
-        self.assertTrue("at least 1 external_ids is required." in str(cm.exception))
+        self.assertTrue("at least 1 external_id is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.chains_client.search_chains("123")
