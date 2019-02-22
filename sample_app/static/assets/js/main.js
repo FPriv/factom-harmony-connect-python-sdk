@@ -102,7 +102,7 @@ function onSimulation() {
     //Validate Stored Document
     $('#vs_Document').prop('href', data.documentAfter.link);
     $('#vs_DocumentHash').html(data.documentAfter.hash);
-    debugger
+
     var entryContentJSON = JSON.parse(data.entryWValidation.entryContentJSON);
     $('#vf_BlockchainDocument').html(entryContentJSON.document_hash);
     $('#vf_DocumentHash').html(data.documentAfter.hash);
