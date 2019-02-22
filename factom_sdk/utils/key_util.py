@@ -23,8 +23,8 @@ class KeyUtil:
         checksum = tmp[:4]
         public_key = base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + checksum))
         return {
-            "private_key": private_key,
-            "public_key": public_key
+            "private_key": "".join(chr(x) for x in private_key),
+            "public_key": "".join(chr(x) for x in public_key)
         }
 
     @staticmethod

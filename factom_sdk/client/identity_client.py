@@ -1,19 +1,19 @@
 import validators
-import base64
+from factom_sdk.utils.common_util import CommonUtil
 from factom_sdk.utils.key_util import KeyUtil
 from factom_sdk.request_handler.request_handler import RequestHandler
 
 IDENTITY_URL = "identities"
 KEYS_STRING = "keys"
-UTF8_ENCODE = "utf-8"
 
 
 class IdentityClient:
     def __init__(self, base_url: str, app_id: str, app_key: str):
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
+    # noinspection PyMethodMayBeStatic
     def create_identity_key_pair(self, number_of_key_pair: int = 3):
-        return [KeyUtil.create_key_pair() for _ in range(number_of_key_pair)]
+        return [KeyUtil.create_key_pair() for _ in list(range(number_of_key_pair))]
 
     def create_identity(self, name: list, keys: list, callback_url: str = "", callback_stages: list = None):
         if callback_stages is None:
@@ -36,7 +36,7 @@ class IdentityClient:
             raise Exception(duplicate_keys)
         if callback_url and not validators.url(callback_url):
             raise Exception("callback_url is an invalid url format.")
-        name_base64 = [base64.b64encode(_name.encode(UTF8_ENCODE)) for _name in name]
+        name_base64 = [CommonUtil.base64_encode(_name) for _name in name]
         name_byte_count = 0
         for name in name_base64:
             name_byte_count += len(name)
