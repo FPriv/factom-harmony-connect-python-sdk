@@ -1,6 +1,5 @@
 import requests
 import validators
-import json
 from factom_sdk.utils.common_util import CommonUtil
 
 
@@ -19,14 +18,11 @@ class RequestHandler:
 
     def _generic_request(self, method, endpoint, data: dict = None, params: dict = None):
         headers = {
-            "content-type": "application/json",
             "app_id": self.app_id,
             "app_key": self.app_key
         }
         url = "/".join(map(lambda x: str(x).rstrip("/"), [self.base_url, endpoint]))
-        if data is not None:
-            data = json.dumps(data)
-        response = requests.request(method, url, params=params, data=data, headers=headers)
+        response = requests.request(method, url, params=params, json=data, headers=headers)
         response.raise_for_status()
         try:
             return CommonUtil.decode_response(response.json())
@@ -34,7 +30,7 @@ class RequestHandler:
             return {}
 
     def get(self, endpoint: str = "", params: dict = None):
-        return self._generic_request("GET", endpoint, None, params)
+        return self._generic_request("GET", endpoint, params=params)
 
     def post(self, endpoint: str = "", data: dict = None):
-        return self._generic_request("POST", endpoint, data, None)
+        return self._generic_request("POST", endpoint, data)
