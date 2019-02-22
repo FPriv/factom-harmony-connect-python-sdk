@@ -75,7 +75,7 @@ class ChainsClient:
                 raise Exception("signer_chain_id is required.")
         else:
             if not external_ids:
-                raise Exception("at least 1 external_ids is required.")
+                raise Exception("at least 1 external_id is required.")
             if not isinstance(external_ids, list):
                 raise Exception("external_ids must be an array.")
             if signer_private_key and not signer_chain_id:
@@ -134,7 +134,7 @@ class ChainsClient:
 
     def search_chains(self, external_ids: list, limit: int = -1, offset: int = -1):
         if not external_ids:
-            raise Exception("at least 1 external_ids is required.")
+            raise Exception("at least 1 external_id is required.")
         if not isinstance(external_ids, list):
             raise Exception("external_ids must be an array.")
         url = "/".join([CHAINS_URL, SEARCH_URL])
