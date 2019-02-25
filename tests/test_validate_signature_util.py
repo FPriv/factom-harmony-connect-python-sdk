@@ -1,0 +1,92 @@
+from unittest import TestCase
+from unittest.mock import patch
+from factom_sdk.request_handler.request_handler import RequestHandler
+from factom_sdk.utils.validate_signature_util import ValidateSignatureUtil
+
+
+class TestValidateSignatureUtil(TestCase):
+    def setUp(self):
+        self.request_handler = RequestHandler('http://google.com', '1', '2')
+
+    def tearDown(self):
+        self.request_handler = None
+
+    def test_validate_signature(self):
+        """Check validate signature"""
+        data = {
+            "data": {
+                "external_ids": [
+                    'SignedChain',
+                    '0x01',
+                    '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
+                    'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
+                    '779229d23cdb7380869e63e5156a5497170bceec139b37e7af2a4d1aae14d053d19f7626e08d4bbb003d4b05d941f43402f1288af2ff0391a2dee4abf0919b07',
+                    '2019-01-18T14:17:50Z',
+                ],
+                "dblock": {
+                    "height": 10000
+                },
+                "content": "123"
+            }
+        }
+
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+            json = {
+                "data": [{
+                    "key": "123"
+                }]
+            }
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = json
+            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+            self.assertIsNotNone(response)
+
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+            json = {
+                "data": [{
+                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
+                }]
+            }
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = json
+            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+            self.assertIsNotNone(response)
+
+        data = {
+            "data": {
+                "external_ids": [
+                    'SignedEntry',
+                    '0x01',
+                    '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
+                    'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
+                    '779229d23cdb7380869e63e5156a5497170bceec139b37e7af2a4d1aae14d053d19f7626e08d4bbb003d4b05d941f43402f1288af2ff0391a2dee4abf0919b07',
+                    '2019-01-18T14:17:50Z',
+                ],
+                "dblock": {
+                    "height": 10000
+                },
+                "content": "123"
+            }
+        }
+
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+            json = {
+                "data": [{
+                    "key": "123"
+                }]
+            }
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = json
+            response = ValidateSignatureUtil.validate_signature(data, False, self.request_handler)
+            self.assertIsNotNone(response)
+
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+            json = {
+                "data": [{
+                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
+                }]
+            }
+            mock_get.return_value.ok = True
+            mock_get.return_value.json.return_value = json
+            response = ValidateSignatureUtil.validate_signature(data, False, self.request_handler)
+            self.assertIsNotNone(response)

@@ -3,25 +3,25 @@ import hashlib
 import base58
 import ed25519
 import base64
-
-PRIVATE_PREFIX_BYTES = bytearray([0x03, 0x45, 0xf3, 0xd0, 0xd6])
-PUBLIC_PREFIX_BYTES = bytearray([0x03, 0x45, 0xef, 0x9d, 0xe0])
-BASE64_ENCODE = "base64"
-UTF8_ENCODE = "utf-8"
+import factom_sdk.utils.consts
 
 
 class KeyUtil:
     @staticmethod
     def create_key_pair():
         private_key_bytes = os.urandom(32)
-        tmp = hashlib.sha256(hashlib.sha256(PRIVATE_PREFIX_BYTES + private_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(factom_sdk.utils.consts.PRIVATE_PREFIX_BYTES +
+                                            private_key_bytes).digest()).digest()
         checksum = tmp[:4]
-        private_key = base58.b58encode(bytes(PRIVATE_PREFIX_BYTES + private_key_bytes + checksum))
+        private_key = base58.b58encode(bytes(factom_sdk.utils.consts.PRIVATE_PREFIX_BYTES +
+                                             private_key_bytes + checksum))
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
-        tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(factom_sdk.utils.consts.PUBLIC_PREFIX_BYTES +
+                                            public_key_bytes).digest()).digest()
         checksum = tmp[:4]
-        public_key = base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + checksum))
+        public_key = base58.b58encode(bytes(factom_sdk.utils.consts.PUBLIC_PREFIX_BYTES +
+                                            public_key_bytes + checksum))
         return {
             "private_key": "".join(chr(x) for x in private_key),
             "public_key": "".join(chr(x) for x in public_key)
@@ -80,9 +80,11 @@ class KeyUtil:
         private_key_bytes = KeyUtil.get_key_bytes_from_key(signer_private_key)
         signing_key = ed25519.SigningKey(private_key_bytes)
         public_key_bytes = signing_key.get_verifying_key().to_bytes()
-        tmp = hashlib.sha256(hashlib.sha256(PUBLIC_PREFIX_BYTES + public_key_bytes).digest()).digest()
+        tmp = hashlib.sha256(hashlib.sha256(factom_sdk.utils.consts.PUBLIC_PREFIX_BYTES +
+                                            public_key_bytes).digest()).digest()
         checksum = tmp[:4]
-        return "".join(chr(x) for x in base58.b58encode(bytes(PUBLIC_PREFIX_BYTES + public_key_bytes + checksum)))
+        return "".join(chr(x) for x in base58.b58encode(bytes(factom_sdk.utils.consts.PUBLIC_PREFIX_BYTES +
+                                                              public_key_bytes + checksum)))
 
     @staticmethod
     def sign_content(signer_private_key: str, message: str):
@@ -94,7 +96,7 @@ class KeyUtil:
             raise Exception("message is required.")
         private_key_bytes = KeyUtil.get_key_bytes_from_key(signer_private_key)
         secret_key = ed25519.SigningKey(private_key_bytes)
-        message_bytes = message.encode(UTF8_ENCODE)
+        message_bytes = message.encode(factom_sdk.utils.consts.UTF8_ENCODE)
         return "".join(chr(x) for x in base64.b64encode(secret_key.sign(message_bytes)))
 
     @staticmethod
@@ -108,7 +110,7 @@ class KeyUtil:
         if not message:
             raise Exception("message is required.")
         signature_bytes = base64.b64decode(signature)
-        message_bytes = message.encode(UTF8_ENCODE)
+        message_bytes = message.encode(factom_sdk.utils.consts.UTF8_ENCODE)
         key_bytes = KeyUtil.get_key_bytes_from_key(signer_public_key)
         verify_key = ed25519.VerifyingKey(key_bytes)
         try:

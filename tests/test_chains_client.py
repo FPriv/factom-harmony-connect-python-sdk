@@ -40,47 +40,6 @@ class TestChainsClientWithoutSigning(TestCase):
             response = self.chains_client.get_chain_info("123124", True)
             self.assertIsNotNone(response)
 
-    def test_validate_signature(self):
-        """Check validate signature"""
-        chain = {
-            "data": {
-                "external_ids": [
-                    'SignedChain',
-                    '0x01',
-                    '171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7',
-                    'idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7',
-                    '779229d23cdb7380869e63e5156a5497170bceec139b37e7af2a4d1aae14d053d19f7626e08d4bbb003d4b05d941f43402f1288af2ff0391a2dee4abf0919b07',
-                    '2019-01-18T14:17:50Z',
-                ],
-                "dblock": {
-                    "height": 10000
-                },
-                "content": "123"
-            }
-        }
-
-        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
-            json = {
-                "data": [{
-                    "key": "123"
-                }]
-            }
-            mock_get.return_value.ok = True
-            mock_get.return_value.json.return_value = json
-            response = self.chains_client.validate_signature(chain)
-            self.assertIsNotNone(response)
-
-        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
-            json = {
-                "data": [{
-                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
-                }]
-            }
-            mock_get.return_value.ok = True
-            mock_get.return_value.json.return_value = json
-            response = self.chains_client.validate_signature(chain)
-            self.assertIsNotNone(response)
-
     def test_create_chain(self):
         """Check create chain"""
         with self.assertRaises(Exception) as cm:

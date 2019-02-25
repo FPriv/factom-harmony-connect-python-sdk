@@ -4,10 +4,10 @@ import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-import hashlib
-import datetime
-import json
-from factom_sdk import FactomClient
+import hashlib  # noqa
+import datetime  # noqa
+import json  # noqa
+from factom_sdk import FactomClient  # noqa
 
 
 def simulate_notary():
@@ -206,3 +206,5 @@ def simulate_notary():
         "replacementEntryResponses": replacement_entry_responses,
         "identityKeys": identity_keys
     }
+
+simulate_notary()

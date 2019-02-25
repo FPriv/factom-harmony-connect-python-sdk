@@ -133,7 +133,7 @@ class TestIdentityClient(TestCase):
                 ["factom", "replicated"]
             )
         self.assertTrue(
-            "calculated bytes of name and keys is 16931. It must be less than 10240, use less/shorter name or less keys." in str(
+            "calculated bytes of name and keys is 12771. It must be less than 10240, use less/shorter name or less keys." in str(
                 cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:

@@ -1,16 +1,9 @@
-import codecs
 import validators
 import datetime
+import factom_sdk.utils.consts
 from factom_sdk.utils.key_util import KeyUtil
 from factom_sdk.utils.common_util import CommonUtil
-
-CHAINS_URL = "chains"
-ENTRIES_URL = "entries"
-FIRST_URL = "first"
-LAST_URL = "last"
-SEARCH_URL = "search"
-IDENTITIES_URL = "identities"
-KEYS_STRING = "keys"
+from factom_sdk.utils.validate_signature_util import ValidateSignatureUtil
 
 
 class EntryUtil:
@@ -20,13 +13,14 @@ class EntryUtil:
             raise Exception("chain_id is required.")
         if not entry_hash:
             raise Exception("entry_hash is required.")
-        response = request_handler.get("/".join([CHAINS_URL, chain_id, ENTRIES_URL, entry_hash]))
+        response = request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
+                                                 factom_sdk.utils.consts.ENTRIES_URL, entry_hash]))
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
             return {
                 "entry": response,
-                "status": EntryUtil.validate_signature(response, request_handler)
+                "status": ValidateSignatureUtil.validate_signature(response, False, request_handler)
             }
         elif callable(signature_validation):
             return {
@@ -34,31 +28,6 @@ class EntryUtil:
                 "status": signature_validation(response)
             }
         return response
-
-    @staticmethod
-    def validate_signature(entry: dict, request_handler):
-        external_ids = entry["data"]["external_ids"]
-        status = "valid_signature"
-        if len(external_ids) < 6 or external_ids[0] != "SignedEntry" or external_ids[1] != "0x01":
-            status = "not_signed/invalid_entry_format"
-        else:
-            signer_chain_id = external_ids[2]
-            signer_public_key = external_ids[3]
-            signature = codecs.encode(codecs.decode(external_ids[4], "hex"), "base64").decode()
-            time_stamp = external_ids[5]
-            data = {}
-            if "dblock" in entry["data"] \
-                    and entry["data"]["dblock"] is not None \
-                    and "height" in entry["data"]["dblock"]:
-                data["active_at_height"] = entry["data"]["dblock"]["height"]
-            key_response = request_handler.get("/".join([IDENTITIES_URL, signer_chain_id, KEYS_STRING]), data)
-            if len([item for item in key_response["data"] if item["key"] == signer_public_key]) == 0:
-                status = "inactive_key"
-            else:
-                message = signer_chain_id + entry["data"]["content"] + time_stamp
-                if not KeyUtil.validate_signature(signer_public_key, signature, message):
-                    status = "invalid_signature"
-        return status
 
     @staticmethod
     def create_entry(chain_id: str, automatic_signing: bool, content: str, external_ids: list = None,
@@ -118,7 +87,8 @@ class EntryUtil:
             data["callback_url"] = callback_url
         if callback_stages:
             data["callback_stages"] = callback_stages
-        return request_handler.post("/".join([CHAINS_URL, chain_id, ENTRIES_URL]), data)
+        return request_handler.post("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
+                                              factom_sdk.utils.consts.ENTRIES_URL]), data)
 
     @staticmethod
     def get_entries(chain_id: str, limit: int = -1, offset: int = -1, stages: list = None, request_handler=None):
@@ -139,19 +109,22 @@ class EntryUtil:
             raise Exception("stages must be an array.")
         if stages:
             data["stages"] = ",".join(stages)
-        return request_handler.get("/".join([CHAINS_URL, chain_id, ENTRIES_URL]), data)
+        return request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
+                                             factom_sdk.utils.consts.ENTRIES_URL]), data)
 
     @staticmethod
     def get_first_entry(chain_id: str, request_handler=None):
         if not chain_id:
             raise Exception("chain_id is required.")
-        return request_handler.get("/".join([CHAINS_URL, chain_id, ENTRIES_URL, FIRST_URL]))
+        return request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
+                                             factom_sdk.utils.consts.ENTRIES_URL, factom_sdk.utils.consts.FIRST_URL]))
 
     @staticmethod
     def get_last_entry(chain_id: str, request_handler=None):
         if not chain_id:
             raise Exception("chain_id is required.")
-        return request_handler.get("/".join([CHAINS_URL, chain_id, ENTRIES_URL, LAST_URL]))
+        return request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
+                                             factom_sdk.utils.consts.ENTRIES_URL, factom_sdk.utils.consts.LAST_URL]))
 
     @staticmethod
     def search_entries(chain_id: str, external_ids: list, limit: int = -1, offset: int = -1, request_handler=None):
@@ -161,7 +134,8 @@ class EntryUtil:
             raise Exception("at least 1 external_id is required.")
         if not isinstance(external_ids, list):
             raise Exception("external_ids must be an array.")
-        url = "/".join([CHAINS_URL, chain_id, ENTRIES_URL, SEARCH_URL])
+        url = "/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id, factom_sdk.utils.consts.ENTRIES_URL,
+                        factom_sdk.utils.consts.SEARCH_URL])
         if not isinstance(limit, int):
             raise Exception("limit must be an integer.")
         if limit > -1:

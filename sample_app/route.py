@@ -3,8 +3,8 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from bottle import get, static_file, route, run
-from sample_app.simulate_notary import simulate_notary
+from bottle import get, static_file, route, run  # noqa
+from sample_app.simulate_notary import simulate_notary  # noqa
 
 
 # Static Routes
