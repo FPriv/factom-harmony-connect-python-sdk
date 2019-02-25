@@ -206,5 +206,3 @@ def simulate_notary():
         "replacementEntryResponses": replacement_entry_responses,
         "identityKeys": identity_keys
     }
-
-simulate_notary()
