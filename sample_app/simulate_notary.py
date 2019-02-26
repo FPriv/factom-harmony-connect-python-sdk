@@ -19,22 +19,6 @@ def simulate_notary():
     # Create single key pair by using factom_client.key_util.create_key_pair()
     original_key_pairs = factom_client.identity.create_identity_key_pair()
 
-    # For now Identity API is not completed so hardcoded 3 key pairs from API document
-    original_key_pairs = [
-        {
-            "private_key": "idsec1rxvt6BX7KJjaqUhVMQNBGzaa1H4oy43njXSW171HftLnTyvhZ",
-            "public_key": "idpub2Cktw6EgcBVMHMXmfcCyTHndcFvG7fJKyBpy3sTYcdTmdTuKya"
-        },
-        {
-            "private_key": "idsec2bH9PmKVsqsGHqBCydjvK6BESQNQY7rqErq1EAV84Tx3NWRiyb",
-            "public_key": "idpub2JegfdBQBnqbXGKMMD89v8N81e4DpvERHWTJp6zvWaoAVi8Jnj"
-        },
-        {
-            "private_key": "idsec35TeMDfgZMfTzinqEqHxt4BFLSAbwQBwsZeXmFG3otjfkDBF8u",
-            "public_key": "idpub2SrEYac7YQd6xQJKHt7hMWTgzBLDeyPYsK9jwJyQx5bfZvcxE9"
-        }
-    ]
-
     public_keys = [val["public_key"] for val in original_key_pairs]
 
     # Create identity with original_key_pairs created above
