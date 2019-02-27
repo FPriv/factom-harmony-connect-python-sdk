@@ -60,13 +60,13 @@ def simulate_notary():
     # This is the document from the customer,
     # It should be stored in a secure location such as an Amazon S3 bucket for later retrieval.
     # The blockchain is your means for ensuring it has not been tampered with.
+    document_hash = hashlib.sha256()
     with open("./static/Factom_Whitepaper_v1.2.pdf", 'rb') as afile:
         buf = afile.read(65536)
-        hasher = hashlib.sha256()
         while len(buf) > 0:
-            hasher.update(buf)
+            document_hash.update(buf)
             buf = afile.read(65536)
-        document_hash = hasher.hexdigest()
+        document_hash = document_hash.hexdigest()
 
     document = {
         "link": "/document",
@@ -125,13 +125,13 @@ def simulate_notary():
 
     # This is the document that was stored in your system
     # and you are now retrieving to verify that it has not been tampered with.
+    document_hash_after = hashlib.sha256()
     with open("./static/Factom_Whitepaper_v1.2.pdf", 'rb') as afile:
         buf = afile.read(65536)
-        hasher = hashlib.sha256()
         while len(buf) > 0:
-            hasher.update(buf)
+            document_hash_after.update(buf)
             buf = afile.read(65536)
-        document_hash_after = hasher.hexdigest()
+        document_hash_after = document_hash_after.hexdigest()
 
     document_after = {
         "link": "/document",
@@ -172,7 +172,7 @@ def simulate_notary():
         "chainSearchInput": chain_search_input,
         "chainSearchResult": chain_search_result["data"],
         "chainWValidation": {
-            "chainId": chain_w_validation.data["chain_id"],
+            "chainId": chain_w_validation.chain_id,
             "externalIds": chain_w_validation.data["external_ids"],
             "status": chain_w_validation.status
         },
