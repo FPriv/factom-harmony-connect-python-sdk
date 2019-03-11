@@ -23,11 +23,11 @@ class RequestHandler:
         }
         url = "/".join(map(lambda x: str(x).rstrip("/"), [self.base_url, endpoint]))
         response = requests.request(method, url, params=params, json=data, headers=headers)
-        response.raise_for_status()
         try:
+            response.raise_for_status()
             return CommonUtil.decode_response(response.json())
-        except ValueError:
-            return {}
+        except requests.HTTPError as error:
+            raise error
 
     def get(self, endpoint: str = "", params: dict = None):
         return self._generic_request("GET", endpoint, params=params)

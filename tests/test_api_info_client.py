@@ -1,12 +1,12 @@
 from unittest import TestCase
 from unittest.mock import patch
-from factom_sdk.client.info_client import InfoClient
+from factom_sdk.client.api_info_client import ApiInfoClient
 from factom_sdk.request_handler.request_handler import RequestHandler
 
 
 class TestInfoClient(TestCase):
     def setUp(self):
-        self.info_client = InfoClient("https://apicast.io", "123456", "123456789")
+        self.info_client = ApiInfoClient("https://apicast.io", "123456", "123456789")
 
     def tearDown(self):
         self.info_client = None
@@ -19,5 +19,5 @@ class TestInfoClient(TestCase):
         """Check get info"""
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
-            response = self.info_client.get_info()
+            response = self.info_client.get()
         self.assertIsNotNone(response)

@@ -2,7 +2,7 @@ from unittest import TestCase
 from factom_sdk.utils.key_common import KeyCommon
 
 
-class TestKeyUtil(TestCase):
+class TestKeyCommon(TestCase):
     def test_create_key_pair(self):
         """Check create key pair"""
         key_pair = KeyCommon.create_key_pair()

@@ -32,20 +32,11 @@ class TestValidateSignatureUtil(TestCase):
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             json = {
-                "data": [{
-                    "key": "123"
-                }]
-            }
-            mock_get.return_value.ok = True
-            mock_get.return_value.json.return_value = json
-            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
-            self.assertIsNotNone(response)
-
-        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
-            json = {
-                "data": [{
-                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
-                }]
+                "data": {
+                    "key": "123",
+                    "retired_height": 1001,
+                    "activated_height": 1001,
+                }
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
@@ -63,7 +54,7 @@ class TestValidateSignatureUtil(TestCase):
                     '2019-01-18T14:17:50Z',
                 ],
                 "dblock": {
-                    "height": 10000
+                    "height": 1000
                 },
                 "content": "123"
             }
@@ -71,9 +62,11 @@ class TestValidateSignatureUtil(TestCase):
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             json = {
-                "data": [{
-                    "key": "123"
-                }]
+                "data": {
+                    "key": "123",
+                    "retired_height": 900,
+                    "activated_height": 1001,
+                }
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
@@ -82,9 +75,11 @@ class TestValidateSignatureUtil(TestCase):
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             json = {
-                "data": [{
-                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7"
-                }]
+                "data": {
+                    "key": "idpub3NegGMKn2CDcx3A9JkpoMm2jE9KxchxqHTmXPvJnmUJGizfrb7",
+                    "retired_height": 1001,
+                    "activated_height": 900,
+                }
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
