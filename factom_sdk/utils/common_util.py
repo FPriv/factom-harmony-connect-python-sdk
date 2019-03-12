@@ -7,7 +7,7 @@ class CommonUtil:
         if response is None:
             response = {}
         if "data" in response:
-            array_decode = ["external_ids", "content", "name"]
+            array_decode = ["external_ids", "content", "names"]
             if isinstance(response["data"], list):
                 for item in response["data"]:
                     for arr in array_decode:
