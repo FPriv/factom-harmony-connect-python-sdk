@@ -8,15 +8,15 @@ class IdentitiesKeyUtil:
     def __init__(self, base_url: str, app_id: str, app_key: str):
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
-    def get(self, identity_chain_id: str, key_string: str):
+    def get(self, identity_chain_id: str, key: str):
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
-        if not key_string:
-            raise Exception("key_string is required.")
-        if not KeyCommon.validate_checksum(key_string):
-            raise Exception("key_string is invalid.")
+        if not key:
+            raise Exception("key is required.")
+        if not KeyCommon.validate_checksum(key):
+            raise Exception("key is invalid.")
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
-                                                  factom_sdk.utils.consts.KEYS_STRING, key_string]))
+                                                  factom_sdk.utils.consts.KEYS_STRING, key]))
 
     def list(self, identity_chain_id: str, limit: int = -1, offset: int = -1):
         if not identity_chain_id:
