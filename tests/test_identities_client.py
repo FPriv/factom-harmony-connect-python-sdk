@@ -155,11 +155,11 @@ class TestIdentityClient(TestCase):
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.get("123", "")
-        self.assertTrue("key_string is required." in str(cm.exception))
+        self.assertTrue("key is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.get("123", "idpub")
-        self.assertTrue("key_string is invalid." in str(cm.exception))
+        self.assertTrue("key is invalid." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
