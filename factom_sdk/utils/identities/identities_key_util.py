@@ -18,14 +18,10 @@ class IdentitiesKeyUtil:
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
                                                   factom_sdk.utils.consts.KEYS_STRING, key_string]))
 
-    def list(self, identity_chain_id: str, active_at_height: int = -1, limit: int = -1, offset: int = -1):
+    def list(self, identity_chain_id: str, limit: int = -1, offset: int = -1):
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         data = {}
-        if not isinstance(active_at_height, int):
-            raise Exception("active_at_height must be an integer.")
-        if active_at_height > -1:
-            data["active_at_height"] = active_at_height
         if not isinstance(limit, int):
             raise Exception("limit must be an integer.")
         if limit > -1:

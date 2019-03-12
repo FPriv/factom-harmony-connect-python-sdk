@@ -13,7 +13,7 @@ function onSimulation() {
       $('<div/>', {
         html: `<div class="row mt-3">
                 <div class="col s2">
-                  <p class="font-weight-bold">Public Key ${index + 1}</p>
+                  <p class="font-weight-bold">Generated Public Key ${index + 1}</p>
                 </div>
                 <div class="col s10">
                   <p>${item.public_key}</p>
@@ -102,56 +102,51 @@ function onSimulation() {
     //Validate Stored Document
     $('#vs_Document').prop('href', data.documentAfter.link);
     $('#vs_DocumentHash').html(data.documentAfter.hash);
-
     var entryContentJSON = JSON.parse(data.entryWValidation.entryContentJSON);
     $('#vf_BlockchainDocument').html(entryContentJSON.document_hash);
     $('#vf_DocumentHash').html(data.documentAfter.hash);
-    var hashMatch = data.documentAfter.hash === entryContentJSON.document_hash ? 'Valid' : 'Invalid';
+    var hashMatch = data.documentAfter.hash === entryContentJSON.document_hash ? '<i class="material-icons validation success">check</i>Valid' : '<i class="material-icons validation fail">close</i>Invalid';
     $('#vf_HashValidation').html(hashMatch);
 
     //Proactive Security
-    data.replaceKeyPairs.forEach((item, index) => {
-      $('<div/>', {
-        html: `<div class="row mt-3">
-                <div class="col s2">
-                  <p class="font-weight-bold">New Public Key ${index + 1}</p>
-                </div>
-                <div class="col s10">
-                  <p>${item.public_key}</p>
-                </div>
-              </div>`,
-      }).appendTo('#newPublicKeys');
-    });
+    $('<div/>', {
+      html: `<div class="row mt-3">
+              <div class="col s2">
+                <p class="font-weight-bold">Replacement Entry Hash</p>
+              </div>
+              <div class="col s10">
+                <p>${data.replacementEntryResponse.entry_hash}</p>
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col s2">
+                <p class="font-weight-bold">New Public Key</p>
+              </div>
+              <div class="col s10">
+                <p>${data.replaceKeyPair.public_key}</p>
+              </div>
+            </div>`,
+    }).appendTo('#replaceKey');
 
-    data.replacementEntryResponses.forEach((item, index) => {
+    data.identityKeys.forEach((item) => {
+      lineThrough = item.state == "Pending and Replacement Pending" ? "lineThrough" : "";
       $('<div/>', {
         html: `<div class="row mt-3">
                 <div class="col s2">
-                  <p class="font-weight-bold">Entry Hash ${index + 1}</p>
+                  <p class="font-weight-bold ${lineThrough}">Public Key ${item.priority + 1}</p>
                 </div>
                 <div class="col s10">
-                  <p>${item.entry_hash}</p>
-                </div>
-              </div>`,
-      }).appendTo('#replaceKeys');
-    });
-
-    data.identityKeys.data.forEach((item, index) => {
-      $('<div/>', {
-        html: `<div class="row mt-3">
-                <div class="col s2">
-                  <p class="font-weight-bold">Public Key ${index + 1}</p>
-                </div>
-                <div class="col s10">
-                  <p>${item.key}</p>
-                  <p><b>Activated Height:</b> ${item.activated_height}</p>
-                  <p><b>Retired Height:</b> ${item.retired_height}</p>
+                  <p class="${lineThrough}">${item.key}</p>
+                  <p class="${lineThrough}"><b>Activated Height:</b> ${item.activated_height}</p>
+                  <p class="${lineThrough}"><b>State:</b> ${item.state}</p>
                 </div>
               </div>`,
       }).appendTo('#retrievePublicKeys');
     });
 
     //Finish
+    var collapsibleElems = document.querySelectorAll('.collapsible');
+    M.Collapsible.init(collapsibleElems)
     $("#loading").hide();
     $('#first-step').hide();
     $('#result').show();
@@ -166,10 +161,10 @@ getStatus = (status) => {
       break;
     case 'invalid_signature':
     case 'retired_key':
-      result = 'Invalid';
+      result = '<i class="material-icons validation fail">close</i>Invalid';
       break;
     case 'valid_signature':
-      result = 'Valid';
+      result = '<i class="material-icons validation success">check</i>Valid';
       break;
   }
 

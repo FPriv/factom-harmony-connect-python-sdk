@@ -11,6 +11,48 @@ import sample_app.configure  # noqa
 from factom_sdk import FactomClient  # noqa
 
 
+def calculate_state(identities_keys):
+    result = []
+    for item in identities_keys["active_keys"]:
+        if item["activated_height"] is None:
+            # "Pending and Replacement Pending" if activated_height is null
+            # and there is a pending key replacement for the same priority
+            if identities_keys["pending_key"] is not None \
+                    and item["priority"] == identities_keys["pending_key"]["priority"]:
+                state = "Pending and Replacement Pending"
+            else:
+                # "Pending" if the activated height is null
+                state = "Pending"
+        else:
+            # "Retired/replaced" if retired_height is not null
+            if item["retired_height"] is not None:
+                state = "Retired/replaced"
+            else:
+                # "Active and Replacement Pending" if activated_height is not null
+                # retired_height is null and there is a pending key replacement for the same priority
+                if identities_keys["pending_key"] is not None \
+                        and item["priority"] == identities_keys["pending_key"]["priority"]:
+                    state = "Active and Replacement Pending"
+                else:
+                    # "Active" if activated_height is not null and retired_height is null
+                    state = "Active"
+        result.append({
+            "key": item["key"],
+            "priority": item["priority"],
+            "activated_height": item["activated_height"],
+            "state": state
+        })
+    if identities_keys["pending_key"] is not None:
+        result.append({
+            "key": identities_keys["pending_key"]["key"],
+            "priority": identities_keys["pending_key"]["priority"],
+            "activated_height": identities_keys["pending_key"]["activated_height"],
+            "state": "Pending"
+        })
+    result.sort(key=lambda x: x["priority"])
+    return result
+
+
 def simulate_notary():
     factom_client = FactomClient(sample_app.configure.BASE_URL,
                                  sample_app.configure.APP_ID,
@@ -141,20 +183,19 @@ def simulate_notary():
     }
 
     # Proactive Security
-    replace_key_pairs = [factom_client.utils.generate_key_pair() for _ in range(3)]
-
     # To replace new key, you need to sign this request with above or same level private key.
     # In this case we are using same level private key.
-    replacement_entry_responses = []
-    for i in range(len(replace_key_pairs)):
-        new_key_pair = replace_key_pairs[i]
-        original_key_pair = original_key_pairs[i]
-        replacement_entry_responses.append(factom_client.identities.keys.replace(identity_chain_id,
-                                                                                 original_key_pair["public_key"],
-                                                                                 new_key_pair["public_key"],
-                                                                                 original_key_pair["private_key"]))
+    original_key_pair = original_key_pairs[1]
+    replacement_entry_response = factom_client.identities.keys.replace(identity_chain_id,
+                                                                       original_key_pair["public_key"],
+                                                                       None,
+                                                                       original_key_pair["private_key"])
 
-    identity_keys = factom_client.identities.keys.list(identity_chain_id)
+    identity_chain = factom_client.identities.get(identity_chain_id)
+    identity_keys = calculate_state({
+        "active_keys": identity_chain["data"]["active_keys"],
+        "pending_key": identity_chain["data"]["pending_key"]
+    })
 
     return {
         "originalKeyPairs": original_key_pairs,
@@ -185,7 +226,7 @@ def simulate_notary():
             "entryContentJSON": entry_content_json,
         },
         "documentAfter": document_after,
-        "replaceKeyPairs": replace_key_pairs,
-        "replacementEntryResponses": replacement_entry_responses,
+        "replaceKeyPair": replacement_entry_response["key_pair"],
+        "replacementEntryResponse": replacement_entry_response,
         "identityKeys": identity_keys
     }

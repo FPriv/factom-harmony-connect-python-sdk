@@ -19,11 +19,11 @@ class TestIdentityClient(TestCase):
         """Check create identity"""
         with self.assertRaises(Exception) as cm:
             self.identities_client.create("", "")
-        self.assertTrue("name is required." in str(cm.exception))
+        self.assertTrue("names is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.create("123", "123")
-        self.assertTrue("name must be an array." in str(cm.exception))
+        self.assertTrue("names must be an array." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.create(["123"], [])
@@ -173,20 +173,16 @@ class TestIdentityClient(TestCase):
         self.assertTrue("identity_chain_id is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.list("123", "123")
-        self.assertTrue("active_at_height must be an integer." in str(cm.exception))
-
-        with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.list("123", 123, "123")
+            self.identities_client.keys.list("123", "123", "123")
         self.assertTrue("limit must be an integer." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.list("123", 123, 123, "123")
+            self.identities_client.keys.list("123", 123, "123")
         self.assertTrue("offset must be an integer." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
-            response = self.identities_client.keys.list("123", 123, 123, 123)
+            response = self.identities_client.keys.list("123", 123, 123)
             self.assertIsNotNone(response)
 
     def test_key_replace(self):

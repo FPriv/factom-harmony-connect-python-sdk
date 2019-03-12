@@ -11,13 +11,13 @@ class IdentitiesClient:
         self.request_handler = RequestHandler(base_url, app_id, app_key)
         self.keys = IdentitiesKeyUtil(base_url, app_id, app_key)
 
-    def create(self, name: list, keys: list = None, callback_url: str = "", callback_stages: list = None):
+    def create(self, names: list, keys: list = None, callback_url: str = "", callback_stages: list = None):
         if callback_stages is None:
             callback_stages = []
-        if not name:
-            raise Exception("name is required.")
-        if not isinstance(name, list):
-            raise Exception("name must be an array.")
+        if not names:
+            raise Exception("names is required.")
+        if not isinstance(names, list):
+            raise Exception("names must be an array.")
 
         key_pairs = []
         if keys is not None:
@@ -41,7 +41,7 @@ class IdentitiesClient:
         if callback_url and not validators.url(callback_url):
             raise Exception("callback_url is an invalid url format.")
         name_byte_count = 0
-        for _name in name:
+        for _name in names:
             name_byte_count += len(_name)
 
         # 2 bytes for the size of extid + 13 for actual IdentityChain ext-id text
@@ -50,14 +50,14 @@ class IdentitiesClient:
         # 58 bytes per `"idpub2PHPArpDF6S86ys314D3JDiKD8HLqJ4HMFcjNJP6gxapoNsyFG",` array element
         # -1 byte because last key element has no comma
         # = 37 + name_byte_count + 2(number_of_names) + 58(number_of_keys)
-        total_bytes = 37 + name_byte_count + (len(name) * 2) + (len(signer_keys) * 58)
+        total_bytes = 37 + name_byte_count + (len(names) * 2) + (len(signer_keys) * 58)
         if total_bytes > 10240:
             raise Exception("calculated bytes of name and keys is " + str(total_bytes) +
                             ". It must be less than 10240, use less/shorter name or less keys.")
 
-        name_base64 = [CommonUtil.base64_encode(_name) for _name in name]
+        names_base64 = [CommonUtil.base64_encode(_name) for _name in names]
         data = {
-            "name": name_base64,
+            "names": names_base64,
             "keys": signer_keys
         }
         if callback_url:
