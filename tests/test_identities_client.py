@@ -19,7 +19,7 @@ class TestIdentityClient(TestCase):
         """Check create identity"""
         with self.assertRaises(Exception) as cm:
             self.identities_client.create("", "")
-        self.assertTrue("names is required." in str(cm.exception))
+        self.assertTrue("at least 1 name is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.create("123", "123")

@@ -15,7 +15,7 @@ class IdentitiesClient:
         if callback_stages is None:
             callback_stages = []
         if not names:
-            raise Exception("names is required.")
+            raise Exception("at least 1 name is required.")
         if not isinstance(names, list):
             raise Exception("names must be an array.")
 
