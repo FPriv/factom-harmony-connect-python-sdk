@@ -100,7 +100,7 @@ class TestCommonUtil(TestCase):
                 "created_height": 118460,
                 "chain_id": "171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7",
                 "all_keys_href": "/v1/identities/<chain_id>/keys",
-                "name": "RU1QTE9ZRUU=",
+                "names": "RU1QTE9ZRUU=",
             },
         }
         decoded_data = {
@@ -110,7 +110,7 @@ class TestCommonUtil(TestCase):
                 "created_height": 118460,
                 "chain_id": "171e5851451ce6f2d9730c1537da4375feb442870d835c54a1bca8ffa7e2bda7",
                 "all_keys_href": "/v1/identities/<chain_id>/keys",
-                "name": "EMPLOYEE",
+                "names": "EMPLOYEE",
             },
         }
         response = CommonUtil.decode_response(data)
