@@ -69,7 +69,7 @@ For more details of a specific module, please refer to the
 [**Methods**](#METHODS) section.
 
 If you want to understand how the SDK works in practice, refer to the
-[**Sample Application**](#SAMPLE APPLICATION) section.
+[**Sample Application**](#SAMPLE-APPLICATION) section.
 
 Below is an example of how to use the SDK. Before executing any
 requests, you will need to instantiate an instance of the SDK. The
