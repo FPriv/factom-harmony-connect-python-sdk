@@ -7,12 +7,12 @@ Gets information about a specific chain from Connect.
 
 **Parameters:**
 
-
+<div markdown="1">  
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                       | **SDK Error Message & Description**                                 |
 |------------------------------|----------|------------------------------------------------------------------------------|---------------------------------------------------------------------|
 | `chain_id`                   | required | string </br> The unique identifier created for each chain.                                                                                                                                                                                                                            | **chain_id is required** </br> `chain_id` parameter was not provided. |
 | `signature_validation`       | optional | boolean (`true`/`false`/`custom function`) </br> Default value is `true`. </br> Indicates whether the SDK automatically validates that the chain was signed based on our signing standard. </br> `custom function`: allows for validating the chain's signature  based on custom logic. |                                                                     |
-
+</div>
 
 
 **Returns:**
