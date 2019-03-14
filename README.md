@@ -122,7 +122,7 @@ License
 
 *This section will be provided by Factom.*
 
-#METHODS
+# METHODS 
 
 utils
 
