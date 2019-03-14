@@ -64,9 +64,6 @@ To use the SDK, you have to import it: `from factom_sdk import FactomClient`
 Usage
 -----
 
-This SDK relies on
-[Promises](https://developers.google.com/web/fundamentals/primers/promises)
-making it easier to handle the asynchronous requests made to the API.
 
 For more details of a specific module, please refer to the
 [**Methods**](#methods) section.
@@ -81,14 +78,8 @@ using to authenticate your requests. If you do not have an application
 yet, you can get one
 [here](https://account.factom.com).
 
-```js
-const factom = new Factom({
-  baseUrl: "YOUR API URL",
-  accessToken: {
-    appId: "YOUR APP ID\",
-    appKey: "YOUR APP KEY"
-  },
-});
+```python
+factom_client = FactomClient("YOUR_BASE_URL", "YOUR_APP_ID","YOUR_APP_KEY")
 ```
 
 
@@ -109,62 +100,20 @@ validate that the chains or entries were created by you or that a
 certain user/device/ organization/etc.actually signed and published a
 certain message that you see in your chain.
 
-Now that you have initialized the SDK, you can use the SDK\'s Methods,
+Now that you have initialized the SDK, you can use the SDK's Methods,
 which will execute the necessary REST API calls on your behalf.
-Following the [Promises](https://developers.google.com/web/fundamentals/primers/promises)
-notation, you should use `Async/Await syntax` or `.then()/.catch in ES5` to
-handle successful and failed requests.
-
-All **Method** calls take an object as a parameter.
-
-**Async/Await**
-```js
-const DoSomeThingWithData = async () => {
-  try {
-    const response = await factom.identities.create({
-      name: [... < your names array > ]
-      keys: [... < your public key array > ]
-    })
-    // handle the response
-  } catch (error) {
-    // handle the error
-  }
-}
-```
-
-**ES5 syntax**
-```js
-function DoSomeThingWithData() {
-  factom.identities.create({
-    name: [... < your names array > ]
-    keys: [... < your public key array > ]
-  }).then((response) => {
-    // handle the response
-  }).catch((error) => {
-    // handle the error
-  })
-}
-```
 
 Patterns to utilize the Factom SDK:
-```js
-// Return a JSON chain object as is from the API.
-const chain = await FactomSDK.chains.get({
-  chainId: '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
-});
+```python
+# Return a JSON chain object as is from the API.
+chain = factom_client.chains.get(chain_id='5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
 
-// Return JSON entries array as is from API.
+# Return JSON entries array as is from API.
+entries = factom_client.chains.entries.list(chain_id = '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
 
-const entries = await FactomSDK.chains.entries.list({
-  chainId: '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
-});
-
-// Return a JSON single entry object as is from the API.
-
-const entry = await FactomSDK.chains.entries.get({
-  chainId: '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
-  entryHash: 'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93',
-});
+# Return a JSON single entry object as is from the API.
+entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
+  entry_hash = 'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93')
 ```
 
 
