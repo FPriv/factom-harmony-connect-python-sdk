@@ -66,7 +66,7 @@ Usage
 
 
 For more details of a specific module, please refer to the
-[**Methods**](#methods) section.
+[**Methods**](#METHODS) section.
 
 If you want to understand how the SDK works in practice, refer to the
 [**Sample Application**](#sample-application) section.
@@ -122,7 +122,7 @@ License
 
 *This section will be provided by Factom.*
 
-METHODS {#methods}
+#METHODS
 =======
 
 utils
