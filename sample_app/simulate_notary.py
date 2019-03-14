@@ -1,14 +1,8 @@
-# import module located on a parent folder, when you don't have a standard package structure
-import os
-import sys
-
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-import hashlib  # noqa
-import datetime  # noqa
-import json  # noqa
-import sample_app.configure  # noqa
-from factom_sdk import FactomClient  # noqa
+import hashlib
+import datetime
+import json
+import sample_app.configure
+from factom_sdk import FactomClient
 
 
 def calculate_state(identities_keys):

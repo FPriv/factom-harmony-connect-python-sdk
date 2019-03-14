@@ -27,7 +27,7 @@ class TestRequestHandlerParams(TestCase):
     def test_initial_success(self):
         """Check initial"""
         request_handler = RequestHandler("http://google.com", "1", "2")
-        self.assertEqual(request_handler.base_url, "http://google.com")
+        self.assertEqual(request_handler.base_url, "http://google.com/")
         self.assertEqual(request_handler.app_id, "1")
         self.assertEqual(request_handler.app_key, "2")
 

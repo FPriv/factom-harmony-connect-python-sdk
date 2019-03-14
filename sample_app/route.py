@@ -1,9 +1,9 @@
 # import module located on a parent folder, when you don't have a standard package structure
 import os
 import sys
+from bottle import get, static_file, route, run
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from bottle import get, static_file, route, run  # noqa
 from sample_app.simulate_notary import simulate_notary  # noqa
 
 

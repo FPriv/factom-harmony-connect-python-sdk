@@ -96,7 +96,7 @@ class KeyCommon:
             raise Exception("message is required.")
         private_key_bytes = KeyCommon.get_key_bytes_from_key(signer_private_key)
         secret_key = ed25519.SigningKey(private_key_bytes)
-        message_bytes = message.encode(factom_sdk.utils.consts.UTF8_ENCODE)
+        message_bytes = message.encode()
         return "".join(chr(x) for x in base64.b64encode(secret_key.sign(message_bytes)))
 
     @staticmethod
@@ -110,7 +110,7 @@ class KeyCommon:
         if not message:
             raise Exception("message is required.")
         signature_bytes = base64.b64decode(signature)
-        message_bytes = message.encode(factom_sdk.utils.consts.UTF8_ENCODE)
+        message_bytes = message.encode()
         key_bytes = KeyCommon.get_key_bytes_from_key(signer_public_key)
         verify_key = ed25519.VerifyingKey(key_bytes)
         try:

@@ -43,5 +43,5 @@ class CommonUtil:
     @staticmethod
     def base64_encode(value):
         if isinstance(value, str):
-            return "".join(chr(x) for x in base64.b64encode(value.encode("utf-8")))
+            return "".join(chr(x) for x in base64.b64encode(value.encode()))
         return "".join(chr(x) for x in base64.b64encode(value))

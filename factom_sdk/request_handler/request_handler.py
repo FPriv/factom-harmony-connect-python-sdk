@@ -1,5 +1,6 @@
 import requests
 import validators
+from urllib.parse import urljoin
 from factom_sdk.utils.common_util import CommonUtil
 
 
@@ -12,6 +13,9 @@ class RequestHandler:
         if not isinstance(app_key, str):
             raise Exception("The app_key provided is not valid.")
 
+        if not base_url.endswith("/"):
+            base_url += "/"
+
         self.base_url = base_url
         self.app_id = app_id
         self.app_key = app_key
@@ -21,8 +25,7 @@ class RequestHandler:
             "app_id": self.app_id,
             "app_key": self.app_key
         }
-        url = "/".join(map(lambda x: str(x).rstrip("/"), [self.base_url, endpoint]))
-        response = requests.request(method, url, params=params, json=data, headers=headers)
+        response = requests.request(method, urljoin(self.base_url, endpoint), params=params, json=data, headers=headers)
         try:
             response.raise_for_status()
             return CommonUtil.decode_response(response.json())
