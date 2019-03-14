@@ -124,13 +124,13 @@ License
 
 # METHODS 
 
-utils
+[utils](documentation/utils.md)
 
-identities
+[identities](documentation/identities.md)
 
-api_info
+[api_info](documentation/api_info.md)
 
-chains
+[chains](documentation/chains.md)
 
 # SAMPLE APPLICATION
 
