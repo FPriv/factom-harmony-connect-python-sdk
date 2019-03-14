@@ -123,7 +123,6 @@ License
 *This section will be provided by Factom.*
 
 #METHODS
-=======
 
 utils
 
