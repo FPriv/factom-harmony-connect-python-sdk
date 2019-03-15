@@ -18,7 +18,7 @@ arrays. For details, please refer to Identity API Documentation [here](https://g
 factom_client.utils.generate_key_pair()
 ```
 
-**Returns:**</br>
+**Returns**</br>
 A key pair object with Public and Private keys.
 - **public_key:** string</br>
 The public key in base58 Idpub format.</br>
