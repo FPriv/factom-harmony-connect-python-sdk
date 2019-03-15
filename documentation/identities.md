@@ -26,6 +26,12 @@ Creates a new Identity chain. You will need to include a unique names array for 
 | `callback_url`    | optional | string </br> The URL you would like the callbacks  </br> to be sent to. </br> **Note:** If this is not specified, callbacks </br> will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `callback_stages` | optional | array of strings </br> The immutability stages you would like to be notified about.  </br> This list can include any or all of these three  </br> stages: `replicated`, `factom`, and </br> `anchored`. For example: when you </br> would like to trigger the callback from </br> Connect at `replicated` and `factom` </br> stage, you would send them in the </br> format: [‘replicated’, ‘factom’]. </br> **Note:** For this field to matter, the URL </br> must be provided. </br> If callbacks are activated (URL has </br> been specified) and this field is not </br> sent, it will default to `factom` and </br> `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
+**Sample**
+```python
+ factom_client.identities.create(
+    ["NotarySimulation", "Test Identity"])
+```
+
 **Returns:**
 
 **Response**: Accepted
@@ -33,10 +39,30 @@ Creates a new Identity chain. You will need to include a unique names array for 
 -   **entry_hash:** string </br> The unique identifier of the first entry that has been created in this identity chain.
 -   **stage:** string </br> The current immutability stage of the identity chain and its first entry.
 -   **key_pairs:** an array of objects </br> The 3 key pairs generated automatically by Factom SDK. This value is not returned if the public keys are provided when creating this identity.
-    - **key_pairs[].public_key:** string </br>
-The public key in base58 Idpub format. </br>
-    - **key_pairs[].private_key:** string </br>
-The private key in base58 Idsec format. 
+    - **key_pairs[].public_key:** string </br> The public key in base58 Idpub format. </br>
+    - **key_pairs[].private_key:** string </br> The private key in base58 Idsec format. 
+
+```python
+{
+   'stage':'replicated',
+   'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+   'chain_id':'107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42',
+   'key_pairs':[
+      {
+         'private_key':'idsec1fKP8B6csh3yAHMiEu2x8NBBJvx7nkWhbJB6XvRobaKibvbMy2',
+         'public_key':'idpub2EDrNudZUKBfKfppPXeeTZJVU4nzMCXQf9vicDeApafbzV3iXa'
+      },
+      {
+         'private_key':'idsec2PY5YdmmMDDVrvkHctfFjbZybe3NSAPbtr9aJJTLrVj4tekXGx',
+         'public_key':'idpub1mxNZop6vAGmutD87hdYz1hog1NnaSfFj3icTUiq6xUyjiiy89'
+      },
+      {
+         'private_key':'idsec36HAy7vPMwCpDVeEDnGrkkW77W4QZ6rMvwrQ9tNP9JWgG6P2yv',
+         'public_key':'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF'
+      }
+   ]
+}
+```
 
 #### get
 
@@ -47,6 +73,11 @@ Gets a summary of the identity chain's current state.
 | **Name**                 | **Type** | **Description**                                                       | **SDK Error Message & Description**                                                   |
 |--------------------------|----------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `identity_chain_id` | required | string </br> The unique identifier for the identity chain being requested. | **identity_chain_id is required.**  </br> `identity_chain_id` parameter was not provided. |
+
+**Sample**
+```python
+factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
+```
 
 **Returns:**</br> 
 **Response**: OK
@@ -64,8 +95,46 @@ Gets a summary of the identity chain's current state.
 	-   **data.active_keys[].priority:** integer </br> The level of this key within the hierarchy. A lower number indicates a key that allows a holder to replace higher numbered keys. The master key is priority 0.
 	-   **data.active_keys[].entry_hash:** string </br> The hash of the entry that was made documenting the key replacement.
 
-
-#### keys
+```python
+{
+   'data':{
+      'stage':'replicated',
+      'pending_key':None,
+      'version':1,
+      'active_keys':[
+         {
+            'activated_height':None,
+            'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+            'key':'idpub2EDrNudZUKBfKfppPXeeTZJVU4nzMCXQf9vicDeApafbzV3iXa',
+            'priority':0,
+            'retired_height':None
+         },
+         {
+            'activated_height':None,
+            'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+            'key':'idpub1mxNZop6vAGmutD87hdYz1hog1NnaSfFj3icTUiq6xUyjiiy89',
+            'priority':1,
+            'retired_height':None
+         },
+         {
+            'activated_height':None,
+            'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+            'key':'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF',
+            'priority':2,
+            'retired_height':None
+         }
+      ],
+      'names':[
+         'NotarySimulation',
+         '2019-03-15T04:17:36.684136'
+      ],
+      'created_height':None,
+      'all_keys_href':'/v1/identities/107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42/keys',
+      'chain_id':'107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42'
+   }
+}
+```
+#### identities.keys
 
 ##### list
 
@@ -79,6 +148,11 @@ are paginated.
 | `identity_chain_id` | required | string </br> The unique identifier of the identity</br> chain whose keys are being requested.                                                                                                                                                                                                                 | **identity_chain_id is required.** </br> `identity_chain_id` parameter was not provided.          | |
 | `limit`           | optional | integer </br> The maximum number of keys you</br>  would like to be returned. The default value</br>  is 15.                                                                                                                                                                                | **limit must be an integer.** </br> An invalid `limit` format was provided.                   |
 | `offset`          | optional | integer </br> The key index (in number of keys from</br> the first key) to start from in the list of all</br> keys. For example, if you have already</br> received the first 15 keys and you would like</br> the next set, you would send an offset of 15. Default value is 0 which</br> represents the first item. | **offset must be an integer.** </br> An invalid `offset` format was provided.                 |
+
+**Sample**
+```python
+factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
+```
 
 **Returns:**
 
@@ -97,6 +171,36 @@ to replace higher numbered keys. The master key is priority 0.
 -   **limit**: integer </br> The number of keys returned in the "data" object.
 -   **count**: integer </br> The total number of keys found (both active and retired) for the identity.
 
+```python
+{
+   'offset':0,
+   'limit':15,
+   'data':[
+      {
+         'activated_height':None,
+         'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+         'key':'idpub1mxNZop6vAGmutD87hdYz1hog1NnaSfFj3icTUiq6xUyjiiy89',
+         'priority':1,
+         'retired_height':None
+      },
+      {
+         'activated_height':None,
+         'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+         'key':'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF',
+         'priority':2,
+         'retired_height':None
+      },
+      {
+         'activated_height':None,
+         'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+         'key':'idpub2EDrNudZUKBfKfppPXeeTZJVU4nzMCXQf9vicDeApafbzV3iXa',
+         'priority':0,
+         'retired_height':None
+      }
+   ],
+   'count':3
+}
+```
 ##### get
 
 Gets information about a specific public key for a given Identity,
@@ -110,6 +214,12 @@ applicable.
 | `identity_chain_id` | required | string </br> The unique identifier for the Identity </br> that the key belongs to.                                | **identity_chain_id is required.** </br> `identity_chain_d` parameter was not provided.                                                                       |
 | `key`             | required | string </br> The public key string to get information,</br> which must be in base58 idpub format. | **key is required.** </br> `key` parameter was not provided. </br> **key is invalid.** </br> An invalid `key` format was provided. |
 
+**Sample**
+```python
+factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42', 
+	'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
+```
+
 **Returns:**
 
 **Response:** OK
@@ -120,6 +230,17 @@ applicable.
 	-   **data.priority:** integer </br> The level of this key within the hierarchy. The master key is priority 0. 
 	-   **data.entry_hash:** string </br> The entry hash of the entry where this key was activated.
 
+```python
+{
+   'data':{
+      'activated_height':None,
+      'entry_hash':'64e5c70cc7b58e3746e2e2e43c6a01b4b504512a3e87d39faf467823c43ccf1e',
+      'key':'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF',
+      'priority':2,
+      'retired_height':None
+   }
+}
+```
 ##### replace
 
 Creates an entry in the Identity Chain for a key replacement, which means the old key will be deactivated (referred to as a “retired” key) and the new key will be activated. 
@@ -141,6 +262,12 @@ This method will automatically generate a new key pair for you and return it. Op
 | `callback_url`      | optional | string </br> The URL you would like the callbacks </br> to be sent to. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                           |
 | `callback_stages`   | optional | array of strings </br> The immutability stages you'd like to be </br> notified about. This list can include any </br> or all of these three stages: `replicated`,</br> `factom`, and `anchored`. </br>  For example: when you would like to </br> trigger the callback from Connect from </br> `replicated` and `factom` then you should </br> send them in the format: [‘replicated’, </br> ‘factom’].  </br> **Note:** For this field to matter, the URL </br> must be provided. If callbacks are activated (URL has </br> been specified) and this field is not </br> sent, it will default to `factom` and </br> `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                             |
 
+**Sample**
+```python
+ factom_client.identities.keys.replace('20ea6362994571c477e8b552fa38a6028760f2089ac1024fffee828279c9baa7',
+					'idpub1uAysiWct2XpmRSk7ydNHNRdtynXn46GwTKyPYM2t5q2chHaBA',
+					'idsec32pHEsJfcx98eBD4WTZDvAfxSwtFeyVy5ZSAad7R2dLgaurKkh')
+```
 **Returns**
 
 **Response**: OK
@@ -151,3 +278,14 @@ This method will automatically generate a new key pair for you and return it. Op
 The public key in base58 Idpub format. 
     - **key_pair.private_key:** string</br> 
     The private key in base58 Idsec format. 
+    
+   ```python
+{
+   'stage':'replicated',
+   'entry_hash':'0fd4bdfead13b471cf47883223a843f454dae1d5bd29fff4cc308eda83d00c1d',
+   'key_pair':{
+      'private_key':'idsec2UQ8d9QK1gUZUJoDSmQtN4UJ1MvSvr64UDFGLuatCPvDaYx1Wj',
+      'public_key':'idpub2Z7mJWCyUDensnQ5UcTxXUrQH9BsGDHjQbmNU5f3Rp3XpW7bYR'
+   }
+}
+   ```
