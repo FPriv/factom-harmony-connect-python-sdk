@@ -1,7 +1,7 @@
 chains
 ------
 
-#### get
+### get
 
 Gets information about a specific chain from Connect.
 
@@ -76,7 +76,7 @@ Displays an empty string ("") when `signature_validation` is set to `false`.
 }
  ```
 
-#### create
+### create
 
 Creates a new chain with or without signature:
 
@@ -124,7 +124,7 @@ factom_client.chains.create(
 }
 ```
 
-#### list
+### list
 
 Gets all of the chains on Factom.
 
@@ -181,7 +181,7 @@ factom_client.chains.list()
 }
 ```
 
-#### search
+### search
 
 Finds all of the chains with `external_ids` that match what you entered. 
 
@@ -238,7 +238,7 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 }
 ```
 
-#### chains.entries
+### chains.entries
 
 ##### get
 
