@@ -5,7 +5,7 @@ chains
 
 Gets information about a specific chain from Connect.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                       | **SDK Error Message & Description**       <img width=400/>                        |
 |------------------------------|----------|------------------------------------------------------------------------------|---------------------------------------------------------------------|
@@ -97,7 +97,7 @@ Creates a new chain with or without signature:
 | `callback_url`            | optional                               | string </br> The URL where you would like to receive the callback from Connect. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `callback_stages`         | optional                               | array of strings </br> The immutability stages you would like to be notified about. This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`. For example, when you would like to trigger the callback from Connect at `replicated` and `factom` stage, you would send them in the format: [‘replicated’, ‘factom’]. </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
-**Sample:**
+**Sample**
 ```python
 factom_client.chains.create(
     "This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as"
@@ -110,7 +110,7 @@ factom_client.chains.create(
 
 **Returns**
 
-**Response**: Accepted
+**Response:** Accepted
 
 -   **chain_id:** string </br> This is the unique identifier created for each chain.  </br>**Note:** Chain ID is a hash based on the external IDs you choose. External IDs must be unique or else the chain creation will fail.
 -   **entry_hash:** string </br> The SHA256 Hash of the first entry of this new chain.
@@ -198,7 +198,7 @@ Finds all of the chains with `external_ids` that match what you entered.
 factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 ```
 
-**Returns:**
+**Returns**
 
 **Response:** OK
 -   **data:** array of objects </br> An array that contains the chains on this page.
@@ -244,7 +244,7 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 
 Gets information about a specific entry on Connect.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                        | **SDK Error Message & Description**    <img width=400/>                                           |
 |------------------------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
@@ -326,7 +326,7 @@ Creates a new entry for the selected chain with or without signature:
     `false`, SDK creates an unsigned entry and therefore it does
     not require these parameters.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                  | **Type**                         | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**     <img width=1500/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
 |---------------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -352,7 +352,7 @@ factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b92
 
 **Returns**
 
-**Response**: Accepted
+**Response:** Accepted
 -   **entry_hash** string </br>
     The SHA256 Hash of the entry you just created. You can use this hash
     to reference this entry in the future.
@@ -369,7 +369,7 @@ factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b92
 
 Gets list of all entries contained on a specified chain.
 
-**Parameters:**
+**Parameters**
 
 | **Name**         | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**  <img width=1300/>                                                     |
 |------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
@@ -433,7 +433,7 @@ ad23eb45a20f0d61827b8dc3c584ced',
 
 Retrieves the first entry that has been saved to this chain.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                   | **SDK Error Message & Description**      <img width=400/>                                    |
 |------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
@@ -510,7 +510,7 @@ hains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
 
 Gets the last entry that has been saved to this chain.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                   | **SDK Error Message & Description**                 <img width=400/>                         |
 |------------------------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
@@ -586,7 +586,7 @@ hains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
 
 Finds all of the entries with `external_ids` that match what you entered. 
 
-**Parameters:**
+**Parameters**
 
 | **Name**             | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**    <img width=1300/>                                                                                                                                                |
 |----------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
