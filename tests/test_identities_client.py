@@ -197,50 +197,48 @@ class TestIdentityClient(TestCase):
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.replace("123", "123", "", "")
-        self.assertTrue("new_public_key is required." in str(cm.exception))
-
-        with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.replace("123", "123", "123", "")
         self.assertTrue("signer_private_key is required." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.replace("123", "idpub1", "idpub2", "idsec")
+            self.identities_client.keys.replace("123", "123", "123", "")
+        self.assertTrue("new_public_key is required." in str(cm.exception))
+
+        with self.assertRaises(Exception) as cm:
+            self.identities_client.keys.replace("123", "idpub1", "idsec", "idpub2")
         self.assertTrue("old_public_key is an invalid public key." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.replace("123",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idpub2", "idsec")
-        self.assertTrue("new_public_key is an invalid public key." in str(cm.exception))
-
-        with self.assertRaises(Exception) as cm:
-            self.identities_client.keys.replace("123",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idsec")
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "idsec", "idpub2")
         self.assertTrue("signer_private_key is invalid." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.replace("123",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
-                                                                 "", "factom")
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
+                                                "idpub2")
+        self.assertTrue("new_public_key is an invalid public key." in str(cm.exception))
+
+        with self.assertRaises(Exception) as cm:
+            self.identities_client.keys.replace("123",
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "", "factom")
         self.assertTrue("callback_stages must be an array." in str(cm.exception))
 
         with self.assertRaises(Exception) as cm:
             self.identities_client.keys.replace("123",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                 "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
-                                                                 "io.com", ["factom"])
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
+                                                "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                "io.com", ["factom"])
         self.assertTrue("callback_url is an invalid url format." in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
             response = self.identities_client.keys.replace("123",
-                                                                            "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
-                                                                            None,
-                                                                            "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6",
-                                                                            "https://appcast.io", ["factom"])
+                                                           "idpub2TWHFrWrJxVEmbeXnMRWeKBdFp7bEByosS1phV1bH7NS99zHF9",
+                                                           "idsec1Xbja4exmHFNgVSsk7VipNi4mwt6BjQFEZFCohs4Y7TzfhHoy6")
             self.assertIsNotNone(response)

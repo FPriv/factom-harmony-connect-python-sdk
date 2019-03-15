@@ -182,7 +182,6 @@ def simulate_notary():
     original_key_pair = original_key_pairs[1]
     replacement_entry_response = factom_client.identities.keys.replace(identity_chain_id,
                                                                        original_key_pair["public_key"],
-                                                                       None,
                                                                        original_key_pair["private_key"])
 
     identity_chain = factom_client.identities.get(identity_chain_id)

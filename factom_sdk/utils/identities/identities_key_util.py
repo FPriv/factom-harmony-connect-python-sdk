@@ -33,14 +33,16 @@ class IdentitiesKeyUtil:
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
                                                   factom_sdk.utils.consts.KEYS_STRING]), data)
 
-    def replace(self, identity_chain_id: str, old_public_key: str, new_public_key: str,
-                signer_private_key: str, callback_url: str = "", callback_stages: list = None):
+    def replace(self, identity_chain_id: str, old_public_key: str, signer_private_key: str,
+                new_public_key: str = None, callback_url: str = "", callback_stages: list = None):
         if callback_stages is None:
             callback_stages = []
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         if not old_public_key:
             raise Exception("old_public_key is required.")
+        if not signer_private_key:
+            raise Exception("signer_private_key is required.")
         key_pair = {}
         if new_public_key is not None:
             if not new_public_key:
@@ -49,15 +51,12 @@ class IdentitiesKeyUtil:
         else:
             key_pair = KeyCommon.create_key_pair()
             new_key = key_pair["public_key"]
-
-        if not signer_private_key:
-            raise Exception("signer_private_key is required.")
         if not KeyCommon.validate_checksum(old_public_key):
             raise Exception("old_public_key is an invalid public key.")
-        if not KeyCommon.validate_checksum(new_key):
-            raise Exception("new_public_key is an invalid public key.")
         if not KeyCommon.validate_checksum(signer_private_key):
             raise Exception("signer_private_key is invalid.")
+        if not KeyCommon.validate_checksum(new_key):
+            raise Exception("new_public_key is an invalid public key.")
         if not isinstance(callback_stages, list):
             raise Exception("callback_stages must be an array.")
         if callback_url and not validators.url(callback_url):
