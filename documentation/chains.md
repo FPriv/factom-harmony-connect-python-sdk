@@ -238,7 +238,7 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 }
 ```
 
-### chains.entries
+### entries
 
 ##### get
 
