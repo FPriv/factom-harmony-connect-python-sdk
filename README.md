@@ -170,12 +170,11 @@ Installation
 ------------
 
 1.  Checkout the repository.
-2.  Run `npm install`.
-3.  Run `npm run build`.
-4.  Navigate to folder `cd ./sample-app`.
-5.  Open `configure.js`.
+2.  Run `pip install -r requirements.txt`.
+3.  Navigate to folder `cd ./sample_app`.
+5.  Open `configure.py`.
 6.  Change configuration settings with your BASE_URL, APP_ID and APP_KEY, which can be found or generated at <https://account.factom.com>.
-7.  Open and run `node server.js`.
+7.  Run `python route.py`.
 8.  Open localhost:8080 on your browser.
 
 Usage
