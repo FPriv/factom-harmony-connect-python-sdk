@@ -6,4 +6,9 @@ class ApiInfoClient:
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
     def get(self):
+        """Gets general information about the Connect API.
+
+        Returns:
+            API Info object.
+        """
         return self.request_handler.get()

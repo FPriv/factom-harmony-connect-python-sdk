@@ -6,6 +6,17 @@ from factom_sdk.utils.utils import Utils
 
 class FactomClient:
     def __init__(self, base_url: str, app_id: str, app_key: str, automatic_signing: bool = True):
+        """The Factom SDK is initialized.
+
+        Args:
+            base_url (str): The URL with the account domain
+            app_id (str): Your app id
+            app_id (str): Your app key
+            automatic_signing (bool)
+
+        Returns:
+            Factom SDK client object.
+        """
         if not isinstance(automatic_signing, bool):
             automatic_signing = True
         self.base_url = base_url

@@ -15,6 +15,15 @@ class ChainsClient:
         self.entries = EntriesClient(base_url, app_id, app_key, automatic_signing)
 
     def get(self, chain_id: str, signature_validation=None):
+        """Gets information about a specific chain from Connect.
+
+        Args:
+            chain_id (str): The unique identifier created for each chain.
+            signature_validation (bool | custom function)
+
+        Returns:
+            Chain object.
+        """
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id]))
@@ -34,6 +43,22 @@ class ChainsClient:
 
     def create(self, content: str, external_ids: list = None, signer_private_key: str = "",
                signer_chain_id: str = "", callback_url: str = "", callback_stages: list = None):
+        """Creates a new chain
+
+        Args:
+            content (str): This is the data that will make up the first entry in your new chain.
+            external_ids (:obj:`list`, optional): Tags that can be used to identify your chain.
+            signer_private_key (:obj:`str`, optional): base58 string in Idsec format. This parameter is optional for
+            creating an unsigned chain.
+            signer_chain_id (:obj:`str`, optional): The chain id of the signer identity. This parameter is optional for
+            creating an unsigned chain.
+            callback_url (:obj:`str`, optional): The URL where you would like to receive the callback from Connect.
+            callback_stages (:obj:`list`, optional): The immutability stages you would like to be notified about.
+            This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`.
+
+        Returns:
+            Chain created info object.
+        """
         if callback_stages is None:
             callback_stages = []
         if external_ids is None:
@@ -89,6 +114,18 @@ class ChainsClient:
         return self.request_handler.post(factom_sdk.utils.consts.CHAINS_URL, data)
 
     def list(self, limit: int = -1, offset: int = -1, stages: list = None):
+        """Gets all of the chains on Factom.
+
+        Args:
+            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
+            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
+            from when a list is returned from Connect.
+            stages (:obj:`list`, optional): The immutability stages you want to restrict results to.
+            You can choose any from `replicated`, `factom`, and `anchored`.
+
+        Returns:
+            List chains object.
+        """
         if stages is None:
             stages = []
         data = {}
@@ -107,6 +144,17 @@ class ChainsClient:
         return self.request_handler.get(factom_sdk.utils.consts.CHAINS_URL, data)
 
     def search(self, external_ids: list, limit: int = -1, offset: int = -1):
+        """Finds all of the chains with `external_ids` that match what you entered.
+
+        Args:
+            external_ids (list): A list of external IDs associated with the chains user would like to search by.
+            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
+            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
+            from when a list is returned from Connect.
+
+        Returns:
+            List chains object.
+        """
         if not external_ids:
             raise Exception("at least 1 external_id is required.")
         if not isinstance(external_ids, list):

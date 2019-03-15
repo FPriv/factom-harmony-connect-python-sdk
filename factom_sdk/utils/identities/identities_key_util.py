@@ -9,6 +9,16 @@ class IdentitiesKeyUtil:
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
     def get(self, identity_chain_id: str, key: str):
+        """Gets information about a specific public key for a given Identity, including the heights at which the key
+        was activated and retired if applicable.
+
+        Args:
+            identity_chain_id (str): The unique identifier for the Identity that the key belongs to.
+            key (str): The public key string to get information, which must be in base58 idpub format.
+
+        Returns:
+            Identity key object.
+        """
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         if not key:
@@ -19,6 +29,17 @@ class IdentitiesKeyUtil:
                                                   factom_sdk.utils.consts.KEYS_STRING, key]))
 
     def list(self, identity_chain_id: str, limit: int = -1, offset: int = -1):
+        """Returns all of the keys that were ever active for this Identity. Results are paginated.
+
+        Args:
+            identity_chain_id (str): The unique identifier of the identity chain whose keys are being requested.
+            limit (:obj:`int`, optional): The maximum number of keys you would like to be returned.
+            offset (:obj:`int`, optional): The key index (in number of keys from the first key) to start from in the
+            list of all keys.
+
+        Returns:
+            List identity key object.
+        """
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         data = {}
@@ -35,6 +56,22 @@ class IdentitiesKeyUtil:
 
     def replace(self, identity_chain_id: str, old_public_key: str, signer_private_key: str,
                 new_public_key: str = None, callback_url: str = "", callback_stages: list = None):
+        """Creates an entry in the Identity Chain for a key replacement.
+
+        Args:
+            identity_chain_id (str): The unique identifier of the identity chain being requested.
+            old_public_key (str): base58 string in Idpub format. The public key to be retired and replaced.
+            signer_private_key (str): base58 string in Idsec format. The private key to use to create the signature,
+            which must be the same or higher priority than the public key to be replaced.
+            new_public_key (:obj:`str`, optional): base58 string in Idpub format. The new public key to be activated
+            and take its place.
+            callback_url (:obj:`str`, optional): The URL you would like the callbacks to be sent to.
+            callback_stages (:obj:`list`, optional): The immutability stages you'd like to be notified about. This list
+            can include any or all of these three stages: `replicated`, `factom`, and `anchored`
+
+        Returns:
+            Replacement result object.
+        """
         if callback_stages is None:
             callback_stages = []
         if not identity_chain_id:

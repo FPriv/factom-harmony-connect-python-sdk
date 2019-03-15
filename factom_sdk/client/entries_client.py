@@ -13,6 +13,16 @@ class EntriesClient:
         self.automatic_signing = automatic_signing
 
     def get(self, chain_id: str, entry_hash: str, signature_validation=None):
+        """Gets information about a specific entry on Connect.
+
+        Args:
+            chain_id (str): The chain identifier.
+            entry_hash (str): The SHA256 hash of the entry.
+            signature_validation (bool | custom function)
+
+        Returns:
+            Entry object.
+        """
         if not chain_id:
             raise Exception("chain_id is required.")
         if not entry_hash:
@@ -36,6 +46,23 @@ class EntriesClient:
     def create(self, chain_id: str, content: str, external_ids: list = None,
                signer_private_key: str = "", signer_chain_id: str = "", callback_url: str = "",
                callback_stages: list = None):
+        """Creates a new entry for the selected chain.
+
+        Args:
+            chain_id (str): The chain identifier.
+            content (str): This is the data that will be stored directly on the blockchain.
+            external_ids (:obj:`list`, optional): Tags that can be used to identify your entry.
+            signer_private_key (:obj:`str`, optional): base58 string in Idsec format. This parameter is optional for
+            creating an unsigned entry.
+            signer_chain_id (:obj:`str`, optional): The chain id of the signer identity. This parameter is optional for
+            creating an unsigned entry.
+            callback_url (:obj:`str`, optional): The URL where you would like to receive the callback from Connect.
+            callback_stages (:obj:`list`, optional): The immutability stages you would like to be notified about.
+            This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`.
+
+        Returns:
+            Entry created object.
+        """
         if callback_stages is None:
             callback_stages = []
         if external_ids is None:
@@ -94,6 +121,19 @@ class EntriesClient:
                                                    factom_sdk.utils.consts.ENTRIES_URL]), data)
 
     def list(self, chain_id: str, limit: int = -1, offset: int = -1, stages: list = None):
+        """Gets list of all entries contained on a specified chain.
+
+        Args:
+            chain_id (str): The chain identifier.
+            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
+            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
+            from when a list is returned from Connect.
+            stages (:obj:`list`, optional): The immutability stages you want to restrict results to.
+            You can choose any from `replicated`, `factom`, and `anchored`.
+
+        Returns:
+            List entry object.
+        """
         if stages is None:
             stages = []
         if not chain_id:
@@ -115,6 +155,15 @@ class EntriesClient:
                                                   factom_sdk.utils.consts.ENTRIES_URL]), data)
 
     def get_first(self, chain_id: str, signature_validation=None):
+        """Retrieves the first entry that has been saved to this chain.
+
+        Args:
+            chain_id (str): The chain identifier.
+            signature_validation (bool | custom function)
+
+        Returns:
+            Entry object.
+        """
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
@@ -135,6 +184,15 @@ class EntriesClient:
         return response
 
     def get_last(self, chain_id: str, signature_validation=None):
+        """Gets the last entry that has been saved to this chain.
+
+        Args:
+            chain_id (str): The chain identifier.
+            signature_validation (bool | custom function)
+
+        Returns:
+            Entry object.
+        """
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
@@ -155,6 +213,18 @@ class EntriesClient:
         return response
 
     def search(self, chain_id: str, external_ids: list, limit: int = -1, offset: int = -1):
+        """Finds all of the entries with `external_ids` that match what you entered.
+
+        Args:
+            chain_id (str): The chain identifier.
+            external_ids (list): A list of external IDs.
+            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
+            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
+            from when a list is returned from Connect.
+
+        Returns:
+            List entry object.
+        """
         if not chain_id:
             raise Exception("chain_id is required.")
         if not external_ids:

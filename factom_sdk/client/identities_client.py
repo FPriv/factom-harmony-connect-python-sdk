@@ -12,6 +12,19 @@ class IdentitiesClient:
         self.keys = IdentitiesKeyUtil(base_url, app_id, app_key)
 
     def create(self, names: list, keys: list = None, callback_url: str = "", callback_stages: list = None):
+        """Creates a new Identity chain.
+
+        Args:
+            names (list): The names array for your identity must be unique.
+            keys (:obj:`list`, optional): An array of public key strings in base58 idpub format, ordered from the
+            highest to the lowest priority.
+            callback_url (:obj:`str`, optional): The URL where you would like to receive the callback from Connect.
+            callback_stages (:obj:`list`, optional): The immutability stages you would like to be notified about.
+            This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`.
+
+        Returns:
+            Identity chain created object.
+        """
         if callback_stages is None:
             callback_stages = []
         if not names:
@@ -70,6 +83,14 @@ class IdentitiesClient:
         return response
 
     def get(self, identity_chain_id: str):
+        """Gets a summary of the identity chain's current state.
+
+        Args:
+            identity_chain_id (str): The unique identifier for the identity chain being requested.
+
+        Returns:
+            Identity chain object.
+        """
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id]))
