@@ -186,9 +186,7 @@ clicks the "Run Notary Simulation" button to run the app.
 
 ![architecture](documentation/pictures/sample-app-2.jpg?raw=true)
 
-**Simulating screen:** Then the system will take some time to generate all
-responses by calling the Harmony Connect API through the JavaScript
-Connect SDK in Node JS backend.
+**Simulating screen:** Then the system will take some time to generate all responses by calling the Harmony Connect API through the Python Connect SDK in Python backend.
 
 ![architecture](documentation/pictures/sample-app-3.jpg?raw=true)
 
