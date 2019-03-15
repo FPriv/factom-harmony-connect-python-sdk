@@ -166,7 +166,7 @@ factom_client.chains.list()
             '0x01',
             '7cdd5333033b4bb6a6c73b4b239257516793b3b83ea6c698d9b9db9764717704',
             'idpub2174LhCanGnM6dHiin6hkzVD7x2M18ChiQShJAohMc9yzP79R9',
-       'c12700993e2764ed3786f910a6d7038326a628966b5ea861b4522a76257c362b8bbdfd1a73f239a7aaa20737b579d60f1905879fff1e7b7f2edcc5e73c6bd601',
+	    'c12700993e2764ed3786f910a6d7038326a628966b5ea861b4522a76257c362b8bbdfd1a73f239a7aaa20737b579d60f1905879fff1e7b7f2edcc5e73c6bd601',
             '2019-03-15T03:51:57.383862',
             'NotarySimulation',
             'CustomerChain',
