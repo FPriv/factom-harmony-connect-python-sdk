@@ -64,8 +64,7 @@ Displays an empty string ("") when `signature_validation` is set to `false`.
          'entries':{
             'href':'/v1/chains/4b9532c79d53ab22b85951b4a5853f81c2682132b3c810a95128c30401cd1e58/entries'
          },
-         'eblock
-':None,
+         'eblock':None,
          'dblock':None,
          'created_at':None,
          'content':"This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as part of the Factom Harmony SDKs. Learn more here: https://docs.harmony.factom.com/docs/sdks-clients",
