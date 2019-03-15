@@ -17,7 +17,7 @@ Gets information about a specific chain from Connect.
 factom_client.chains.get('4b9532c79d53ab22b85951b4a5853f81c2682132b3c810a95128c30401cd1e58')
 ```
 
-**Returns:**
+**Returns**
 
 **Response:** OK
 -   **data:** object
@@ -257,7 +257,7 @@ Gets information about a specific entry on Connect.
 factom_client.chains.entries.get('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2', 
 	'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc')
 ```
-**Returns:**
+**Returns**
 
 **Response:** OK
 -   **data:** object
@@ -350,7 +350,7 @@ factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b92
                                                             )
 ```
 
-**Returns:**
+**Returns**
 
 **Response**: Accepted
 -   **entry_hash** string </br>
@@ -382,7 +382,7 @@ Gets list of all entries contained on a specified chain.
 ```python
 factom_client.chains.entries.list('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
 ```
-**Returns:**
+**Returns**
 
 **Response:** OK
 
@@ -444,7 +444,7 @@ Retrieves the first entry that has been saved to this chain.
 ```python
 factom_client.chains.entries.get_first('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
 ```
-##### Returns:
+**Returns**
 
 **Response:** OK
 
@@ -521,7 +521,7 @@ Gets the last entry that has been saved to this chain.
 ```python
 factom_client.chains.entries.get_last('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
 ```
-##### Returns:
+**Returns**
 
 **Response:** OK
 
@@ -601,7 +601,7 @@ factom_client.chains.entries.search('c15f9e51781a8a4c520c15fd135e761b922b709217e
                                                "DocumentEntry",
                                                "doc987"])
 ```
-**Returns:**
+**Returns**
 
 **Response:** OK
 
