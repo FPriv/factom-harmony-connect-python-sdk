@@ -225,7 +225,7 @@ applicable.
 **Sample**
 ```python
 factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42', 
-	'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
+				  'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
 ```
 
 **Returns**
@@ -273,8 +273,8 @@ This method will automatically generate a new key pair for you and return it. Op
 **Sample**
 ```python
  factom_client.identities.keys.replace('20ea6362994571c477e8b552fa38a6028760f2089ac1024fffee828279c9baa7',
-					'idpub1uAysiWct2XpmRSk7ydNHNRdtynXn46GwTKyPYM2t5q2chHaBA',
-					'idsec32pHEsJfcx98eBD4WTZDvAfxSwtFeyVy5ZSAad7R2dLgaurKkh')
+				       'idpub1uAysiWct2XpmRSk7ydNHNRdtynXn46GwTKyPYM2t5q2chHaBA',
+				       'idsec32pHEsJfcx98eBD4WTZDvAfxSwtFeyVy5ZSAad7R2dLgaurKkh')
 ```
 **Returns**
 
@@ -287,7 +287,7 @@ The public key in base58 Idpub format.
     - **key_pair.private_key:** string</br> 
     The private key in base58 Idsec format. 
     
-   ```python
+```python
 {
    'stage':'replicated',
    'entry_hash':'0fd4bdfead13b471cf47883223a843f454dae1d5bd29fff4cc308eda83d00c1d',
@@ -296,4 +296,4 @@ The public key in base58 Idpub format.
       'public_key':'idpub2Z7mJWCyUDensnQ5UcTxXUrQH9BsGDHjQbmNU5f3Rp3XpW7bYR'
    }
 }
-   ```
+```
