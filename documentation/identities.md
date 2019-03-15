@@ -28,8 +28,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 
 **Sample**
 ```python
- factom_client.identities.create(
-    ["NotarySimulation", "Test Identity"])
+ factom_client.identities.create(["NotarySimulation", "Test Identity"])
 ```
 
 **Returns**
