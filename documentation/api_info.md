@@ -1,7 +1,7 @@
 api_info
 -------
 
-#### get
+### get
 
 Gets general information about the Connect API.
 
@@ -11,10 +11,10 @@ factom_client.api_info.get()
 ```
 **Returns**</br>
 
-**Response**: OK
+**Response:** OK
 -   **version:** string </br> Current version of the Connect API.
 -   **links**: object </br> Links to internal paths of the application.
-	-   **links.chains**: string </br> The link to chain API.
+	-   **links.chains:** string </br> The link to chain API.
 ```python
 {  
    'version':'1.0.17',
