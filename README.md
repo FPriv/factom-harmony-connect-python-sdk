@@ -174,7 +174,7 @@ Installation
 3.  Run `npm run build`.
 4.  Navigate to folder `cd ./sample-app`.
 5.  Open `configure.js`.
-6.  Change the following lines with your baseUrl, appId and appKey, which can be found or generated at <https://account.factom.com>.
+6.  Change configuration settings with your BASE_URL, APP_ID and APP_KEY, which can be found or generated at <https://account.factom.com>.
 7.  Open and run `node server.js`.
 8.  Open localhost:8080 on your browser.
 
