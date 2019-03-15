@@ -97,7 +97,7 @@ When the Factom SDK is initialized, there will be an optional
 The primary benefit of `automatic_signing` param is to encourage you to
 create chains and entries with unique signatures. Later on, you can
 validate that the chains or entries were created by you or that a
-certain user/device/ organization/etc.actually signed and published a
+certain user/device/ organization/etc. actually signed and published a
 certain message that you see in your chain.
 
 Now that you have initialized the SDK, you can use the SDK's Methods,
