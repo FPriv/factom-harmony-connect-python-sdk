@@ -253,8 +253,8 @@ Gets information about a specific entry on Connect.
 
 **Sample**
 ```python
-factom_client.chains.entries.get('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2', 
-	'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc')
+factom_client.chains.entries.get('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+				 'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc')
 ```
 **Returns**
 
@@ -340,13 +340,10 @@ Creates a new entry for the selected chain with or without signature:
 **Sample**
 ```python
 factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
-                                                            signer_private_key='idsec1xbKD6tkgLPMBuNQbTnHPr6mFoeF7iQV4ybTN63sKdFg7h1uWH',
-                                                            signer_chain_id='8c33e7432cdfd3933beb6de5ccbc3706ac21458ed53352e02658daf2dce8f27c',
-                                                            external_ids=["NotarySimulation",
-                                                                          "DocumentEntry",
-                                                                          "doc987"],
-                                                            content='Abc123'
-                                                            )
+                                    signer_private_key='idsec1xbKD6tkgLPMBuNQbTnHPr6mFoeF7iQV4ybTN63sKdFg7h1uWH',
+                                    signer_chain_id='8c33e7432cdfd3933beb6de5ccbc3706ac21458ed53352e02658daf2dce8f27c',
+                                    external_ids=["NotarySimulation","DocumentEntry","doc987"],
+                                    content='Abc123')
 ```
 
 **Returns**
@@ -414,8 +411,7 @@ ad23eb45a20f0d61827b8dc3c584ced',
       },
       {
          'stage':'replicated',
-         'href':'/v
-1/chains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2/entries/cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc',
+         'href':'/v1/chains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2/entries/cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc',
          'entry_hash':'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc',
          'created_at':None,
          'chain':{
@@ -495,8 +491,7 @@ In case `signature_validation` is set to `true` then one of the following values
 created_at':None,
          'content':"This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as part of the Factom Harmony SDKs. Learn more here: https://docs.harmony.factom.com/docs/sdks-clients",
          'chain':{
-            'href':'/v1/c
-hains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+            'href':'/v1/chains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
             'chain_id':'c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2'
          }
       }
@@ -568,12 +563,10 @@ In case `signature_validation` is set to `true` then one of the following values
          'entry_hash':'bcf9ce3beba20007408319a3965a6dde2ad23eb45a20f0d61827b8dc3c584ced',
          'eblock':None,
          'dblock':None,
-         '
-created_at':None,
+         'created_at':None,
          'content':"This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as part of the Factom Harmony SDKs. Learn more here: https://docs.harmony.factom.com/docs/sdks-clients",
          'chain':{
-            'href':'/v1/c
-hains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+            'href':'/v1/chains/c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
             'chain_id':'c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2'
          }
       }
@@ -596,9 +589,8 @@ Finds all of the entries with `external_ids` that match what you entered.
 
 **Sample**
 ```python
-factom_client.chains.entries.search('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2', ["NotarySimulation",
-                                               "DocumentEntry",
-                                               "doc987"])
+factom_client.chains.entries.search('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+				    ["NotarySimulation","DocumentEntry","doc987"])
 ```
 **Returns**
 
