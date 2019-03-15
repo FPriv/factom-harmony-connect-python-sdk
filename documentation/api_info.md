@@ -5,7 +5,7 @@ api_info
 
 Gets general information about the Connect API.
 
-**Sample:**
+**Sample**
 ```python
 factom_client.api_info.get()
 ```
