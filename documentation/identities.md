@@ -13,7 +13,7 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 
 
 
-#### create
+### create
 
 Creates a new Identity chain. You will need to include a unique names array for your Identity. This method will automatically generate 3 Public/Private keys pairs for you and return them, be sure to save them for future use. Optionally, you can pass in an array of public keys you have generated on your own, at which point no keys will be returned.
 
@@ -32,7 +32,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
     ["NotarySimulation", "Test Identity"])
 ```
 
-**Returns:**
+**Returns**
 
 **Response**: Accepted
 -   **chain_id**: string </br> The unique identifier of the chain that has been created for this identity.
@@ -64,7 +64,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 }
 ```
 
-#### get
+### get
 
 Gets a summary of the identity chain's current state.
 
@@ -79,7 +79,7 @@ Gets a summary of the identity chain's current state.
 factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
 ```
 
-**Returns:**</br> 
+**Returns**</br> 
 **Response**: OK
 - **data:** object
 - **data.version:** string </br> The identity chain's schema version. This details the format of this digital identity. For more information about the Factom identity schemas, view the documentation [here](URL not specified).
@@ -142,7 +142,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
    }
 }
 ```
-#### identities.keys
+### keys
 
 ##### list
 
@@ -162,7 +162,7 @@ are paginated.
 factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
 ```
 
-**Returns:**
+**Returns**
 
 **Response**: OK
 -   **data:** array of objects </br> An array of public identity keys in the order that they were added to the identity.
@@ -228,7 +228,7 @@ factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d13
 	'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
 ```
 
-**Returns:**
+**Returns**
 
 **Response:** OK
 -   **data:** object
