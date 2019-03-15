@@ -17,7 +17,7 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 
 Creates a new Identity chain. You will need to include a unique names array for your Identity. This method will automatically generate 3 Public/Private keys pairs for you and return them, be sure to save them for future use. Optionally, you can pass in an array of public keys you have generated on your own, at which point no keys will be returned.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | **SDK Error Message & Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 |-------------------------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -34,7 +34,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 
 **Returns**
 
-**Response**: Accepted
+**Response:** Accepted
 -   **chain_id**: string </br> The unique identifier of the chain that has been created for this identity.
 -   **entry_hash:** string </br> The unique identifier of the first entry that has been created in this identity chain.
 -   **stage:** string </br> The current immutability stage of the identity chain and its first entry.
@@ -68,7 +68,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 
 Gets a summary of the identity chain's current state.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                 | **Type** | **Description**                                                       | **SDK Error Message & Description**                                                   |
 |--------------------------|----------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
@@ -79,8 +79,9 @@ Gets a summary of the identity chain's current state.
 factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
 ```
 
-**Returns**</br> 
-**Response**: OK
+**Returns**
+
+**Response:** OK
 - **data:** object
 - **data.version:** string </br> The identity chain's schema version. This details the format of this digital identity. For more information about the Factom identity schemas, view the documentation [here](URL not specified).
 - **data.stage:** string </br>  The immutability stage that this chain has reached. The identity can be considered active once it (and thus its keys) reaches the `factom` stage.
@@ -149,7 +150,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 Returns all of the keys that were ever active for this Identity. Results
 are paginated. 
 
-**Parameters:**
+**Parameters**
 
 | **Name**                 | **Type** | **Description**                                                                                                                                                                                                                                                                                               | **SDK Error Message & Description**                                                           |
 |--------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
@@ -164,7 +165,7 @@ factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d1
 
 **Returns**
 
-**Response**: OK
+**Response:** OK
 -   **data:** array of objects </br> An array of public identity keys in the order that they were added to the identity.
 	-   **data[].key:** string </br> The public key string in base58 idpub format.
 	-   **data[].activated_height:** integer </br> The height at which this key became active for this identity.
@@ -215,7 +216,7 @@ Gets information about a specific public key for a given Identity,
 including the heights at which the key was activated and retired if
 applicable.
 
-**Parameters:**
+**Parameters**
 
 | **Name**                 | **Type** | **Description**                                                                                   | **SDK Error Message & Description**                                                                                                                        |
 |--------------------------|----------|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -259,7 +260,7 @@ This method will automatically generate a new key pair for you and return it. Op
 
 
 
-**Parameters:**
+**Parameters**
 
 | **Name**                  | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | **SDK Error Message & Description**                                                                                                                                                                                                     |
 |---------------------------|----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -278,7 +279,7 @@ This method will automatically generate a new key pair for you and return it. Op
 ```
 **Returns**
 
-**Response**: OK
+**Response:** OK
 -   **entry_hash:** string </br> The entry hash that will point to the key replacement entry on the blockchain.
 -   **stage:** string </br> The current immutability stage of the new entry.
 -   **key_pair:** object </br> The key pair generated automatically by the Factom SDK. This value will not be returned if the new public key is provided when calling this method. 
