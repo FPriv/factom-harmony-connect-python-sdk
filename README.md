@@ -170,28 +170,28 @@ entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f
  - <a name="generatekeypair"></a>[generate_key_pair]
 
 <a name="identities"></a>[identities](documentation/identities.md)
-  - <a name="identitiescreate"></a>[create]
-  - <a name="identitiesget"></a>[get]
-  - <a name="keys"></a>[keys]
-     - <a name="keyslist"></a>[list]
-     - <a name="keysget"></a>[get]
-     - <a name="keyreplace"></a>[replace]
+  - <a name="identitiescreate"></a>[create](documentation/identities.md#create)
+  - <a name="identitiesget"></a>[get](documentation/identities.md#get)
+  - <a name="keys"></a>[keys](documentation/identities.md#keys)
+     - <a name="keyslist"></a>[list](documentation/identities.md#keys_list)
+     - <a name="keysget"></a>[get](documentation/identities.md#keys_get)
+     - <a name="keyreplace"></a>[replace](documentation/identities.md#keys_replace)
  
 <a name="apiinfo"></a>[api_info](documentation/api_info.md)
-  - <a name="infoget"></a>[get]
+  - <a name="infoget"></a>[get](documentation/api_info.md#get)
 
 <a name="chains"></a>[chains](documentation/chains.md)
-  - <a name="chainsget"></a>[get]
-  - <a name="chainscreate"></a>[create]
-  - <a name="chainslist"></a>[list]
-  - <a name="chainssearch"></a>[search]
-  - <a name="chainsentries"></a>[entries]
-     - <a name="entriesget"></a>[get]
-     - <a name="entriescreate"></a>[create]
-     - <a name="entrieslist"></a>[list]
-     - <a name="entriesfirst"></a>[get_first]
-     - <a name="entrieslast"></a>[get_last]
-     - <a name="entriessearch"></a>[search]
+  - <a name="chainsget"></a>[get](documentation/chains.md#get)
+  - <a name="chainscreate"></a>[create](documentation/chains.md#create)
+  - <a name="chainslist"></a>[list](documentation/chains.md#list)
+  - <a name="chainssearch"></a>[search](documentation/chains.md#search)
+  - <a name="chainsentries"></a>[entries](documentation/chains.md#entries)
+     - <a name="entriesget"></a>[get](documentation/chains.md#entries_get)
+     - <a name="entriescreate"></a>[create](documentation/chains.md#entries_create)
+     - <a name="entrieslist"></a>[list](documentation/chains.md#entries_list)
+     - <a name="entriesfirst"></a>[get_first](documentation/chains.md#entries_first)
+     - <a name="entrieslast"></a>[get_last](documentation/chains.md#entries_last)
+     - <a name="entriessearch"></a>[search](documentation/chains.md#entries_search)
 
 # <a name="sampleapplication"></a> SAMPLE APPLICATION
 
