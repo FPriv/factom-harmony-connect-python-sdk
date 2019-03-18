@@ -100,7 +100,7 @@ In order to use this Python SDK, you will need the following tool:
 - Install dependencies 
   - `pip install -r requirements.txt`
 
-To use the SDK, you have to import it: `from factom_sdk import FactomClient`
+To use the SDK, you have to import: `from factom_sdk import FactomClient`
 
 
 <a name="usage"></a>Usage
