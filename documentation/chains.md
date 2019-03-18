@@ -11,8 +11,8 @@ chains
 	- [get](#entries_get)
 	- [create](#entries_create)
 	- [list](#entries_list)
-	- [getFirst](#entries_first)
-	- [getLast](#entries_last)
+	- [get_first](#entries_first)
+	- [get_last](#entries_last)
 	- [search](#entries_search)
 
 ### <a name="get"></a>get
