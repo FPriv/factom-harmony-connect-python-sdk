@@ -1,7 +1,49 @@
-INTRODUCTION
+Table of Contents
+===============
+[INTRODUCTION](#Introduction) 
+- [About This Document](#about)
+- [SDK Architecture Overview](#architecture) 
+
+[GETTING STARTED](#gettingstarted)
+ - [System Requirements](#requirements)
+ - [Installation](#installation)
+ - [Usage](#usage)
+ - [License](#license)
+ 
+ [METHODS](#methods) 
+ - [utils](#utils)
+   - [generate_key_pair](#generatekeypair)
+ - [identities](#identities)
+   - [create](#identitiescreate)
+   - [get](#identitiesget)
+   - [keys](#keys)
+     - [list](#keyslist)
+     - [get](#keysget)
+     - [replace](#keyreplace)
+ - [api_info](#apiInfo)
+   - [get](#infoget)
+ - [chains](#chains) 
+   - [get](#chainsget)
+   - [create](#chainscreate)
+   - [list](#chainslist)
+   - [search](#chainssearch)
+   - [entries](#chainsentries)
+     - [get](#entriesget)
+     - [create](#entriescreate)
+     - [list](#entrieslist)
+     - [get_first](#entriesfirst)
+     - [get_last](#entrieslast)
+     - [search](#entriessearch)
+     
+[SAMPLE APPLICATION](#sampleapplication)
+- [Overview](#overview) 
+- [Installation](#appinstallation)
+- [Usage](#appusage)
+
+<a name="Introduction"></a>INTRODUCTION
 ============
 
-About This Document
+<a name="about"></a>About This Document
 -------------------
 
 This documentation is written for developers with a basic level of
@@ -16,7 +58,7 @@ You can learn more about Factom Harmony Connect
 This SDK is open source and can be accessed on Github
 [here](https://github.com/FactomProject/factom-harmony-connect-python-sdk).
 
-SDK Architecture Overview
+<a name="architecture"></a>SDK Architecture Overview
 -------------------------
 
 ![architecture](documentation/pictures/architecture.jpg?raw=true)
@@ -31,13 +73,13 @@ provides access to other layers.
 **Request/Response Handler:** Handles all requests/responses (HTTP /
 HTTPS) from Connect API before passing them to other components.
 
-GETTING STARTED
+<a name="gettingstarted"></a>GETTING STARTED
 ===============
 
 This section contains a summary of the steps required to get started
 with Python Connect SDK installation.
 
-System Requirements
+<a name="requirements"></a>System Requirements
 -------------------
 
 In order to use this Python SDK, you will need the following tool:
@@ -45,7 +87,7 @@ In order to use this Python SDK, you will need the following tool:
 -  Python version >= 3.5
 
 
-Installation 
+<a name="installation"></a>Installation 
 -------------
 **Published package**
 
@@ -61,7 +103,7 @@ Installation
 To use the SDK, you have to import it: `from factom_sdk import FactomClient`
 
 
-Usage
+<a name="usage"></a>Usage
 -----
 
 
@@ -117,25 +159,44 @@ entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f
 ```
 
 
-License
+<a name="license"></a>License
 -------
 
 *This section will be provided by Factom.*
 
-# METHODS 
+# <a name="methods"></a> METHODS 
 
-[utils](documentation/utils.md)
+<a name="utils"></a>[utils](documentation/utils.md)
+ - <a name="generatekeypair"></a>[generate_key_pair]
 
-[identities](documentation/identities.md)
+<a name="identities"></a>[identities](documentation/identities.md)
+  - <a name="identitiescreate"></a>[create]
+  - <a name="identitiesget"></a>[get]
+  - <a name="keys"></a>[keys]
+     - <a name="keyslist"></a>[list]
+     - <a name="keysget"></a>[get]
+     - <a name="keyreplace"></a>[replace]
+ 
+<a name="api_info"></a>[api_info](documentation/api_info.md)
+  - <a name="infoget"></a>[get]
 
-[api_info](documentation/api_info.md)
+<a name="chains"></a>[chains](documentation/chains.md)
+  - <a name="chainsget"></a>[get]
+  - <a name="chainscreate"></a>[create]
+  - <a name="chainslist"></a>[list]
+  - <a name="chainssearch"></a>[search]
+  - <a name="chainsentries"></a>[entries]
+     - <a name="entriesget"></a>[get]
+     - <a name="entriescreate"></a>[create]
+     - <a name="entrieslist"></a>[list]
+     - <a name="entriesfirst"></a>[get_first]
+     - <a name="entrieslast"></a>[get_last]
+     - <a name="entriessearch"></a>[search]
 
-[chains](documentation/chains.md)
-
-# SAMPLE APPLICATION
+# <a name="sampleapplication"></a> SAMPLE APPLICATION
 
 
-Overview
+<a name="overview"></a> Overview
 --------
 ![architecture](documentation/pictures/sample-app-1.jpg?raw=true)
 
@@ -166,7 +227,7 @@ The concept of the Sample App is a simple Notary service with a business flow as
 -   **A developer who had access to one of the keys leaves employment with the Notary company, so they carry out proactive security:** The app replaces the old key pair that the employee had access to. 
 
 
-Installation
+<a name="appinstallation"></a>Installation
 ------------
 
 1.  Checkout the repository.
@@ -177,7 +238,7 @@ Installation
 7.  Run `python route.py`.
 8.  Open localhost:8080 on your browser.
 
-Usage
+<a name="appusage"></a>Usage
 -----
 
 **Starting screen:** The app comes with a starting page where the user
