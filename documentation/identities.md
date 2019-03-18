@@ -14,14 +14,14 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 
 ### Table of Contents
 
-- [create](#create)
-- [get](#get)
-- [keys](#keys)
+- [create](#identities_create)
+- [get](#identities_get)
+- [keys](#identities_keys)
 	- [list](#keys_list)
 	- [get](#keys_get)
 	- [replace](#keys_replace)
 
-### <a name="create"></a>create
+### <a name="identities_create"></a>create
 
 Creates a new Identity chain. You will need to include a unique names array for your Identity. This method will automatically generate 3 Public/Private keys pairs for you and return them, be sure to save them for future use. Optionally, you can pass in an array of public keys you have generated on your own, at which point no keys will be returned.
 
@@ -71,7 +71,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 }
 ```
 
-### <a name="get"></a>get
+### <a name="identities_get"></a>get
 
 Gets a summary of the identity chain's current state.
 
@@ -150,7 +150,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
    }
 }
 ```
-### <a name="keys"></a>keys
+### <a name="identities_keys"></a>keys
 
 ##### <a name="keys_list"></a>list
 
