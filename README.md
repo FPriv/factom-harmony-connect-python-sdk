@@ -204,7 +204,7 @@ This Sample App is created to illustrate some of the core methods of this SDK an
 business scenario of how it can be used. 
 
 Since the application is built as a standalone application with a backend SDK process, 
-the reader should review the commented code [here](https://github.com/FactomProject/factom-harmony-connect-js-sdk/blob/master/sample-app/simulateNotary.js). 
+the reader should review the commented code [here](https://github.com/FactomProject/factom-harmony-connect-python-sdk/blob/master/sample_app/simulate_notary.py). 
 
 The concept of the Sample App is a simple Notary service with a business flow as follows: 
 
