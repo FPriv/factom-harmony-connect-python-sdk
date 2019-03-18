@@ -1,7 +1,7 @@
 utils
 -----
 
-### generate_key_pair
+### generate_key_pair <a name="generate_key_pair"></a>
 
 Creates a Public/Private Key Pair which can be applied to Identities
 during creation or when replacing a key. An Identity's keys are used to
