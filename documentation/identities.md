@@ -1,5 +1,15 @@
 identities
 -----
+
+### Table of Contents
+
+- [create](#create)
+- [get](#get)
+- [keys](#keys)
+	- [list](#keys_list)
+	- [get](#keys_get)
+	- [replace](#keys_replace)
+
 An **Identity** contains 3 components: a names array, a set of currently active keys, and an auditable history of what other keys were active at a given point in time.
 
 Each **Identity** uses their currently active keys to sign messages, proving that the messages came from the Identity. These messages are typically chains and entries that are written to the blockchain, but can be used off-chain as well for scenarios such as authentication.
@@ -13,7 +23,7 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 
 
 
-### create
+### <a name="create"></a>create
 
 Creates a new Identity chain. You will need to include a unique names array for your Identity. This method will automatically generate 3 Public/Private keys pairs for you and return them, be sure to save them for future use. Optionally, you can pass in an array of public keys you have generated on your own, at which point no keys will be returned.
 
@@ -63,7 +73,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 }
 ```
 
-### get
+### <a name="get"></a>get
 
 Gets a summary of the identity chain's current state.
 
@@ -142,9 +152,9 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
    }
 }
 ```
-### keys
+### <a name="keys"></a>keys
 
-##### list
+##### <a name="keys_list"></a>list
 
 Returns all of the keys that were ever active for this Identity. Results
 are paginated. 
@@ -209,7 +219,7 @@ to replace higher numbered keys. The master key is priority 0.
    'count':3
 }
 ```
-##### get
+##### <a name="keys_get"></a>get
 
 Gets information about a specific public key for a given Identity,
 including the heights at which the key was activated and retired if
@@ -249,7 +259,7 @@ factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d13
    }
 }
 ```
-##### replace
+##### <a name="keys_replace"></a>replace
 
 Creates an entry in the Identity Chain for a key replacement, which means the old key will be deactivated (referred to as a “retired” key) and the new key will be activated. 
 
