@@ -20,7 +20,7 @@ Table of Contents
      - [list](#keyslist)
      - [get](#keysget)
      - [replace](#keyreplace)
- - [api_info](#apiInfo)
+ - [api_info](#apiinfo)
    - [get](#infoget)
  - [chains](#chains) 
    - [get](#chainsget)
@@ -111,7 +111,7 @@ For more details of a specific module, please refer to the
 [**Methods**](#METHODS) section.
 
 If you want to understand how the SDK works in practice, refer to the
-[**Sample Application**](#SAMPLE-APPLICATION) section.
+[**Sample Application**](#sampleapplication) section.
 
 Below is an example of how to use the SDK. Before executing any
 requests, you will need to instantiate an instance of the SDK. The
@@ -177,7 +177,7 @@ entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f
      - <a name="keysget"></a>[get]
      - <a name="keyreplace"></a>[replace]
  
-<a name="api_info"></a>[api_info](documentation/api_info.md)
+<a name="apiinfo"></a>[api_info](documentation/api_info.md)
   - <a name="infoget"></a>[get]
 
 <a name="chains"></a>[chains](documentation/chains.md)
