@@ -177,7 +177,7 @@ entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f
      - <a name="keys_get"></a>[get](documentation/identities.md#keys_get)
      - <a name="keys_replace"></a>[replace](documentation/identities.md#keys_replace)
  
-<a name="apiinfo"></a>[api_info](documentation/api_info.md)
+<a name="api_info"></a>[api_info](documentation/api_info.md)
   - <a name="info_get"></a>[get](documentation/api_info.md#info_get)
 
 <a name="chains"></a>[chains](documentation/chains.md)
