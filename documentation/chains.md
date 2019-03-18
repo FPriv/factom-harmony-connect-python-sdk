@@ -1,7 +1,21 @@
 chains
 ------
 
-### get
+### Table of Contents
+
+- [get](#get)
+- [create](#create)
+- [list](#list)
+- [search](#search)
+- [entries](#entries)
+	- [get](#entries_get)
+	- [create](#entries_create)
+	- [list](#entries_list)
+	- [getFirst](#entries_first)
+	- [getLast](#entries_last)
+	- [search](#entries_search)
+
+### <a name="get"></a>get
 
 Gets information about a specific chain from Connect.
 
@@ -75,7 +89,7 @@ Displays an empty string ("") when `signature_validation` is set to `false`.
 }
  ```
 
-### create
+### <a name="create"></a>create
 
 Creates a new chain with or without signature:
 
@@ -123,7 +137,7 @@ factom_client.chains.create(
 }
 ```
 
-### list
+### <a name="list"></a>list
 
 Gets all of the chains on Factom.
 
@@ -180,7 +194,7 @@ factom_client.chains.list()
 }
 ```
 
-### search
+### <a name="search"></a>search
 
 Finds all of the chains with `external_ids` that match what you entered. 
 
@@ -237,9 +251,9 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 }
 ```
 
-### entries
+### <a name="entries"></a>entries
 
-##### get
+##### <a name="entries_get"></a>get
 
 Gets information about a specific entry on Connect.
 
@@ -314,7 +328,7 @@ In case `signature_validation` is set to `true` then one of the following values
    'status':'valid_signature'
 }
 ```
-##### create
+##### <a name="entries_create"></a>create
 
 Creates a new entry for the selected chain with or without signature:
 
@@ -361,7 +375,7 @@ factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b92
 }
 ```
 
-##### list
+##### <a name="entries_list"></a>list
 
 Gets list of all entries contained on a specified chain.
 
@@ -424,7 +438,7 @@ ad23eb45a20f0d61827b8dc3c584ced',
 }
 ```
 
-##### get_first
+##### <a name="entries_first"></a>get_first
 
 Retrieves the first entry that has been saved to this chain.
 
@@ -500,7 +514,7 @@ created_at':None,
 }
 ```
 
-##### get_last
+##### <a name="entries_last"></a>get_last
 
 Gets the last entry that has been saved to this chain.
 
@@ -574,7 +588,7 @@ In case `signature_validation` is set to `true` then one of the following values
    'status':'not_signed/invalid_entry_format'
 }
 ```
-##### search
+##### <a name="entries_search"></a>search
 
 Finds all of the entries with `external_ids` that match what you entered. 
 
