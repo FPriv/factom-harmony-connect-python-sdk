@@ -1,7 +1,7 @@
 api_info
 -------
 
-### get <a name="get">
+### get <a name="info_get">
 
 Gets general information about the Connect API.
 
