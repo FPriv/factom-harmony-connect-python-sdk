@@ -3,11 +3,11 @@ chains
 
 ### Table of Contents
 
-- [get](#get)
-- [create](#create)
-- [list](#list)
-- [search](#search)
-- [entries](#entries)
+- [get](#chains_get)
+- [create](#chains_create)
+- [list](#chains_list)
+- [search](#chains_search)
+- [entries](#chains_entries)
 	- [get](#entries_get)
 	- [create](#entries_create)
 	- [list](#entries_list)
@@ -15,7 +15,7 @@ chains
 	- [get_last](#entries_last)
 	- [search](#entries_search)
 
-### <a name="get"></a>get
+### <a name="chains_get"></a>get
 
 Gets information about a specific chain from Connect.
 
@@ -89,7 +89,7 @@ Displays an empty string ("") when `signature_validation` is set to `false`.
 }
  ```
 
-### <a name="create"></a>create
+### <a name="chains_create"></a>create
 
 Creates a new chain with or without signature:
 
@@ -137,7 +137,7 @@ factom_client.chains.create(
 }
 ```
 
-### <a name="list"></a>list
+### <a name="chains_list"></a>list
 
 Gets all of the chains on Factom.
 
@@ -194,7 +194,7 @@ factom_client.chains.list()
 }
 ```
 
-### <a name="search"></a>search
+### <a name="chains_search"></a>search
 
 Finds all of the chains with `external_ids` that match what you entered. 
 
@@ -251,7 +251,7 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 }
 ```
 
-### <a name="entries"></a>entries
+### <a name="chains_entries"></a>entries
 
 ##### <a name="entries_get"></a>get
 
