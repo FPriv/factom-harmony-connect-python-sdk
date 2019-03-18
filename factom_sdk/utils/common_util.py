@@ -3,11 +3,11 @@ import base64
 
 class CommonUtil:
     @staticmethod
-    def decode_response(response=None):
+    def decode_response(response: dict = None):
         if response is None:
             response = {}
         if "data" in response:
-            array_decode = ["external_ids", "content", "name"]
+            array_decode = ["external_ids", "content", "names"]
             if isinstance(response["data"], list):
                 for item in response["data"]:
                     for arr in array_decode:
@@ -39,3 +39,9 @@ class CommonUtil:
             return decoded
         else:
             return "".join(chr(x) for x in base64.b64decode(data))
+
+    @staticmethod
+    def base64_encode(value):
+        if isinstance(value, str):
+            return "".join(chr(x) for x in base64.b64encode(value.encode()))
+        return "".join(chr(x) for x in base64.b64encode(value))
