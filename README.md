@@ -167,7 +167,7 @@ entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f
 # <a name="methods"></a> METHODS 
 
 <a name="utils"></a>[utils](documentation/utils.md)
- - <a name="generatekeypair"></a>[generate_key_pair]
+ - <a name="generatekeypair"></a>[generate_key_pair](documentation/utils.md#generate_key_pair)
 
 <a name="identities"></a>[identities](documentation/identities.md)
   - <a name="identitiescreate"></a>[create](documentation/identities.md#create)
