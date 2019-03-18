@@ -1,15 +1,6 @@
 identities
 -----
 
-### Table of Contents
-
-- [create](#create)
-- [get](#get)
-- [keys](#keys)
-	- [list](#keys_list)
-	- [get](#keys_get)
-	- [replace](#keys_replace)
-
 An **Identity** contains 3 components: a names array, a set of currently active keys, and an auditable history of what other keys were active at a given point in time.
 
 Each **Identity** uses their currently active keys to sign messages, proving that the messages came from the Identity. These messages are typically chains and entries that are written to the blockchain, but can be used off-chain as well for scenarios such as authentication.
@@ -21,7 +12,14 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 - The first key is the highest priority key for an Identity. Since it can be used to replace all other keys, it should be kept the most secure and used the least frequently to reduce the risk of it being mishandled or compromised. We recommend storing this key in “cold storage”.
 - The lower priority keys are typically kept in “hot storage” and accessible for use by your live application. Still, these keys should be treated with care, for example: not being stored in repositories or not being stored in plaintext, etc. as they could be used by anyone, whom obtains them to indicate ownership of an Identity.
 
+### Table of Contents
 
+- [create](#create)
+- [get](#get)
+- [keys](#keys)
+	- [list](#keys_list)
+	- [get](#keys_get)
+	- [replace](#keys_replace)
 
 ### <a name="create"></a>create
 
