@@ -40,7 +40,7 @@ with Python Connect SDK installation.
 System Requirements
 -------------------
 
-In order to use this Python SDK, you will need the following tools:
+In order to use this Python SDK, you will need the following tool:
 
 -  Python version >= 3.5
 
