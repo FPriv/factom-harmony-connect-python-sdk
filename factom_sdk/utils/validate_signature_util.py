@@ -14,7 +14,10 @@ class ValidateSignatureUtil:
             type_name = "SignedEntry"
             invalid_format = "not_signed/invalid_entry_format"
 
-        if len(external_ids) < 6 or external_ids[0] != type_name or external_ids[1] != "0x01":
+        if len(external_ids) < 6 \
+                or external_ids[0] != type_name \
+                or external_ids[1] != "0x01"\
+                or not KeyCommon.validate_checksum(external_ids[3]):
             return invalid_format
 
         signer_chain_id = external_ids[2]
