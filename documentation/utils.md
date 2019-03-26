@@ -20,10 +20,11 @@ factom_client.utils.generate_key_pair()
 
 **Returns**</br>
 A key pair object with Public and Private keys.
-- **public_key:** string</br>
-The public key in base58 Idpub format.</br>
 - **private_key:** string</br>
 The private key in base58 Idsec format. 
+- **public_key:** string</br>
+The public key in base58 Idpub format.</br>
+
 
 ```python
 {

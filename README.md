@@ -125,14 +125,14 @@ which will execute the necessary REST API calls on your behalf.
 Patterns to utilize the Factom SDK:
 ```python
 # Return a JSON chain object as is from the API.
-chain = factom_client.chains.get(chain_id='5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
+chain = factom_client.chains.get('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
 
 # Return JSON entries array as is from API.
-entries = factom_client.chains.entries.list(chain_id = '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
+entries = factom_client.chains.entries.list('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63')
 
 # Return a JSON single entry object as is from the API.
-entry = factom_client.chains.entries.get(chain_id = '5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
-  entry_hash = 'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93')
+entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
+                                         'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93')
 ```
 
 
