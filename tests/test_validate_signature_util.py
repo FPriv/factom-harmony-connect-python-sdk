@@ -1,5 +1,6 @@
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import patch, Mock
+from requests import HTTPError
 from factom_sdk.request_handler.request_handler import RequestHandler
 from factom_sdk.utils.validate_signature_util import ValidateSignatureUtil
 
@@ -81,6 +82,23 @@ class TestValidateSignatureUtil(TestCase):
                 "content": "123"
             }
         }
+
+        with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+            mock_error = HTTPError()
+            mock_error.response = Mock()
+            mock_error.response.status_code = 404
+            mock_get.side_effect = mock_error
+            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+            self.assertEqual("key_not_found", response)
+
+        with self.assertRaises(HTTPError) as cm:
+            with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
+                mock_error = HTTPError()
+                mock_error.response = Mock()
+                mock_error.response.status_code = 500
+                mock_get.side_effect = mock_error
+                ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+        self.assertTrue("" in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             json = {

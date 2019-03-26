@@ -46,8 +46,10 @@ class ValidateSignatureUtil:
                     not ((key_response["data"]["activated_height"] <= key_height) and
                          (key_height <= key_response["data"]["retired_height"])):
                 return "retired_key"
-        except requests.HTTPError:
-            return "retired_key"
+        except requests.HTTPError as error:
+            if error.response.status_code == 404:
+                return "key_not_found"
+            raise error
 
         message = signer_chain_id + obj["data"]["content"] + time_stamp
         if not KeyCommon.validate_signature(signer_public_key, signature, message):
