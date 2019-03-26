@@ -25,6 +25,11 @@ The **Keys** for an **Identity** have priorities, where keys with a higher prior
 
 Creates a new Identity chain. You will need to include a unique names array for your Identity. This method will automatically generate 3 Public/Private keys pairs for you and return them, be sure to save them for future use. Optionally, you can pass in an array of public keys you have generated on your own, at which point no keys will be returned.
 
+**Sample**
+```python
+ factom_client.identities.create(["NotarySimulation", "Test Identity"])
+```
+
 **Parameters**
 
 | **Name**                | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  | **SDK Error Message & Description**             <img width=2000/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
@@ -34,11 +39,6 @@ Creates a new Identity chain. You will need to include a unique names array for 
 | `callback_url`    | optional | string </br> The URL you would like the callbacks to be sent to. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `callback_stages` | optional | array of strings </br> The immutability stages you would like to be notified about. This list can include any or all of these three stages: `replicated`, `factom`, and `anchored`. For example: when you would like to trigger the callback from Connect at `replicated` and `factom` stage, you would send them in the format: [‘replicated’, ‘factom’]. </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
 
-**Sample**
-```python
- factom_client.identities.create(["NotarySimulation", "Test Identity"])
-```
-
 **Returns**
 
 **Response:** Accepted
@@ -46,8 +46,8 @@ Creates a new Identity chain. You will need to include a unique names array for 
 -   **entry_hash:** string </br> The unique identifier of the first entry that has been created in this identity chain.
 -   **stage:** string </br> The current immutability stage of the identity chain and its first entry.
 -   **key_pairs:** an array of objects </br> The 3 key pairs generated automatically by Factom SDK. This value is not returned if the public keys are provided when creating this identity.
-    - **key_pairs[].public_key:** string </br> The public key in base58 Idpub format. </br>
     - **key_pairs[].private_key:** string </br> The private key in base58 Idsec format. 
+    - **key_pairs[].public_key:** string </br> The public key in base58 Idpub format. </br>
 
 ```python
 {
@@ -75,16 +75,16 @@ Creates a new Identity chain. You will need to include a unique names array for 
 
 Gets a summary of the identity chain's current state.
 
+**Sample**
+```python
+factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
+```
+
 **Parameters**
 
 | **Name**                 | **Type** | **Description**                                                       | **SDK Error Message & Description**                                                   |
 |--------------------------|----------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `identity_chain_id` | required | string </br> The unique identifier for the identity chain being requested. | **identity_chain_id is required.**  </br> `identity_chain_id` parameter was not provided. |
-
-**Sample**
-```python
-factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
-```
 
 **Returns**
 
@@ -157,6 +157,11 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 Returns all of the keys that were ever active for this Identity. Results
 are paginated. 
 
+**Sample**
+```python
+factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
+```
+
 **Parameters**
 
 | **Name**                 | **Type** | **Description**                                                                                                                                                                                                                                                                                               | **SDK Error Message & Description** <img width=1400/>                                                                 |
@@ -164,11 +169,6 @@ are paginated.
 | `identity_chain_id` | required | string </br> The unique identifier of the identity chain whose keys are being requested.                                                                                                                                                                                                                 | **identity_chain_id is required.** </br> `identity_chain_id` parameter was not provided.          | |
 | `limit`           | optional | integer </br> The maximum number of keys you would like to be returned. The default value is 15.                                                                                                                                                                                | **limit must be an integer.** </br> An invalid `limit` format was provided.                   |
 | `offset`          | optional | integer </br> The key index (in number of keys from the first key) to start from in the list of all keys. For example, if you have already received the first 15 keys and you would like the next set, you would send an offset of 15. Default value is 0 which represents the first item. | **offset must be an integer.** </br> An invalid `offset` format was provided.                 |
-
-**Sample**
-```python
-factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42')
-```
 
 **Returns**
 
@@ -223,18 +223,18 @@ Gets information about a specific public key for a given Identity,
 including the heights at which the key was activated and retired if
 applicable.
 
+**Sample**
+```python
+factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42', 
+				  'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
+```
+
 **Parameters**
 
 | **Name**                 | **Type** | **Description**                                                                                   | **SDK Error Message & Description** <img width=400/>                                                                                                                              |
 |--------------------------|----------|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `identity_chain_id` | required | string </br> The unique identifier for the Identity that the key belongs to.                                | **identity_chain_id is required.** </br> `identity_chain_d` parameter was not provided.                                                                       |
 | `key`             | required | string </br> The public key string to get information, which must be in base58 idpub format. | **key is required.** </br> `key` parameter was not provided. </br></br> **key is invalid.** </br> An invalid `key` format was provided. |
-
-**Sample**
-```python
-factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42', 
-				  'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
-```
 
 **Returns**
 
@@ -265,7 +265,12 @@ To do this, a user must send the key to be replaced (`old_public_key`), a signat
 
 This method will automatically generate a new key pair for you and return it. Optionally, you can provide your own new public key for a keypair you have generated yourself, at which time no keys will be returned. The key pair generated automatically by the SDK will be returned for you to save.
 
-
+**Sample**
+```python
+ factom_client.identities.keys.replace('20ea6362994571c477e8b552fa38a6028760f2089ac1024fffee828279c9baa7',
+				       'idpub1uAysiWct2XpmRSk7ydNHNRdtynXn46GwTKyPYM2t5q2chHaBA',
+				       'idsec32pHEsJfcx98eBD4WTZDvAfxSwtFeyVy5ZSAad7R2dLgaurKkh')
+```
 
 **Parameters**
 
@@ -278,22 +283,17 @@ This method will automatically generate a new key pair for you and return it. Op
 | `callback_url`      | optional | string </br> The URL you would like the callbacks to be sent to. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                           |
 | `callback_stages`   | optional | array of strings </br> The immutability stages you'd like to be notified about. This list can include any or all of these three stages: `replicated`, `factom`, and `anchored`. For example: when you would like to trigger the callback from Connect from `replicated` and `factom` then you should send them in the format: [‘replicated’, ‘factom’].  </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                             |
 
-**Sample**
-```python
- factom_client.identities.keys.replace('20ea6362994571c477e8b552fa38a6028760f2089ac1024fffee828279c9baa7',
-				       'idpub1uAysiWct2XpmRSk7ydNHNRdtynXn46GwTKyPYM2t5q2chHaBA',
-				       'idsec32pHEsJfcx98eBD4WTZDvAfxSwtFeyVy5ZSAad7R2dLgaurKkh')
-```
 **Returns**
 
 **Response:** OK
 -   **entry_hash:** string </br> The entry hash that will point to the key replacement entry on the blockchain.
 -   **stage:** string </br> The current immutability stage of the new entry.
 -   **key_pair:** object </br> The key pair generated automatically by the Factom SDK. This value will not be returned if the new public key is provided when calling this method. 
-    - **key_pair.public_key:** string</br> 
-The public key in base58 Idpub format. 
     - **key_pair.private_key:** string</br> 
     The private key in base58 Idsec format. 
+    - **key_pair.public_key:** string</br> 
+The public key in base58 Idpub format. 
+
     
 ```python
 {
