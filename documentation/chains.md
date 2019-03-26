@@ -19,17 +19,17 @@ chains
 
 Gets information about a specific chain from Connect.
 
+**Sample**
+```python
+factom_client.chains.get('4b9532c79d53ab22b85951b4a5853f81c2682132b3c810a95128c30401cd1e58')
+```
+
 **Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                       | **SDK Error Message & Description**       <img width=400/>                        |
 |------------------------------|----------|------------------------------------------------------------------------------|---------------------------------------------------------------------|
 | `chain_id`                   | required | string </br> The unique identifier created for each chain.                                                                                                                                                                                                                            | **chain_id is required** </br> `chain_id` parameter was not provided. |
 | `signature_validation`       | optional | boolean (`true`/`false`/`custom function`) </br> Default value is `true`. Indicates whether the SDK automatically validates that the chain was signed based on our signing standard. </br> `custom function`: allows for validating the chain's signature  based on custom logic. |  
-
-**Sample**
-```python
-factom_client.chains.get('4b9532c79d53ab22b85951b4a5853f81c2682132b3c810a95128c30401cd1e58')
-```
 
 **Returns**
 
@@ -57,6 +57,7 @@ Displays an empty string ("") when `signature_validation` is set to `false`.
     -   **invalid_signature:** A chain was created in the proper SignedChain structure, but the signature does not match the attached key.
     -   **retired_height:** A chain that conformed to the SignedChain structure and the signature was verified with the listed key, but
     that key was retired for the signer identity at a height lower than when this chain reached the `factom` immutability stage.
+    -   **key_not_found:** A chain that conformed to the SignedChain structure but the signer public key does not belong to the signer identity chain.
     -   **valid_signature:** A chain that conformed to the SignedChain structure and the signature was verified with the listed key. That key was also active for the signer identity at the height when this chain reached the `factom` immutability stage.
     
  ```python
@@ -98,6 +99,17 @@ Creates a new chain with or without signature:
     -   `signer_private_key`
 -   When the Factom SDK is initialized, if `automatic_signing` = `false`, SDK creates an unsigned chain and therefore it does not require these parameters.
 
+**Sample**
+```python
+factom_client.chains.create(
+    "This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as"
+    " part of the Factom Harmony SDKs. Learn more here: https://docs.harmony.factom.com/docs/sdks-clients",
+    signer_chain_id='d22fd62b2c64061d48121d24bfa4e57826caaf532df1524da6eb243da3daa84f',
+    external_ids=["NotarySimulation", "CustomerChain", "cust123"],
+    signer_private_key='idsec2rY42dadPcytBLEx9sanpCJk3PHqLnVwMYuPF7jcmDULVRySH2'
+)
+```
+
 **Parameters**
 
 
@@ -109,17 +121,6 @@ Creates a new chain with or without signature:
 | `signer_private_key`      | required </br> or </br> optional </br> | base58 string in Idsec format</br> The private key signer would like to sign with. In fact, private key is used to generate the public key, which is included as an external ID on the created signed entry. </br> **Note:** This parameter is optional for creating an unsigned chain. However, if `signer_chain_id` is inputted then `signer_private_key` must also be inputted.                                     | In case of creating a signed chain:</br>**signer_private_key is required.**</br> `signer_private_key` parameter was not provided.</br></br>  **signer_private_key is invalid.** </br> An invalid `signer_private_key` parameter was provided or key’s byte length is not equal to 41. </br></br> In case of creating an unsigned chain: </br> **signer_private_key is required when passing a signer_chain_id.** </br>   `signer_chain_id` parameter was provided but lacking `signer_private_key` parameter.  </br></br>  **signer_private_key is invalid.**  </br> `signer_chain_id` was provided but either an invalid `signer_private_key` parameter was also provided or key’s byte length is not equal to 41. |
 | `callback_url`            | optional                               | string </br> The URL where you would like to receive the callback from Connect. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `callback_stages`         | optional                               | array of strings </br> The immutability stages you would like to be notified about. This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`. For example, when you would like to trigger the callback from Connect at `replicated` and `factom` stage, you would send them in the format: [‘replicated’, ‘factom’]. </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-
-**Sample**
-```python
-factom_client.chains.create(
-    "This chain represents a notary service's customer in the NotarySimulation, a sample implementation provided as"
-    " part of the Factom Harmony SDKs. Learn more here: https://docs.harmony.factom.com/docs/sdks-clients",
-    signer_chain_id='d22fd62b2c64061d48121d24bfa4e57826caaf532df1524da6eb243da3daa84f',
-    external_ids=["NotarySimulation", "CustomerChain", "cust123"],
-    signer_private_key='idsec2rY42dadPcytBLEx9sanpCJk3PHqLnVwMYuPF7jcmDULVRySH2'
-)
-```
 
 **Returns**
 
@@ -141,6 +142,11 @@ factom_client.chains.create(
 
 Gets all of the chains on Factom.
 
+**Sample**
+```python
+factom_client.chains.list()
+```
+
 **Parameters**
 
 | **Name**        | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                                | **SDK Error Message & Description**             <img width=1300/>                                  | 
@@ -148,11 +154,6 @@ Gets all of the chains on Factom.
 | `limit`  | optional | integer </br>  The number of items you would like to return back in each stage. The default value is 15.                                                                                                                                                                                                                                                                          | **limit must be an integer.**</br>   An invalid `limit` format was provided.  |   
 | `offset` | optional | integer </br>  The offset parameter allows you to select which item you would like to start from when a list is returned from Connect. For example, if you have already seen the first 15 items and you would like the next set, you would send an offset of 15. `offset=0` starts from the first item of the set and is the default position.   | **offset must be an integer.**  </br>  An invalid `offset` format was provided. |   
 | `stages` | optional | array of strings </br>  The immutability stages you want to restrict results to. You can choose any from `replicated`, `factom`, and `anchored`. The default value are these three stages: `replicated`, `factom`, and `anchored`. </br>  **Note**: If you would like to search among multiple stages, you would send them in the format: [‘replicated’, ‘factom’]. | **stages must be an array.**</br>  An invalid `stages` format was provided.   |   
-
-**Sample**
-```python
-factom_client.chains.list()
-```
 
 **Returns**
 
@@ -198,6 +199,11 @@ factom_client.chains.list()
 
 Finds all of the chains with `external_ids` that match what you entered. 
 
+**Sample**
+```python
+factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
+```
+
 **Parameters**
 
 | **Name**             | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**          <img width=1300/>                                                                                                                                                 |   
@@ -205,11 +211,6 @@ Finds all of the chains with `external_ids` that match what you entered.
 | `external_ids` | required | array of strings </br>  A list of external IDs associated with the chains user would like to search by.                                                                                                                                                                                                                                                                              | **at least 1 external_ids is required.**</br>  `external_ids` parameter was not provided.</br>   **external_ids must be an array.** </br>  An invalid `external_ids` format was provided. |   
 | `limit`       | optional | integer </br> The number of items you would like to return back in each stage. The default value is 15.                                                                                                                                                                                                                                                                             | **limit must be an integer.** </br> An invalid `limit` format was provided.                                                                                                          |   
 | `offset`      | optional | integer </br>  The offset parameter allows you to select which item you would like to start from when a list is returned from Connect. For example, if you have already seen the first 15 items and you would like the next set, you would send an offset of 15. `offset=0` starts from the first item of the set and is the default position. | **offset must be an integer.**</br>  An invalid `offset` format was provided.                                                                                                       |   
-
-**Sample**
-```python
-factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
-```
 
 **Returns**
 
@@ -257,6 +258,12 @@ factom_client.chains.search(["TestFunction", "CustomerChain", "cust123"])
 
 Gets information about a specific entry on Connect.
 
+**Sample**
+```python
+factom_client.chains.entries.get('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+				 'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc')
+```
+
 **Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                        | **SDK Error Message & Description**    <img width=400/>                                           |
@@ -265,11 +272,6 @@ Gets information about a specific entry on Connect.
 | `entry_hash`           | required | string </br> The SHA256 hash of the entry.                                                                                                                                                                                                                                                                             | **entry_hash is required.** </br> `entry_hash` parameter was not provided. |
 | `signature_validation` | optional | boolean (`true`/`false`/`custom function`) </br>  The default value is `true`. Indicates whether the SDK automatically validates that the entry was signed based on our signing standard. </br> `custom function`: allows for validating the entry's signature based on custom logic.|                                                                                |
 
-**Sample**
-```python
-factom_client.chains.entries.get('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
-				 'cccf02ac98c9e04f556508aa4dc9e277d44e8ce2006a244ebec082e0bed36efc')
-```
 **Returns**
 
 **Response:** OK
@@ -296,6 +298,7 @@ In case `signature_validation` is set to `true` then one of the following values
     - **not_signed/invalid_entry_format:** An entry that was not signed or did not conform to the SignedEntry structure.
     - **invalid_signature:** An entry was created in the proper SignedEntry structure, but the signature does not match the attached key.
     - **retired_height:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key, but that key was retired for the signer identity at a height lower than when this entry reached the `factom` immutability stage.
+    -   **key_not_found:** An entry that conformed to the SignedEntry structure but the signer public key does not belong to the signer identity chain.
     - **valid_signature:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key. That key was also active for the signer identity at the height when this entry reached the `factom` immutability stage.
 
 ```python
@@ -339,6 +342,15 @@ Creates a new entry for the selected chain with or without signature:
     `false`, SDK creates an unsigned entry and therefore it does
     not require these parameters.
 
+**Sample**
+```python
+factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+                                    signer_private_key='idsec1xbKD6tkgLPMBuNQbTnHPr6mFoeF7iQV4ybTN63sKdFg7h1uWH',
+                                    signer_chain_id='8c33e7432cdfd3933beb6de5ccbc3706ac21458ed53352e02658daf2dce8f27c',
+                                    external_ids=["NotarySimulation","DocumentEntry","doc987"],
+                                    content='Abc123')
+```
+
 **Parameters**
 
 | **Name**                  | **Type**                         | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**     <img width=1500/>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
@@ -350,15 +362,6 @@ Creates a new entry for the selected chain with or without signature:
 | `signer_private_key` | required</br>  or</br>  optional | a base58 string in Idsec format</br> The private key signer would like to sign with. In fact, private key is used to generate the public key, which is included as an external ID on the created signed entry.</br>   **Note:** This parameter is optional for creating an unsigned entry. However, if `signer_chain_id` is inputted then `signer_private_key` must also be inputted.                                                                                                                                                                                               | In case of creating a signed entry:</br> **signer_private_key is required.**</br> `signer_private_key` parameter was not provided.</br></br>  **signer_private_key is invalid.**</br> An invalid `signer_private_key` parameter was provided or key's byte length is not equal to 41. </br></br>  In case of creating an unsigned entry:</br>  **signer_private_key is required when passing a signer_chain_id.**</br> `signer_chain_id` was provided but lacking `signer_private_key` parameter.</br></br>  **signer_private_key is invalid.**</br>  `signer_chain_id` was provided but an invalid `signer_private_key` parameter was provided or key's byte length is not equal to 41.  |
 | `callback_url`      | optional                         | string</br> the URL you would like the callbacks to be sent to </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.**</br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | `callback_stages`   | optional                         | array of strings</br>  The immutability stages you would like to be notified about. This list can include any or all of these three stages: `replicated`, `factom`, and `anchored`. For example, when you would like to trigger the callback from Connect from `replicated` and `factom` then you would send them in the format: ['replicated', 'factom'].</br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.**</br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
-
-**Sample**
-```python
-factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
-                                    signer_private_key='idsec1xbKD6tkgLPMBuNQbTnHPr6mFoeF7iQV4ybTN63sKdFg7h1uWH',
-                                    signer_chain_id='8c33e7432cdfd3933beb6de5ccbc3706ac21458ed53352e02658daf2dce8f27c',
-                                    external_ids=["NotarySimulation","DocumentEntry","doc987"],
-                                    content='Abc123')
-```
 
 **Returns**
 
@@ -379,6 +382,11 @@ factom_client.chains.entries.create(chain_id='c15f9e51781a8a4c520c15fd135e761b92
 
 Gets list of all entries contained on a specified chain.
 
+**Sample**
+```python
+factom_client.chains.entries.list('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
+```
+
 **Parameters**
 
 | **Name**         | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**  <img width=1300/>                                                     |
@@ -388,10 +396,6 @@ Gets list of all entries contained on a specified chain.
 | `offset`  | optional | integer</br> The offset parameter allows you to select which item you would like to start from when a list is returned from Connect. For example, if you have already seen the first 15 items and you would like the next set, you would send an offset of 15. `offset=0` starts from the first item of the set and is the default position. | **offset must be an integer.**</br> An invalid `offset` format was provided.|
 | `stages`  | optional | array of strings</br> The immutability stages you want to restrict results to. You can choose any from `replicated`, `factom`, and `anchored`. The default value are these three stages: `replicated`, `factom` and `anchored`.</br>  **Note:** If you would like to search among multiple stages, you would send them in the format ['replicated', 'factom'].  | **stages must be an array.**</br>  An invalid `stages` format was provided. |
 
-**Sample**
-```python
-factom_client.chains.entries.list('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
-```
 **Returns**
 
 **Response:** OK
@@ -442,6 +446,11 @@ ad23eb45a20f0d61827b8dc3c584ced',
 
 Retrieves the first entry that has been saved to this chain.
 
+**Sample**
+```python
+factom_client.chains.entries.get_first('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
+```
+
 **Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                   | **SDK Error Message & Description**      <img width=400/>                                    |
@@ -449,10 +458,6 @@ Retrieves the first entry that has been saved to this chain.
 | `chain_id`             | required | string </br>  The chain identifier.                                                                                                                                                                                                                                                                               | **chain_id is required.**</br>  `chain_id` parameter was not provided.</br> |
 | `signature_validation` | optional | boolean (`true`/`false`/`custom function`)</br> Default value is `true`.</br>  Indicates whether the SDK automatically validates that the entry was signed based on our signing standard.</br>   `custom function`: allows for validating the entry's signature based on custom logic. |                                                                           |
 
-**Sample**
-```python
-factom_client.chains.entries.get_first('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
-```
 **Returns**
 
 **Response:** OK
@@ -480,6 +485,7 @@ In case `signature_validation` is set to `true` then one of the following values
     - **not_signed/invalid_entry_format:** An entry that was not signed or did not conform to the SignedEntry structure.
     - **invalid_signature:** An entry was created in the proper SignedEntry structure, but the signature does not match the attached key.
     - **retired_height:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key, but that key was retired for the signer identity at a height lower than when this entry reached the `factom` immutability stage.
+    -   **key_not_found:** An entry that conformed to the SignedEntry structure but the signer public key does not belong to the signer identity chain.
     - **valid_signature:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key. That key was also active for the signer identity at the height when this entry reached the `factom` immutability stage.
 
 ```python
@@ -518,6 +524,11 @@ created_at':None,
 
 Gets the last entry that has been saved to this chain.
 
+**Sample**
+```python
+factom_client.chains.entries.get_last('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
+```
+
 **Parameters**
 
 | **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                                                   | **SDK Error Message & Description**                 <img width=400/>                         |
@@ -525,10 +536,6 @@ Gets the last entry that has been saved to this chain.
 | `chain_id`             | required | string </br>  The chain identifier.                                                                                                                                                                                                                                                                               | **chain_id is required.**</br>  `chain_id` parameter was not provided.</br> |
 | `signature_validation` | optional | boolean (`true`/`false`/`custom function`)</br> Default value is `true`.</br> Indicates whether the SDK automatically validates that the entry was signed based on our signing standard.</br> `custom function`: allows for validating the entry's signature based on custom logic. |                                                                           |
 
-**Sample**
-```python
-factom_client.chains.entries.get_last('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2')
-```
 **Returns**
 
 **Response:** OK
@@ -556,6 +563,7 @@ In case `signature_validation` is set to `true` then one of the following values
     - **not_signed/invalid_entry_format:** An entry that was not signed or did not conform to the SignedEntry structure.
     - **invalid_signature:** An entry was created in the proper SignedEntry structure, but the signature does not match the attached key.
     - **retired_height:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key, but that key was retired for the signer identity at a height lower than when this entry reached the `factom` immutability stage.
+    -   **key_not_found:** An entry that conformed to the SignedEntry structure but the signer public key does not belong to the signer identity chain.
     - **valid_signature:** An entry that conformed to the SignedEntry structure and the signature was verified with the listed key. That key was also active for the signer identity at the height when this entry reached the `factom` immutability stage.
 
 ```python
@@ -592,6 +600,12 @@ In case `signature_validation` is set to `true` then one of the following values
 
 Finds all of the entries with `external_ids` that match what you entered. 
 
+**Sample**
+```python
+factom_client.chains.entries.search('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
+				    ["NotarySimulation","DocumentEntry","doc987"])
+```
+
 **Parameters**
 
 | **Name**             | **Type** | **Description**                                                                                                                                                                                                                                                                                                                                                                            | **SDK Error Message & Description**    <img width=1300/>                                                                                                                                                |
@@ -601,11 +615,6 @@ Finds all of the entries with `external_ids` that match what you entered.
 | `limit`       | optional | integer</br> The number of items you would like to return back in each page. The default value is  15.                                                                                                                                                                                                                                                                              | **limit must be an integer.**</br> An invalid `limit` format was provided.</br>                                                                                                      |
 | `offset`      | optional | integer</br> The offset parameter allows you to select which item you would like to start from when a list is returned from Connect. For example, if you have already seen the first 15 items and you would like the next set, you would send an offset of 15. `offset=0` starts from the first item of the set and is the default position. | **offset must be an integer.**</br> An invalid `offset` format was provided.                                                                                              |
 
-**Sample**
-```python
-factom_client.chains.entries.search('c15f9e51781a8a4c520c15fd135e761b922b709217ebea974537e8689c74d0c2',
-				    ["NotarySimulation","DocumentEntry","doc987"])
-```
 **Returns**
 
 **Response:** OK
