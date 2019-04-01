@@ -1,11 +1,14 @@
-import validators
 import datetime
+
+import validators
+
 import factom_sdk.utils.consts
-from factom_sdk.utils.key_common import KeyCommon
+from factom_sdk.client.entries_client import EntriesClient
 from factom_sdk.request_handler.request_handler import RequestHandler
 from factom_sdk.utils.common_util import CommonUtil
+from factom_sdk.utils.key_common import KeyCommon
+from factom_sdk.utils.utils import Utils
 from factom_sdk.utils.validate_signature_util import ValidateSignatureUtil
-from factom_sdk.client.entries_client import EntriesClient
 
 
 class ChainsClient:
@@ -91,7 +94,7 @@ class ChainsClient:
             raise Exception("callback_stages must be an array.")
         ids_base64 = []
         if self.automatic_signing:
-            time_stamp = datetime.datetime.utcnow().isoformat()
+            time_stamp = Utils.to_military_timezone_str(datetime.datetime.now(datetime.timezone.utc))
             message = signer_chain_id + content + time_stamp
             signature = KeyCommon.sign_content(signer_private_key, message)
             signer_public_key = KeyCommon.get_public_key_from_private_key(signer_private_key)
