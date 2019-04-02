@@ -53,8 +53,10 @@ def simulate_notary():
                                  sample_app.configure.APP_KEY)
 
     # Create identity without key. System automatic generating 3 key pairs
-    create_identity_chain_response = factom_client.identities.create(
-        ["NotarySimulation", datetime.datetime.utcnow().isoformat()])
+    create_identity_chain_response = factom_client.identities.create([
+        "NotarySimulation",
+        datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+    ])
     original_key_pairs = create_identity_chain_response["key_pairs"]
 
     # We'll use this later for sign chain/entry
