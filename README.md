@@ -139,7 +139,7 @@ entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e57
 <a name="license"></a>License
 -------
 
-*This section will be provided by Factom.*
+The Harmony Connect SDK is licensed under the [MIT License](https://opensource.org/licenses/MIT).
 
 # <a name="methods"></a> METHODS 
 
