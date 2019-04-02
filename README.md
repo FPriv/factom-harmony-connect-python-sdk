@@ -1,19 +1,19 @@
 Table of Contents
 ===============
-[INTRODUCTION](#Introduction) 
+[INTRODUCTION](#Introduction)
 - [About This Document](#about)
-- [SDK Architecture Overview](#architecture) 
+- [SDK Architecture Overview](#architecture)
 
 [GETTING STARTED](#gettingstarted)
  - [System Requirements](#requirements)
  - [Installation](#installation)
  - [Usage](#usage)
  - [License](#license)
- 
-[METHODS](#methods) 
-     
+
+[METHODS](#methods)
+
 [SAMPLE APPLICATION](#sampleapplication)
-- [Overview](#overview) 
+- [Overview](#overview)
 - [Installation](#appinstallation)
 - [Usage](#appusage)
 
@@ -64,7 +64,7 @@ In order to use this Python SDK, you will need the following tool:
 -  Python version >= 3.5
 
 
-<a name="installation"></a>Installation 
+<a name="installation"></a>Installation
 -------------
 **Published package**
 
@@ -74,7 +74,7 @@ In order to use this Python SDK, you will need the following tool:
 
 - Clone the repo
 - Setup a virtual environment (optional)
-- Install dependencies 
+- Install dependencies
   - `pip install -r requirements.txt`
 
 To use the SDK, you have to import: `from factom_sdk import FactomClient`
@@ -107,10 +107,10 @@ When the Factom SDK is initialized, there will be an optional
 
 -   When this initial config is set to `true` as default, all chain
     and entry POST methods require passing the params:
-    `signer_private_key` and `signer_chain_id` which will be used to create signed chains and entries, 
-    as per the Factom Signing Standard. 
+    `signer_private_key` and `signer_chain_id` which will be used to create signed chains and entries,
+    as per the Factom Signing Standard.
 
--   When this initial config is set to `false`, the FactomSDK will not sign the chains and entries that are 
+-   When this initial config is set to `false`, the FactomSDK will not sign the chains and entries that are
     created and therefore it does not require the params: `signer_private_key` and `signer_chain_id`.  
 
 The primary benefit of `automatic_signing` param is to encourage you to
@@ -139,9 +139,9 @@ entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e57
 <a name="license"></a>License
 -------
 
-*This section will be provided by Factom.*
+The Harmony Connect SDK is provided with an [MIT License](LICENSE).
 
-# <a name="methods"></a> METHODS 
+# <a name="methods"></a> METHODS
 
 <a name="utils"></a>[utils](documentation/utils.md)
  - <a name="generate_key_pair"></a>[generate_key_pair](documentation/utils.md#generate_key_pair)
@@ -153,7 +153,7 @@ entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e57
      - <a name="keys_list"></a>[list](documentation/identities.md#keys_list)
      - <a name="keys_get"></a>[get](documentation/identities.md#keys_get)
      - <a name="keys_replace"></a>[replace](documentation/identities.md#keys_replace)
- 
+
 <a name="api_info"></a>[api_info](documentation/api_info.md)
   - <a name="info_get"></a>[get](documentation/api_info.md#info_get)
 
@@ -177,31 +177,31 @@ entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e57
 --------
 ![architecture](documentation/pictures/sample-app-1.jpg?raw=true)
 
-This Sample App is created to illustrate some of the core methods of this SDK and a real-world 
-business scenario of how it can be used. 
+This Sample App is created to illustrate some of the core methods of this SDK and a real-world
+business scenario of how it can be used.
 
-Since the application is built as a standalone application with a backend SDK process, 
-the reader should review the commented code [here](https://github.com/FactomProject/factom-harmony-connect-python-sdk/blob/master/sample_app/simulate_notary.py). 
+Since the application is built as a standalone application with a backend SDK process,
+the reader should review the commented code [here](https://github.com/FactomProject/factom-harmony-connect-python-sdk/blob/master/sample_app/simulate_notary.py).
 
-The concept of the Sample App is a simple Notary service with a business flow as follows: 
+The concept of the Sample App is a simple Notary service with a business flow as follows:
 
 
 -   **A Notary service begins using Factom Harmony:** To use Harmony, there should be at least 1 identity used when signing written data. So, to start, the app creates an identity’s chain for the Notary service.
 
--   **The first customer purchases the Notary service’s new “Blockchain authentication” service tier:** To track the customer’s documents, the app creates a signed chain for them, allowing easy retrieval for that customer’s records. 
+-   **The first customer purchases the Notary service’s new “Blockchain authentication” service tier:** To track the customer’s documents, the app creates a signed chain for them, allowing easy retrieval for that customer’s records.
 
 
 -   **The customer requests notarization of the first document:** The app creates a signed entry within the customer’s chain containing a hashed version of the document. At this time, the notary service should also be storing the document in a secure location.
 
 -   **The customer returns at a later date and the clerk retrieves the past work for this customer:** The app searches the blockchain for the customer’s chain, and with that data, retrieves the chain. The SDK automatically validates the authenticity of this chain, which ensures that the Notary’s systems have not been tampered with and the blockchain data was submitted by the Notary service.
 
--   **The customer requests the document that was notarized:** The app searches for an entry in the chain validated in the step above and gets that entry info, then validates the authenticity of the signature used to sign that entry. 
+-   **The customer requests the document that was notarized:** The app searches for an entry in the chain validated in the step above and gets that entry info, then validates the authenticity of the signature used to sign that entry.
 
 
--   **The document’s authenticity is validated:** The app pulls out the document’s hash from the entry’s content and compares it against a freshly generated hash of a stored document. 
+-   **The document’s authenticity is validated:** The app pulls out the document’s hash from the entry’s content and compares it against a freshly generated hash of a stored document.
     -   **Note:** It is recommended that in a real-world scenario, scheduled tasks are run to validate the data for proactive validation.
 
--   **A developer who had access to one of the keys leaves employment with the Notary company, so they carry out proactive security:** The app replaces the old key pair that the employee had access to. 
+-   **A developer who had access to one of the keys leaves employment with the Notary company, so they carry out proactive security:** The app replaces the old key pair that the employee had access to.
 
 
 <a name="appinstallation"></a>Installation
