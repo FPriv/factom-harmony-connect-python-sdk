@@ -128,7 +128,7 @@ class ChainsClient:
         b64encode   = lambda x : CommonUtil.base64_encode(x)
 
         ids_base64 = []
-        if signing:
+        if automatic_signing:
             time_stamp = Utils.to_military_timezone_str(datetime.datetime.now(datetime.timezone.utc))
             message = signer_chain_id + content + time_stamp
             signature = KeyCommon.sign_content(signer_private_key, message)
