@@ -17,3 +17,11 @@ script:
 # script: travis_wait 20 nosetests --with-coverage
 after_sucess: 
   - coveralls
+
+cache: yarn
+script:
+after_success:
+  - yarn run semantic-release
+branches:
+  except:
+    - /^v\d+\.\d+\.\d+$/
