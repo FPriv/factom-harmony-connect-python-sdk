@@ -230,3 +230,6 @@ clicks the "Run Notary Simulation" button to run the app.
 **Response screen:** After the loading process is finished, the app will display relevant data with regard to this business flow.
 
 ![architecture](documentation/pictures/sample-app-4.jpg?raw=true)
+
+
+[![Build Status](https://travis-ci.com/kirit93/factom-harmony-connect-python-sdk.svg?branch=develop)](https://travis-ci.com/kirit93/factom-harmony-connect-python-sdk)
