@@ -71,7 +71,7 @@ class ChainsClient:
         automatic_signing       = kwargs.get('automatic_signing', self.automatic_signing)
 
         if not content:
-            raise Exception("content must be provided")
+            raise Exception("content is required.")
 
         # User should be able to pass any sequence of elements
         if not hasattr(external_ids, '__iter__'):
