@@ -19,7 +19,6 @@ after_sucess:
   - coveralls
 
 cache: yarn
-script:
 after_success:
   - yarn run semantic-release
 branches:
