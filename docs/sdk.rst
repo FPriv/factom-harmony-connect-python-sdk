@@ -8,3 +8,10 @@ SDK Contents
 
 Identities
 ------------
+
+Identities Client
+~~~~~~~~~~~~~~~~~~~
+.. automodule:: factom_sdk.client.identities_client
+    :members:
+    :undoc-members:
+    :show-inheritance:
