@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+# command to install dependencies
+install: 
+  - pip install --upgrade pip
+  - pip install wheel
+  - pip install coverage
+  - pip install pytest
+  - pip install pytest-cov
+# command to run tests
+
+script:
+  # - cd $HOME/build/bhargavvavder/pycobra
+  # - python tests.py --with-coverage --cover-package=pycobra
+  - python tests.py
+# script: travis_wait 20 nosetests --with-coverage
+after_sucess: 
+  - coveralls
