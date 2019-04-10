@@ -10,6 +10,7 @@ install:
   - pip install pytest
   - pip install requests
   - pip install validators
+  - pip install tox
 # command to run tests
 script:
   - tox
