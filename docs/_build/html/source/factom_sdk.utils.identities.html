@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>factom_sdk.utils.identities package &mdash; pyharmony 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyharmony
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk.html">SDK Contents</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyharmony</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>factom_sdk.utils.identities package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/factom_sdk.utils.identities.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="factom-sdk-utils-identities-package">
+<h1>factom_sdk.utils.identities package<a class="headerlink" href="#factom-sdk-utils-identities-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-factom_sdk.utils.identities.identities_key_util">
+<span id="factom-sdk-utils-identities-identities-key-util-module"></span><h2>factom_sdk.utils.identities.identities_key_util module<a class="headerlink" href="#module-factom_sdk.utils.identities.identities_key_util" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil">
+<em class="property">class </em><code class="descclassname">factom_sdk.utils.identities.identities_key_util.</code><code class="descname">IdentitiesKeyUtil</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>identity_chain_id: str</em>, <em>key: str</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets information about a specific public key for a given Identity, including the heights at which the key
+was activated and retired if applicable.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>identity_chain_id (str): The unique identifier for the Identity that the key belongs to.
+key (str): The public key string to get information, which must be in base58 idpub format.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Identity key object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>identity_chain_id: str</em>, <em>limit: int = -1</em>, <em>offset: int = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all of the keys that were ever active for this Identity. Results are paginated.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>identity_chain_id (str): The unique identifier of the identity chain whose keys are being requested.
+limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The maximum number of keys you would like to be returned.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The key index (in number of keys from the first key) to start from in the
+list of all keys.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List identity key object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.replace">
+<code class="descname">replace</code><span class="sig-paren">(</span><em>identity_chain_id: str</em>, <em>old_public_key: str</em>, <em>signer_private_key: str</em>, <em>new_public_key: str = None</em>, <em>callback_url: str = ''</em>, <em>callback_stages: factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates an entry in the Identity Chain for a key replacement.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>identity_chain_id (str): The unique identifier of the identity chain being requested.
+old_public_key (str): base58 string in Idpub format. The public key to be retired and replaced.
+signer_private_key (str): base58 string in Idsec format. The private key to use to create the signature,
+which must be the same or higher priority than the public key to be replaced.
+new_public_key (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): base58 string in Idpub format. The new public key to be activated
+and take its place.
+callback_url (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The URL you would like the callbacks to be sent to.
+callback_stages (<a class="reference internal" href="#factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.list" title="factom_sdk.utils.identities.identities_key_util.IdentitiesKeyUtil.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you’d like to be notified about. This list
+can include any or all of these three stages: <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite></p>
+</dd>
+<dt>Returns:</dt><dd><p>Replacement result object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.utils.identities">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-factom_sdk.utils.identities" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Factom Inc.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

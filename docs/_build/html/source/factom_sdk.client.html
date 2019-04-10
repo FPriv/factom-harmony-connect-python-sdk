@@ -1,0 +1,471 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>factom_sdk.client package &mdash; pyharmony 0.0.1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> pyharmony
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../starting.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../sdk.html">SDK Contents</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">pyharmony</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>factom_sdk.client package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/source/factom_sdk.client.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="factom-sdk-client-package">
+<h1>factom_sdk.client package<a class="headerlink" href="#factom-sdk-client-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-factom_sdk.client.api_info_client">
+<span id="factom-sdk-client-api-info-client-module"></span><h2>factom_sdk.client.api_info_client module<a class="headerlink" href="#module-factom_sdk.client.api_info_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.client.api_info_client.ApiInfoClient">
+<em class="property">class </em><code class="descclassname">factom_sdk.client.api_info_client.</code><code class="descname">ApiInfoClient</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.api_info_client.ApiInfoClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="factom_sdk.client.api_info_client.ApiInfoClient.get">
+<code class="descname">get</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.api_info_client.ApiInfoClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets general information about the Connect API.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>API Info object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.client.chains_client">
+<span id="factom-sdk-client-chains-client-module"></span><h2>factom_sdk.client.chains_client module<a class="headerlink" href="#module-factom_sdk.client.chains_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.client.chains_client.ChainsClient">
+<em class="property">class </em><code class="descclassname">factom_sdk.client.chains_client.</code><code class="descname">ChainsClient</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em>, <em>automatic_signing: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.chains_client.ChainsClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="factom_sdk.client.chains_client.ChainsClient.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>content: str</em>, <em>external_ids: list = None</em>, <em>signer_private_key: str = ''</em>, <em>signer_chain_id: str = ''</em>, <em>callback_url: str = ''</em>, <em>callback_stages: list = None</em>, <em>signing=True</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.chains_client.ChainsClient.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new chain</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>content (str): This is the data that will make up the first entry in your new chain.
+external_ids (<a class="reference internal" href="#factom_sdk.client.chains_client.ChainsClient.list" title="factom_sdk.client.chains_client.ChainsClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): Tags that can be used to identify your chain.
+signer_private_key (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): base58 string in Idsec format. This parameter is optional for
+creating an unsigned chain.
+signer_chain_id (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The chain id of the signer identity. This parameter is optional for
+creating an unsigned chain.
+callback_url (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The URL where you would like to receive the callback from Connect.
+callback_stages (<a class="reference internal" href="#factom_sdk.client.chains_client.ChainsClient.list" title="factom_sdk.client.chains_client.ChainsClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you would like to be notified about.
+This list can include any or all of the three stages: <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Chain created info object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.chains_client.ChainsClient.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>signature_validation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.chains_client.ChainsClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets information about a specific chain from Connect.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The unique identifier created for each chain.
+signature_validation (bool | custom function)</p>
+</dd>
+<dt>Returns:</dt><dd><p>Chain object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.chains_client.ChainsClient.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>limit: int = -1</em>, <em>offset: int = -1</em>, <em>stages: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.chains_client.ChainsClient.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets all of the chains on Factom.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The number of items you would like to return back in each stage.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The offset parameter allows you to select which item you would like to start
+from when a list is returned from Connect.
+stages (<a class="reference internal" href="#factom_sdk.client.chains_client.ChainsClient.list" title="factom_sdk.client.chains_client.ChainsClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you want to restrict results to.
+You can choose any from <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List chains object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.chains_client.ChainsClient.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>external_ids: factom_sdk.client.chains_client.ChainsClient.list</em>, <em>limit: int = -1</em>, <em>offset: int = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.chains_client.ChainsClient.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all of the chains with <cite>external_ids</cite> that match what you entered.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>external_ids (list): A list of external IDs associated with the chains user would like to search by.
+limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The number of items you would like to return back in each stage.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The offset parameter allows you to select which item you would like to start
+from when a list is returned from Connect.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List chains object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.client.entries_client">
+<span id="factom-sdk-client-entries-client-module"></span><h2>factom_sdk.client.entries_client module<a class="headerlink" href="#module-factom_sdk.client.entries_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.client.entries_client.EntriesClient">
+<em class="property">class </em><code class="descclassname">factom_sdk.client.entries_client.</code><code class="descname">EntriesClient</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em>, <em>automatic_signing: bool</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>content: str</em>, <em>external_ids: list = None</em>, <em>signer_private_key: str = ''</em>, <em>signer_chain_id: str = ''</em>, <em>callback_url: str = ''</em>, <em>callback_stages: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new entry for the selected chain.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+content (str): This is the data that will be stored directly on the blockchain.
+external_ids (<a class="reference internal" href="#factom_sdk.client.entries_client.EntriesClient.list" title="factom_sdk.client.entries_client.EntriesClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): Tags that can be used to identify your entry.
+signer_private_key (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): base58 string in Idsec format. This parameter is optional for
+creating an unsigned entry.
+signer_chain_id (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The chain id of the signer identity. This parameter is optional for
+creating an unsigned entry.
+callback_url (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The URL where you would like to receive the callback from Connect.
+callback_stages (<a class="reference internal" href="#factom_sdk.client.entries_client.EntriesClient.list" title="factom_sdk.client.entries_client.EntriesClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you would like to be notified about.
+This list can include any or all of the three stages: <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Entry created object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>entry_hash: str</em>, <em>signature_validation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets information about a specific entry on Connect.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+entry_hash (str): The SHA256 hash of the entry.
+signature_validation (bool | custom function)</p>
+</dd>
+<dt>Returns:</dt><dd><p>Entry object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.get_first">
+<code class="descname">get_first</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>signature_validation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.get_first" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the first entry that has been saved to this chain.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+signature_validation (bool | custom function)</p>
+</dd>
+<dt>Returns:</dt><dd><p>Entry object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.get_last">
+<code class="descname">get_last</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>signature_validation=None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.get_last" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the last entry that has been saved to this chain.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+signature_validation (bool | custom function)</p>
+</dd>
+<dt>Returns:</dt><dd><p>Entry object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>limit: int = -1</em>, <em>offset: int = -1</em>, <em>stages: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets list of all entries contained on a specified chain.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The number of items you would like to return back in each stage.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The offset parameter allows you to select which item you would like to start
+from when a list is returned from Connect.
+stages (<a class="reference internal" href="#factom_sdk.client.entries_client.EntriesClient.list" title="factom_sdk.client.entries_client.EntriesClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you want to restrict results to.
+You can choose any from <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List entry object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.entries_client.EntriesClient.search">
+<code class="descname">search</code><span class="sig-paren">(</span><em>chain_id: str</em>, <em>external_ids: factom_sdk.client.entries_client.EntriesClient.list</em>, <em>limit: int = -1</em>, <em>offset: int = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.entries_client.EntriesClient.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Finds all of the entries with <cite>external_ids</cite> that match what you entered.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>chain_id (str): The chain identifier.
+external_ids (list): A list of external IDs.
+limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The number of items you would like to return back in each stage.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The offset parameter allows you to select which item you would like to start
+from when a list is returned from Connect.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List entry object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.client.factom_client">
+<span id="factom-sdk-client-factom-client-module"></span><h2>factom_sdk.client.factom_client module<a class="headerlink" href="#module-factom_sdk.client.factom_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.client.factom_client.FactomClient">
+<em class="property">class </em><code class="descclassname">factom_sdk.client.factom_client.</code><code class="descname">FactomClient</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em>, <em>automatic_signing: bool = True</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.factom_client.FactomClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="attribute">
+<dt id="factom_sdk.client.factom_client.FactomClient.api_info">
+<code class="descname">api_info</code><a class="headerlink" href="#factom_sdk.client.factom_client.FactomClient.api_info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="factom_sdk.client.factom_client.FactomClient.chains">
+<code class="descname">chains</code><a class="headerlink" href="#factom_sdk.client.factom_client.FactomClient.chains" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="factom_sdk.client.factom_client.FactomClient.identities">
+<code class="descname">identities</code><a class="headerlink" href="#factom_sdk.client.factom_client.FactomClient.identities" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.client.identities_client">
+<span id="factom-sdk-client-identities-client-module"></span><h2>factom_sdk.client.identities_client module<a class="headerlink" href="#module-factom_sdk.client.identities_client" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="factom_sdk.client.identities_client.IdentitiesClient">
+<em class="property">class </em><code class="descclassname">factom_sdk.client.identities_client.</code><code class="descname">IdentitiesClient</code><span class="sig-paren">(</span><em>base_url: str</em>, <em>app_id: str</em>, <em>app_key: str</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.identities_client.IdentitiesClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="factom_sdk.client.identities_client.IdentitiesClient.create">
+<code class="descname">create</code><span class="sig-paren">(</span><em>names: list</em>, <em>keys: list = None</em>, <em>callback_url: str = ''</em>, <em>callback_stages: list = None</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.identities_client.IdentitiesClient.create" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a new Identity chain.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>names (list): The names array for your identity must be unique.
+keys (<a class="reference internal" href="#factom_sdk.client.identities_client.IdentitiesClient.list" title="factom_sdk.client.identities_client.IdentitiesClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): An array of public key strings in base58 idpub format, ordered from the
+highest to the lowest priority.
+callback_url (<code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>, optional): The URL where you would like to receive the callback from Connect.
+callback_stages (<a class="reference internal" href="#factom_sdk.client.identities_client.IdentitiesClient.list" title="factom_sdk.client.identities_client.IdentitiesClient.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a>, optional): The immutability stages you would like to be notified about.
+This list can include any or all of the three stages: <cite>replicated</cite>, <cite>factom</cite>, and <cite>anchored</cite>.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Identity chain created object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.identities_client.IdentitiesClient.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>identity_chain_id: str</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.identities_client.IdentitiesClient.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets a summary of the identity chain’s current state.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>identity_chain_id (str): The unique identifier for the identity chain being requested.</p>
+</dd>
+<dt>Returns:</dt><dd><p>Identity chain object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="factom_sdk.client.identities_client.IdentitiesClient.list">
+<code class="descname">list</code><span class="sig-paren">(</span><em>identity_chain_id: str</em>, <em>limit: int = -1</em>, <em>offset: int = -1</em><span class="sig-paren">)</span><a class="headerlink" href="#factom_sdk.client.identities_client.IdentitiesClient.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all of the keys that were ever active for this Identity. Results are paginated.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>identity_chain_id (str): The unique identifier of the identity chain whose keys are being requested.
+limit (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The maximum number of keys you would like to be returned.
+offset (<code class="xref py py-obj docutils literal notranslate"><span class="pre">int</span></code>, optional): The key index (in number of keys from the first key) to start from in the
+list of all keys.</p>
+</dd>
+<dt>Returns:</dt><dd><p>List identity key object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-factom_sdk.client">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-factom_sdk.client" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, Factom Inc.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
