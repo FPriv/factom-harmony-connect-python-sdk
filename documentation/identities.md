@@ -90,7 +90,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 
 **Response:** OK
 - **data:** object
-- **data.version:** string </br> The identity chain's schema version. This details the format of this digital identity. For more information about the Factom identity schemas, view the documentation [here](URL not specified).
+- **data.version:** string </br> The identity chain's schema version. This details the format of this digital identity. For more information about the Factom identity schemas, view the documentation [here](https://docs.harmony.factom.com/docs/factom-signing-standard#section-factom-identity-chains).
 - **data.stage:** string </br>  The immutability stage that this chain has reached. The identity can be considered active once it (and thus its keys) reaches the `factom` stage.
 - **data.created_height:** integer </br> The block height at which this chain was written into the Factom blockchain. This is null if the chain has not reached the `factom` stage.
 - **data.chain_id:** string</br> The unique identifier of this identity chain. 
