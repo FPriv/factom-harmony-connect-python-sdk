@@ -16,6 +16,9 @@ Identities Client
     :undoc-members:
     :show-inheritance:
 
+Chains
+-------
+
 Chains Client
 ~~~~~~~~~~~~~~~~
 
@@ -23,6 +26,9 @@ Chains Client
     :members:
     :undoc-members:
     :show-inheritance:
+
+Entries
+-------
 
 Entries Client
 ~~~~~~~~~~~~~~~~
@@ -32,6 +38,8 @@ Entries Client
     :undoc-members:
     :show-inheritance:
 
+Utilities
+--------------
 
 Request Handler
 ~~~~~~~~~~~~~~~~~
