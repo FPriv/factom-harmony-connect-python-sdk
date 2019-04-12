@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath('../..'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'pyharmony'
+project = 'factom-harmony-connect-python-sdk'
 copyright = '2019, Factom Inc.'
 author = 'Factom Inc.'
 
