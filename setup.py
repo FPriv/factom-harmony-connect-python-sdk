@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages  # noqa: H301
 
 NAME = "factom-harmony-connect"
-VERSION = "1.0.1"
+VERSION = "1.0.2"
 REQUIRES = [
     "base58 >= 1.0.3",
     "ed25519 >= 1.4",

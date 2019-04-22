@@ -65,8 +65,8 @@ class IdentitiesClient:
         # = 37 + name_byte_count + 2(number_of_names) + 58(number_of_keys)
         total_bytes = 37 + name_byte_count + (len(names) * 2) + (len(signer_keys) * 58)
         if total_bytes > 10240:
-            raise Exception(f"calculated bytes of name and keys is {total_bytes}."
-                            f" It must be less than 10240, use less/shorter name or less keys.")
+            message = "Entry size {} must be less than 10240. Use less/shorter names or less keys.".format(total_bytes)
+            raise Exception(message)
 
         names_base64 = [CommonUtil.base64_encode(_name) for _name in names]
         data = {
