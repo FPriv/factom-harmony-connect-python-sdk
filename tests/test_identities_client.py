@@ -123,8 +123,8 @@ class TestIdentityClient(TestCase):
                 "https://callback.com",
                 ["factom", "replicated"]
             )
-        self.assertTrue("calculated bytes of name and keys is 12771. It must be less than 10240, "
-                        "use less/shorter name or less keys." in str(cm.exception))
+        self.assertTrue("Entry size 12771 must be less than 10240. Use less/shorter names or less keys."
+                        in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_post:
             mock_post.return_value.ok = True
