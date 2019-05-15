@@ -6,7 +6,10 @@ from factom_sdk.utils.key_common import KeyCommon
 
 class ValidateSignatureUtil:
     @staticmethod
-    def validate_signature(obj: dict, validate_for_chain: bool = True, request_handler=None):
+    def validate_signature(obj: dict, **kwargs):
+        validate_for_chain = kwargs.get("validate_for_chain", True)
+        request_handler = kwargs.get("request_handler", None)
+        client_overrides = kwargs.get("client_overrides", {})
         external_ids = obj["data"]["external_ids"]
 
         try:
@@ -41,7 +44,8 @@ class ValidateSignatureUtil:
             key_height = obj["data"]["dblock"]["height"]
         try:
             key_response = request_handler.get("/".join([factom_sdk.utils.consts.IDENTITIES_URL, signer_chain_id,
-                                                         factom_sdk.utils.consts.KEYS_STRING, signer_public_key]))
+                                                         factom_sdk.utils.consts.KEYS_STRING, signer_public_key]),
+                                               client_overrides=client_overrides)
             if key_response["data"]["retired_height"] is not None and \
                     not ((key_response["data"]["activated_height"] <= key_height) and
                          (key_height <= key_response["data"]["retired_height"])):

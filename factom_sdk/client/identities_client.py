@@ -11,22 +11,19 @@ class IdentitiesClient:
         self.request_handler = RequestHandler(base_url, app_id, app_key)
         self.keys = IdentitiesKeyUtil(base_url, app_id, app_key)
 
-    def create(self, names: list, keys: list = None, callback_url: str = "", callback_stages: list = None):
+    def create(self, names: list, **kwargs):
         """Creates a new Identity chain.
 
         Args:
             names (list): The names array for your identity must be unique.
-            keys (:obj:`list`, optional): An array of public key strings in base58 idpub format, ordered from the
-            highest to the lowest priority.
-            callback_url (:obj:`str`, optional): The URL where you would like to receive the callback from Connect.
-            callback_stages (:obj:`list`, optional): The immutability stages you would like to be notified about.
-            This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`.
 
         Returns:
             Identity chain created object.
         """
-        if callback_stages is None:
-            callback_stages = []
+        keys = kwargs.get("keys", None)
+        callback_url = kwargs.get("callback_url", "")
+        callback_stages = kwargs.get("callback_stages", [])
+        client_overrides = kwargs.get("client_overrides", {})
         if not names:
             raise Exception("at least 1 name is required.")
         if not isinstance(names, list):
@@ -77,12 +74,14 @@ class IdentitiesClient:
             data["callback_url"] = callback_url
         if callback_stages:
             data["callback_stages"] = callback_stages
-        response = self.request_handler.post(factom_sdk.utils.consts.IDENTITY_URL, data)
+        response = self.request_handler.post(factom_sdk.utils.consts.IDENTITY_URL,
+                                             data=data,
+                                             client_overrides=client_overrides)
         if keys is None:
             response["key_pairs"] = key_pairs
         return response
 
-    def get(self, identity_chain_id: str):
+    def get(self, identity_chain_id: str, **kwargs):
         """Gets a summary of the identity chain's current state.
 
         Args:
@@ -91,6 +90,8 @@ class IdentitiesClient:
         Returns:
             Identity chain object.
         """
+        client_overrides = kwargs.get("client_overrides", {})
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
-        return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id]))
+        return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id]),
+                                        client_overrides=client_overrides)

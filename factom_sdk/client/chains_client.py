@@ -17,25 +17,30 @@ class ChainsClient:
         self.automatic_signing = automatic_signing
         self.entries = EntriesClient(base_url, app_id, app_key, automatic_signing)
 
-    def get(self, chain_id: str, signature_validation=None):
+    def get(self, chain_id: str, **kwargs):
         """Gets information about a specific chain from Connect.
 
         Args:
             chain_id (str): The unique identifier created for each chain.
-            signature_validation (bool | custom function)
 
         Returns:
             Chain object.
         """
+        signature_validation = kwargs.get("signature_validation", None)
+        client_overrides = kwargs.get("client_overrides", {})
         if not chain_id:
             raise Exception("chain_id is required.")
-        response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id]))
+        response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id]),
+                                            client_overrides=client_overrides)
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
             return {
                 "chain": response,
-                "status": ValidateSignatureUtil.validate_signature(response, True, self.request_handler)
+                "status": ValidateSignatureUtil.validate_signature(response,
+                                                                   validate_for_chain=True,
+                                                                   request_handler=self.request_handler,
+                                                                   client_overrides=client_overrides)
             }
         elif callable(signature_validation):
             return {
@@ -44,29 +49,24 @@ class ChainsClient:
             }
         return response
 
-    def create(self, content: str, external_ids: list = None, signer_private_key: str = "",
-               signer_chain_id: str = "", callback_url: str = "", callback_stages: list = None):
+    def create(self, content: str, **kwargs):
         """Creates a new chain
 
         Args:
             content (str): This is the data that will make up the first entry in your new chain.
-            external_ids (:obj:`list`, optional): Tags that can be used to identify your chain.
-            signer_private_key (:obj:`str`, optional): base58 string in Idsec format. This parameter is optional for
-            creating an unsigned chain.
-            signer_chain_id (:obj:`str`, optional): The chain id of the signer identity. This parameter is optional for
-            creating an unsigned chain.
-            callback_url (:obj:`str`, optional): The URL where you would like to receive the callback from Connect.
-            callback_stages (:obj:`list`, optional): The immutability stages you would like to be notified about.
-            This list can include any or all of the three stages: `replicated`, `factom`, and `anchored`.
 
         Returns:
             Chain created info object.
         """
-        if callback_stages is None:
-            callback_stages = []
-        if external_ids is None:
-            external_ids = []
-        if self.automatic_signing:
+        external_ids = kwargs.get("external_ids", [])
+        signer_private_key = kwargs.get("signer_private_key", "")
+        signer_chain_id = kwargs.get("signer_chain_id", "")
+        callback_url = kwargs.get("callback_url", "")
+        callback_stages = kwargs.get("callback_stages", [])
+        client_overrides = kwargs.get("client_overrides", {})
+        automatic_signing = client_overrides.get("automatic_signing", self.automatic_signing)
+
+        if automatic_signing:
             if not isinstance(external_ids, list):
                 raise Exception("external_ids must be an array.")
             if not signer_private_key:
@@ -93,7 +93,7 @@ class ChainsClient:
         if not isinstance(callback_stages, list):
             raise Exception("callback_stages must be an array.")
         ids_base64 = []
-        if self.automatic_signing:
+        if automatic_signing:
             time_stamp = Utils.to_military_timezone_str(datetime.datetime.now(datetime.timezone.utc))
             message = signer_chain_id + content + time_stamp
             signature = KeyCommon.sign_content(signer_private_key, message)
@@ -114,23 +114,23 @@ class ChainsClient:
             data["callback_url"] = callback_url
         if callback_stages:
             data["callback_stages"] = callback_stages
-        return self.request_handler.post(factom_sdk.utils.consts.CHAINS_URL, data)
+        return self.request_handler.post(factom_sdk.utils.consts.CHAINS_URL,
+                                         data=data,
+                                         client_overrides=client_overrides)
 
-    def list(self, limit: int = -1, offset: int = -1, stages: list = None):
+    def list(self, **kwargs):
         """Gets all of the chains on Factom.
 
         Args:
-            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
-            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
-            from when a list is returned from Connect.
-            stages (:obj:`list`, optional): The immutability stages you want to restrict results to.
-            You can choose any from `replicated`, `factom`, and `anchored`.
 
         Returns:
             List chains object.
         """
-        if stages is None:
-            stages = []
+        limit = kwargs.get("limit", -1)
+        offset = kwargs.get("offset", -1)
+        stages = kwargs.get("stages", [])
+        client_overrides = kwargs.get("client_overrides", {})
+
         data = {}
         if not isinstance(limit, int):
             raise Exception("limit must be an integer.")
@@ -144,20 +144,22 @@ class ChainsClient:
             raise Exception("stages must be an array.")
         if stages:
             data["stages"] = ",".join(stages)
-        return self.request_handler.get(factom_sdk.utils.consts.CHAINS_URL, data)
+        return self.request_handler.get(factom_sdk.utils.consts.CHAINS_URL,
+                                        params=data,
+                                        client_overrides=client_overrides)
 
-    def search(self, external_ids: list, limit: int = -1, offset: int = -1):
+    def search(self, external_ids: list, **kwargs):
         """Finds all of the chains with `external_ids` that match what you entered.
 
         Args:
             external_ids (list): A list of external IDs associated with the chains user would like to search by.
-            limit (:obj:`int`, optional): The number of items you would like to return back in each stage.
-            offset (:obj:`int`, optional): The offset parameter allows you to select which item you would like to start
-            from when a list is returned from Connect.
 
         Returns:
             List chains object.
         """
+        limit = kwargs.get("limit", -1)
+        offset = kwargs.get("offset", -1)
+        client_overrides = kwargs.get("client_overrides", {})
         if not external_ids:
             raise Exception("at least 1 external_id is required.")
         if not isinstance(external_ids, list):
@@ -176,4 +178,4 @@ class ChainsClient:
                 url += "?offset=" + str(offset)
         ids_base64 = [CommonUtil.base64_encode(val) for val in external_ids]
         data = {"external_ids": ids_base64}
-        return self.request_handler.post(url, data)
+        return self.request_handler.post(url, data=data, client_overrides=client_overrides)

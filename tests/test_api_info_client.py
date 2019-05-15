@@ -12,7 +12,7 @@ class TestInfoClient(TestCase):
         self.info_client = None
 
     def test_init(self):
-        """Check init identity client"""
+        """Check init api info client"""
         self.assertTrue(isinstance(self.info_client.request_handler, RequestHandler))
 
     def test_get_info(self):
