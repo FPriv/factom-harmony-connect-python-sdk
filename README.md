@@ -137,6 +137,50 @@ entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e57
                                          'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93')
 ```
 
+**Note:** The SDK allows for override values: app_id, app_key, base_url, automatic_signing, that were set in the instatiation of the SDK  on a per-method call basis. To override desired parameters, you need to add a dictionary named `client_overrides` as an optional parameter. 
+
+Example:
+
+```python
+# Create a chain with automatic_signing turned off for one call
+ create_chain_response = factom_client.chains.create(
+   "TestOverrides",
+   external_ids = ["TestOverrides", "CustomerChain", "cust123"],
+   client_overrides = {
+     "automatic_signing": False
+   }
+ )
+ 
+# Return a JSON chain object as is from the API with new app_id, app_key and base_url.
+chain = factom_client.chains.get('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
+  client_overrides = {
+    "base_url": "https://ephemeral.api.factom.com/v1",
+    "app_id": "4db6b007",
+    "app_key": "ec0c88e3c5bb57cd7303d070ad838260"
+  }
+)
+
+# Return JSON entries array as is from API with new app_id, app_key and base_url.
+entries = factom_client.chains.entries.list('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
+  client_overrides = {
+    "base_url": "https://ephemeral.api.factom.com/v1",
+    "app_id": "4db6b007",
+    "app_key": "ec0c88e3c5bb57cd7303d070ad838260",
+
+  }
+)
+# Return a JSON single entry object as is from the API with new app_id, app_key and base_url.
+entry = factom_client.chains.entries.get('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
+  'e0e2b7f7920ce25c20cf98c13ae454566e7cda7bb815b8a9ca568320d7bdeb93',
+  client_overrides = {
+    "base_url": "https://ephemeral.api.factom.com/v1",
+    "app_id": "4db6b007",
+    "app_key": "ec0c88e3c5bb57cd7303d070ad838260",
+  }
+)
+```
+
+
 
 <a name="license"></a>License
 -------
