@@ -13,7 +13,7 @@ factom_client.api_info.get()
 
 | **Name**                 | **Type** | **Description**                                                                                                                                                                                                                                                                                                                               | **SDK Error Message & Description** |
 |--------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| `client_overrides`  | optional                               | dict </br>  This is the override parameter that allows user to specify which instantiation of the SDK to be overridden simply by adding `client_overrides[key]`.</br> Keys are allowed to be overridden are: </br>- app_id </br>- app_key</br>- base_url</br>                                   |
+| `client_overrides`  | optional                               | dict </br>This is the override parameter that allows user to specify which instantiation of the SDK to be overridden simply by adding `client_overrides[key]`.</br> Keys are allowed to be overridden are: </br>- app_id </br>- app_key</br>- base_url</br>                                   |
 
 
 **Returns**</br>
