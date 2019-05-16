@@ -122,6 +122,8 @@ certain message that you see in your chain.
 Now that you have initialized the SDK, you can use the SDK's Methods,
 which will execute the necessary REST API calls on your behalf.
 
+**Note:** The SDK requires to pass all optional parameters with `**kwargs` added as final arguments. Please refer to [**Methods**](#METHODS) section to get the correct parameter names. 
+
 Patterns to utilize the Factom SDK:
 ```python
 # Return a JSON chain object as is from the API.
