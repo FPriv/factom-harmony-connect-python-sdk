@@ -1,5 +1,7 @@
 from factom_sdk.client.chains_client import ChainsClient
 from factom_sdk.client.identities_client import IdentitiesClient
+from factom_sdk.client.receipts_client import ReceiptsClient
+from factom_sdk.client.anchors_client import AnchorsClient
 from factom_sdk.client.api_info_client import ApiInfoClient
 from factom_sdk.utils.utils import Utils
 
