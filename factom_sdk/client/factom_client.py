@@ -1,5 +1,7 @@
 from factom_sdk.client.chains_client import ChainsClient
 from factom_sdk.client.identities_client import IdentitiesClient
+from factom_sdk.client.receipts_client import ReceiptsClient
+from factom_sdk.client.anchors_client import AnchorsClient
 from factom_sdk.client.api_info_client import ApiInfoClient
 from factom_sdk.utils.utils import Utils
 
@@ -26,6 +28,8 @@ class FactomClient:
         self._api_info = None
         self._chains = None
         self._identities = None
+        self._receipts = None
+        self._anchors = None
         self.utils = Utils
 
     @property
@@ -45,3 +49,15 @@ class FactomClient:
         if self._chains is None:
             self._chains = ChainsClient(self.base_url, self.app_id, self.app_key, self.automatic_signing)
         return self._chains
+
+    @property
+    def receipts(self):
+        if self._receipts is None:
+            self._receipts = ReceiptsClient(self.base_url, self.app_id, self.app_key)
+        return self._receipts
+
+    @property
+    def anchors(self):
+        if self._anchors is None:
+            self._anchors = AnchorsClient(self.base_url, self.app_id, self.app_key)
+        return self._anchors
