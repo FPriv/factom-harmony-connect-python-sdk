@@ -13,7 +13,9 @@ factom_client.api_info.get()
 
 | **Name**                 | **Type** | **Description**                                                                                                                                                                                                                                                                                                                               | **SDK Error Message & Description** |
 |--------------------------|----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| `client_overrides`  | optional                               | dict </br>This is the override parameter that allows user to specify which instantiation of the SDK to be overridden simply by adding `client_overrides[key]`.</br> Keys are allowed to be overridden are: </br>- app_id </br>- app_key</br>- base_url</br>                                   |
+| app_id            | optional | string</br>  This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| app_key           | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| base_url          | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
 
 
 **Returns**</br>
