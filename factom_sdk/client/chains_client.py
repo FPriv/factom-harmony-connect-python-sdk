@@ -27,11 +27,13 @@ class ChainsClient:
             Chain object.
         """
         signature_validation = kwargs.get("signature_validation", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id]),
-                                            client_overrides=client_overrides)
+                                            base_url=base_url, app_id=app_id, app_key=app_key)
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
@@ -40,7 +42,7 @@ class ChainsClient:
                 "status": ValidateSignatureUtil.validate_signature(response,
                                                                    validate_for_chain=True,
                                                                    request_handler=self.request_handler,
-                                                                   client_overrides=client_overrides)
+                                                                   base_url=base_url, app_id=app_id, app_key=app_key)
             }
         elif callable(signature_validation):
             return {
@@ -63,8 +65,12 @@ class ChainsClient:
         signer_chain_id = kwargs.get("signer_chain_id", "")
         callback_url = kwargs.get("callback_url", "")
         callback_stages = kwargs.get("callback_stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
-        automatic_signing = client_overrides.get("automatic_signing", self.automatic_signing)
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
+        automatic_signing = kwargs.get("automatic_signing", self.automatic_signing)
+        if not isinstance(automatic_signing, bool):
+            automatic_signing = self.automatic_signing
 
         if automatic_signing:
             if not isinstance(external_ids, list):
@@ -115,8 +121,7 @@ class ChainsClient:
         if callback_stages:
             data["callback_stages"] = callback_stages
         return self.request_handler.post(factom_sdk.utils.consts.CHAINS_URL,
-                                         data=data,
-                                         client_overrides=client_overrides)
+                                         data=data, base_url=base_url, app_id=app_id, app_key=app_key)
 
     def list(self, **kwargs):
         """Gets all of the chains on Factom.
@@ -129,7 +134,9 @@ class ChainsClient:
         limit = kwargs.get("limit", -1)
         offset = kwargs.get("offset", -1)
         stages = kwargs.get("stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
 
         data = {}
         if not isinstance(limit, int):
@@ -145,8 +152,7 @@ class ChainsClient:
         if stages:
             data["stages"] = ",".join(stages)
         return self.request_handler.get(factom_sdk.utils.consts.CHAINS_URL,
-                                        params=data,
-                                        client_overrides=client_overrides)
+                                        params=data, base_url=base_url, app_id=app_id, app_key=app_key)
 
     def search(self, external_ids: list, **kwargs):
         """Finds all of the chains with `external_ids` that match what you entered.
@@ -159,7 +165,9 @@ class ChainsClient:
         """
         limit = kwargs.get("limit", -1)
         offset = kwargs.get("offset", -1)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not external_ids:
             raise Exception("at least 1 external_id is required.")
         if not isinstance(external_ids, list):
@@ -178,4 +186,4 @@ class ChainsClient:
                 url += "?offset=" + str(offset)
         ids_base64 = [CommonUtil.base64_encode(val) for val in external_ids]
         data = {"external_ids": ids_base64}
-        return self.request_handler.post(url, data=data, client_overrides=client_overrides)
+        return self.request_handler.post(url, data=data, base_url=base_url, app_id=app_id, app_key=app_key)

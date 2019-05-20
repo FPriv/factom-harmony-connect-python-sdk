@@ -23,18 +23,23 @@ class RequestHandler:
     def _generic_request(self, method, endpoint, **kwargs):
         data = kwargs.get("data", None)
         params = kwargs.get("params", None)
-        client_overrides = kwargs.get("client_overrides", {})
-        app_id = client_overrides.get("app_id", self.app_id)
+        app_id = kwargs.get("app_id")
+        if app_id is None:
+            app_id = self.app_id
         if not isinstance(app_id, str):
             raise Exception("The app_id provided for override is not valid.")
-        app_key = client_overrides.get("app_key", self.app_key)
+        app_key = kwargs.get("app_key")
+        if app_key is None:
+            app_key = self.app_key
         if not isinstance(app_key, str):
             raise Exception("The app_key provided for override is not valid.")
         headers = {
-            "app_id": client_overrides.get("app_id", self.app_id),
-            "app_key": client_overrides.get("app_key", self.app_key)
+            "app_id": app_id,
+            "app_key": app_key
         }
-        base_url = client_overrides.get("base_url", self.base_url)
+        base_url = kwargs.get("base_url")
+        if base_url is None:
+            base_url = self.base_url
         if not validators.url(base_url):
             raise Exception("The base_url provided for override is not valid.")
         if not base_url.endswith("/"):
@@ -52,13 +57,17 @@ class RequestHandler:
             raise error
 
     def get(self, endpoint: str = "", **kwargs):
-        params = kwargs.get("params", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        params = kwargs.get("params")
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         return self._generic_request("GET", endpoint, params=params,
-                                     client_overrides=client_overrides)
+                                     base_url=base_url, app_id=app_id, app_key=app_key)
 
     def post(self, endpoint: str = "", **kwargs):
-        data = kwargs.get("data", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        data = kwargs.get("data")
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         return self._generic_request("POST", endpoint, data=data,
-                                     client_overrides=client_overrides)
+                                     base_url=base_url, app_id=app_id, app_key=app_key)

@@ -19,7 +19,9 @@ class IdentitiesKeyUtil:
         Returns:
             Identity key object.
         """
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         if not key:
@@ -28,7 +30,7 @@ class IdentitiesKeyUtil:
             raise Exception("key is invalid.")
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
                                                   factom_sdk.utils.consts.KEYS_STRING, key]),
-                                        client_overrides=client_overrides)
+                                        base_url=base_url, app_id=app_id, app_key=app_key)
 
     def list(self, identity_chain_id: str, **kwargs):
         """Returns all of the keys that were ever active for this Identity. Results are paginated.
@@ -41,7 +43,9 @@ class IdentitiesKeyUtil:
         """
         limit = kwargs.get("limit", -1)
         offset = kwargs.get("offset", -1)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         data = {}
@@ -56,7 +60,7 @@ class IdentitiesKeyUtil:
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
                                                   factom_sdk.utils.consts.KEYS_STRING]),
                                         params=data,
-                                        client_overrides=client_overrides)
+                                        base_url=base_url, app_id=app_id, app_key=app_key)
 
     def replace(self, identity_chain_id: str, old_public_key: str, signer_private_key: str, **kwargs):
         """Creates an entry in the Identity Chain for a key replacement.
@@ -73,7 +77,9 @@ class IdentitiesKeyUtil:
         new_public_key = kwargs.get("new_public_key", None)
         callback_url = kwargs.get("callback_url", "")
         callback_stages = kwargs.get("callback_stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         if not old_public_key:
@@ -114,7 +120,7 @@ class IdentitiesKeyUtil:
         response = self.request_handler.post("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id,
                                                        factom_sdk.utils.consts.KEYS_STRING]),
                                              data=data,
-                                             client_overrides=client_overrides)
+                                             base_url=base_url, app_id=app_id, app_key=app_key)
         if new_public_key is None:
             response["key_pair"] = key_pair
         return response

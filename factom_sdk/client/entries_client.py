@@ -26,14 +26,16 @@ class EntriesClient:
             Entry object.
         """
         signature_validation = kwargs.get("signature_validation", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         if not entry_hash:
             raise Exception("entry_hash is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
                                                       factom_sdk.utils.consts.ENTRIES_URL, entry_hash]),
-                                            client_overrides=client_overrides)
+                                            base_url=base_url, app_id=app_id, app_key=app_key)
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
@@ -42,7 +44,7 @@ class EntriesClient:
                 "status": ValidateSignatureUtil.validate_signature(response,
                                                                    validate_for_chain=False,
                                                                    request_handler=self.request_handler,
-                                                                   client_overrides=client_overrides)
+                                                                   base_url=base_url, app_id=app_id, app_key=app_key)
             }
         elif callable(signature_validation):
             return {
@@ -66,8 +68,12 @@ class EntriesClient:
         signer_chain_id = kwargs.get("signer_chain_id", "")
         callback_url = kwargs.get("callback_url", "")
         callback_stages = kwargs.get("callback_stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
-        automatic_signing = client_overrides.get("automatic_signing", self.automatic_signing)
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
+        automatic_signing = kwargs.get("automatic_signing", self.automatic_signing)
+        if not isinstance(automatic_signing, bool):
+            automatic_signing = self.automatic_signing
 
         if not chain_id:
             raise Exception("chain_id is required.")
@@ -121,8 +127,7 @@ class EntriesClient:
             data["callback_stages"] = callback_stages
         return self.request_handler.post("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
                                                    factom_sdk.utils.consts.ENTRIES_URL]),
-                                         data=data,
-                                         client_overrides=client_overrides)
+                                         data=data, base_url=base_url, app_id=app_id, app_key=app_key)
 
     def list(self, chain_id: str, **kwargs):
         """Gets list of all entries contained on a specified chain.
@@ -136,7 +141,9 @@ class EntriesClient:
         limit = kwargs.get("limit", -1)
         offset = kwargs.get("offset", -1)
         stages = kwargs.get("stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         data = {}
@@ -155,7 +162,7 @@ class EntriesClient:
         return self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
                                                   factom_sdk.utils.consts.ENTRIES_URL]),
                                         params=data,
-                                        client_overrides=client_overrides)
+                                        base_url=base_url, app_id=app_id, app_key=app_key)
 
     def get_first(self, chain_id: str, **kwargs):
         """Retrieves the first entry that has been saved to this chain.
@@ -167,13 +174,15 @@ class EntriesClient:
             Entry object.
         """
         signature_validation = kwargs.get("signature_validation", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
                                                       factom_sdk.utils.consts.ENTRIES_URL,
                                                       factom_sdk.utils.consts.FIRST_URL]),
-                                            client_overrides=client_overrides)
+                                            base_url=base_url, app_id=app_id, app_key=app_key)
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
@@ -182,7 +191,7 @@ class EntriesClient:
                 "status": ValidateSignatureUtil.validate_signature(response,
                                                                    validate_for_chain=False,
                                                                    request_handler=self.request_handler,
-                                                                   client_overrides=client_overrides)
+                                                                   base_url=base_url, app_id=app_id, app_key=app_key)
             }
         elif callable(signature_validation):
             return {
@@ -201,13 +210,15 @@ class EntriesClient:
             Entry object.
         """
         signature_validation = kwargs.get("signature_validation", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         response = self.request_handler.get("/".join([factom_sdk.utils.consts.CHAINS_URL, chain_id,
                                                       factom_sdk.utils.consts.ENTRIES_URL,
                                                       factom_sdk.utils.consts.LAST_URL]),
-                                            client_overrides=client_overrides)
+                                            base_url=base_url, app_id=app_id, app_key=app_key)
         if not callable(signature_validation) and not isinstance(signature_validation, bool):
             signature_validation = True
         if signature_validation and isinstance(signature_validation, bool):
@@ -216,7 +227,7 @@ class EntriesClient:
                 "status": ValidateSignatureUtil.validate_signature(response,
                                                                    validate_for_chain=False,
                                                                    request_handler=self.request_handler,
-                                                                   client_overrides=client_overrides)
+                                                                   base_url=base_url, app_id=app_id, app_key=app_key)
             }
         elif callable(signature_validation):
             return {
@@ -237,7 +248,9 @@ class EntriesClient:
         """
         limit = kwargs.get("limit", -1)
         offset = kwargs.get("offset", -1)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not chain_id:
             raise Exception("chain_id is required.")
         if not external_ids:
@@ -259,4 +272,4 @@ class EntriesClient:
                 url += "?offset=" + str(offset)
         ids_base64 = [CommonUtil.base64_encode(val) for val in external_ids]
         data = {"external_ids": ids_base64}
-        return self.request_handler.post(url, data=data, client_overrides=client_overrides)
+        return self.request_handler.post(url, data=data, base_url=base_url, app_id=app_id, app_key=app_key)

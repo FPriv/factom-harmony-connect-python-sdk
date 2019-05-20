@@ -11,5 +11,7 @@ class ApiInfoClient:
         Returns:
             API Info object.
         """
-        client_overrides = kwargs.get("client_overrides", {})
-        return self.request_handler.get(client_overrides=client_overrides)
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
+        return self.request_handler.get(base_url=base_url, app_id=app_id, app_key=app_key)

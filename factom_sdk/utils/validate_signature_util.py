@@ -9,7 +9,9 @@ class ValidateSignatureUtil:
     def validate_signature(obj: dict, **kwargs):
         validate_for_chain = kwargs.get("validate_for_chain", True)
         request_handler = kwargs.get("request_handler", None)
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         external_ids = obj["data"]["external_ids"]
 
         try:
@@ -45,7 +47,7 @@ class ValidateSignatureUtil:
         try:
             key_response = request_handler.get("/".join([factom_sdk.utils.consts.IDENTITIES_URL, signer_chain_id,
                                                          factom_sdk.utils.consts.KEYS_STRING, signer_public_key]),
-                                               client_overrides=client_overrides)
+                                               base_url=base_url, app_id=app_id, app_key=app_key)
             if key_response["data"]["retired_height"] is not None and \
                     not ((key_response["data"]["activated_height"] <= key_height) and
                          (key_height <= key_response["data"]["retired_height"])):

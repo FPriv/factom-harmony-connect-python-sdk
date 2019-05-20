@@ -172,8 +172,6 @@ class TestChainsClientWithSigning(TestCase):
                                                  external_ids=["1"],
                                                  callback_url="http://google.com",
                                                  callback_stages=["123"],
-                                                 client_overrides={
-                                                     "automatic_signing": False
-                                                 })
+                                                 automatic_signing=False)
         self.assertIsNotNone(response)
 

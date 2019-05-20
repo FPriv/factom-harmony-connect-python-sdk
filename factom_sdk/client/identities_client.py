@@ -23,7 +23,9 @@ class IdentitiesClient:
         keys = kwargs.get("keys", None)
         callback_url = kwargs.get("callback_url", "")
         callback_stages = kwargs.get("callback_stages", [])
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not names:
             raise Exception("at least 1 name is required.")
         if not isinstance(names, list):
@@ -76,7 +78,7 @@ class IdentitiesClient:
             data["callback_stages"] = callback_stages
         response = self.request_handler.post(factom_sdk.utils.consts.IDENTITY_URL,
                                              data=data,
-                                             client_overrides=client_overrides)
+                                             base_url=base_url, app_id=app_id, app_key=app_key)
         if keys is None:
             response["key_pairs"] = key_pairs
         return response
@@ -90,8 +92,10 @@ class IdentitiesClient:
         Returns:
             Identity chain object.
         """
-        client_overrides = kwargs.get("client_overrides", {})
+        base_url = kwargs.get("base_url")
+        app_id = kwargs.get("app_id")
+        app_key = kwargs.get("app_key")
         if not identity_chain_id:
             raise Exception("identity_chain_id is required.")
         return self.request_handler.get("/".join([factom_sdk.utils.consts.IDENTITY_URL, identity_chain_id]),
-                                        client_overrides=client_overrides)
+                                        base_url=base_url, app_id=app_id, app_key=app_key)
