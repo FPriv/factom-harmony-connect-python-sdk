@@ -135,7 +135,8 @@ def simulate_notary():
     # In order to display the External Ids array then we need to get entry. However, we don't need
     # to validate the signature so in this step pass in signature_validation=False
     get_entry_response = factom_client.chains.entries.get(chain["data"]["chain_id"],
-                                                          create_entry_response["entry_hash"], False)
+                                                          create_entry_response["entry_hash"],
+                                                          signature_validation=False)
     entry_created_time = get_entry_response["data"]["external_ids"][5]
 
     # Search chain
@@ -153,7 +154,7 @@ def simulate_notary():
     # to make sure search function only return one result
     entry_search_input = ["DocumentEntry", "doc987", entry_created_time]
     entry_search_result = factom_client.chains.entries.search(chain_w_validation["chain"]["data"]["chain_id"],
-                                                              entry_search_input)
+                                                              external_ids=entry_search_input)
 
     # Retrieve Blockchain Data aren't always necessary
     # because it is common practice to store the chain_id and entry_hash within your own database.
