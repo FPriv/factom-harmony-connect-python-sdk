@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/kirit93/factom-harmony-connect-python-sdk.svg?branch=develop)](https://travis-ci.com/kirit93/factom-harmony-connect-python-sdk)
+
 Table of Contents
 ===============
 [INTRODUCTION](#Introduction)

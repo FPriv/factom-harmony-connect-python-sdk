@@ -1,0 +1,16 @@
+language: python
+python:
+  - "3.6"
+env:
+  TOXENV=py
+# command to install dependencies
+install: 
+  - pip install --upgrade pip
+  - pip install wheel
+  - pip install pytest
+  - pip install requests
+  - pip install validators
+  - pip install tox
+# command to run tests
+script:
+  - tox

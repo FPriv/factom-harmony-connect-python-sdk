@@ -44,8 +44,7 @@ class ChainsClient:
             }
         return response
 
-    def create(self, content: str, external_ids: list = None, signer_private_key: str = "",
-               signer_chain_id: str = "", callback_url: str = "", callback_stages: list = None):
+    def create(self, content, **kwargs):
         """Creates a new chain
 
         Args:
@@ -62,59 +61,71 @@ class ChainsClient:
         Returns:
             Chain created info object.
         """
-        if callback_stages is None:
-            callback_stages = []
-        if external_ids is None:
-            external_ids = []
-        if self.automatic_signing:
-            if not isinstance(external_ids, list):
-                raise Exception("external_ids must be an array.")
-            if not signer_private_key:
-                raise Exception("signer_private_key is required.")
-            if not KeyCommon.validate_checksum(signer_private_key):
-                raise Exception("signer_private_key is invalid.")
-            if not signer_chain_id:
-                raise Exception("signer_chain_id is required.")
-        else:
-            if not external_ids:
-                raise Exception("at least 1 external_id is required.")
-            if not isinstance(external_ids, list):
-                raise Exception("external_ids must be an array.")
-            if signer_private_key and not signer_chain_id:
-                raise Exception("signer_chain_id is required when passing a signer_private_key.")
-            if signer_private_key and not KeyCommon.validate_checksum(signer_private_key):
-                raise Exception("signer_private_key is invalid.")
-            if signer_chain_id and not signer_private_key:
-                raise Exception("signer_private_key is required when passing a signer_chain_id.")
+   
+        external_ids            = kwargs.get('external_ids', [])
+        signer_private_key      = kwargs.get('signer_private_key', None)
+        signer_chain_id         = kwargs.get('signer_chain_id', None)
+        callback_stages         = kwargs.get('callback_stages', [])
+        callback_url            = kwargs.get('callback_url', "")
+
+        automatic_signing       = kwargs.get('automatic_signing', self.automatic_signing)
+
         if not content:
             raise Exception("content is required.")
+
+        # User should be able to pass any sequence of elements
+        if not hasattr(external_ids, '__iter__'):
+            raise Exception("external_ids must be iterable")
+
+        if automatic_signing:
+            if not (signer_private_key is not None and signer_chain_id is not None):
+                raise Exception("Must pass both private key and identity if chain is to be signed")
+            if not KeyCommon.validate_checksum(signer_private_key):
+                raise Exception("signer_private_key is invalid.")
+        else:
+            if not len(external_ids) > 0:
+                raise Exception("At least 1 external id is required")
+
         if callback_url and not validators.url(callback_url):
             raise Exception("callback_url is an invalid url format.")
-        if not isinstance(callback_stages, list):
-            raise Exception("callback_stages must be an array.")
-        ids_base64 = []
-        if self.automatic_signing:
-            time_stamp = Utils.to_military_timezone_str(datetime.datetime.now(datetime.timezone.utc))
-            message = signer_chain_id + content + time_stamp
-            signature = KeyCommon.sign_content(signer_private_key, message)
-            signer_public_key = KeyCommon.get_public_key_from_private_key(signer_private_key)
-            ids_base64.append(CommonUtil.base64_encode("SignedChain"))
-            ids_base64.append(CommonUtil.base64_encode(bytes([0x01])))
-            ids_base64.append(CommonUtil.base64_encode(signer_chain_id))
-            ids_base64.append(CommonUtil.base64_encode(signer_public_key))
-            ids_base64.append(signature)
-            ids_base64.append(CommonUtil.base64_encode(time_stamp))
+        
+        if not hasattr(callback_stages, '__iter__'):
+            raise Exception("callback_stages must be iterable.")
+        
+        b64encode               = lambda x : CommonUtil.base64_encode(x)
+        ids_base64              = []
+
+        if automatic_signing:
+            time_stamp          = Utils.to_military_timezone_str(datetime.datetime.now(datetime.timezone.utc))
+            message             = signer_chain_id + content + time_stamp
+            signature           = KeyCommon.sign_content(signer_private_key, message)
+            signer_public_key   = KeyCommon.get_public_key_from_private_key(signer_private_key)
+            ids_base64          = \
+            [
+                b64encode("SignedChain"),
+                b64encode(bytes([0x01])),
+                b64encode(signer_chain_id),
+                b64encode(signer_public_key),
+                signature,
+                b64encode(time_stamp)
+
+            ]
         for val in external_ids:
-            ids_base64.append(CommonUtil.base64_encode(val))
-        data = {
+            ids_base64.append(b64encode(val))
+
+        data =\
+        {
             "external_ids": ids_base64,
-            "content": CommonUtil.base64_encode(content)
+            "content": b64encode(content)
         }
+        
         if callback_url:
-            data["callback_url"] = callback_url
+            data["callback_url"]    = callback_url
         if callback_stages:
-            data["callback_stages"] = callback_stages
+            data["callback_stages"] = list(callback_stages)
+        
         return self.request_handler.post(factom_sdk.utils.consts.CHAINS_URL, data)
+
 
     def list(self, limit: int = -1, offset: int = -1, stages: list = None):
         """Gets all of the chains on Factom.
