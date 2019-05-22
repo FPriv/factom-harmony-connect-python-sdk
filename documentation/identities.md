@@ -38,6 +38,10 @@ Creates a new Identity chain. You will need to include a unique names array for 
 | `keys`           | optional | array of strings </br> An array of public key strings in base58 idpub format, ordered from the highest to the lowest priority. </br> **Note:** `keys` must be in base58 idpub format.                                                                                                                                                                                                                                                                                                                                                                                                                                                  | **at least 1 key is required.** </br> An empty array of strings was provided for `keys` parameter. </br></br> **"*invalid key*" key is invalid.** </br> An invalid key for `keys` parameter was provided. `keys` must be in base58 idpub format.</br></br> ***"duplicated key"* key is duplicated; keys must be unique.** </br> A duplicate key for the `keys` parameter was provided. </br></br> **keys must be an array.** </br> An invalid `keys` format was provided. </br></br> **calculated bytes of names and keys is <*totalBytes*>. It must be less than 10240, use less/shorter names or less keys.** </br> Too many `names` or `keys` were provided resulting in calculated bytes being larger than 10kb.
 | `callback_url`    | optional | string </br> The URL you would like the callbacks to be sent to. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
 | `callback_stages` | optional | array of strings </br> The immutability stages you would like to be notified about. This list can include any or all of these three stages: `replicated`, `factom`, and `anchored`. For example: when you would like to trigger the callback from Connect at `replicated` and `factom` stage, you would send them in the format: [‘replicated’, ‘factom’]. </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| `app_id`             | optional | string </br> This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| `app_key `            | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| `base_url `           | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
+
 
 **Returns**
 
@@ -46,7 +50,7 @@ Creates a new Identity chain. You will need to include a unique names array for 
 -   **entry_hash:** string </br> The unique identifier of the first entry that has been created in this identity chain.
 -   **stage:** string </br> The current immutability stage of the identity chain and its first entry.
 -   **key_pairs:** an array of objects </br> The 3 key pairs generated automatically by Factom SDK. This value is not returned if the public keys are provided when creating this identity.
-    - **key_pairs[].private_key:** string </br> The private key in base58 Idsec format. 
+    - **key_pairs[].private_key:** string </br> The private key in base58 Idsec format.
     - **key_pairs[].public_key:** string </br> The public key in base58 Idpub format. </br>
 
 ```python
@@ -85,6 +89,11 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 | **Name**                 | **Type** | **Description**                                                       | **SDK Error Message & Description**                                                   |
 |--------------------------|----------|-----------------------------------------------------------------------|---------------------------------------------------------------------------------------|
 | `identity_chain_id` | required | string </br> The unique identifier for the identity chain being requested. | **identity_chain_id is required.**  </br> `identity_chain_id` parameter was not provided. |
+| `app_id`             | optional | string </br> This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| `app_key `            | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| `base_url `           | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
+
+
 
 **Returns**
 
@@ -93,7 +102,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 - **data.version:** string </br> The identity chain's schema version. This details the format of this digital identity. For more information about the Factom identity schemas, view the documentation [here](https://docs.harmony.factom.com/docs/factom-signing-standard#section-factom-identity-chains).
 - **data.stage:** string </br>  The immutability stage that this chain has reached. The identity can be considered active once it (and thus its keys) reaches the `factom` stage.
 - **data.created_height:** integer </br> The block height at which this chain was written into the Factom blockchain. This is null if the chain has not reached the `factom` stage.
-- **data.chain_id:** string</br> The unique identifier of this identity chain. 
+- **data.chain_id:** string</br> The unique identifier of this identity chain.
 - **data.names:** array of strings </br> A unique array of strings that together constitute the identity's name.</br>  **Note:** Since the Connect API Base64 encodes these values for transport, each array element will be decoded for you by the SDK.
 - **data.all_keys_href:** string </br> An API link to retrieve the keys for this identity.
 - **data.active_keys:** array of objects </br> An array of currently active public identity keys ordered from the highest to the lowest priority.
@@ -107,7 +116,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 	-  **data.pending_key.activated_height:** integer </br> The height at which this key became active for this identity
 	-  **data.pending_key.retired_height:** integer </br> The height at which this key was retired for this identity. This will be null if key is still active.
 	-  **data.pending_key.priority:** integer </br> The level of this key within the hierarchy. A lower number indicates a key that allows a holder to replace higher numbered keys. The master key is priority 0.
-	-  **data.pending_key.entry_hash:** string </br> The hash of the entry that was made documenting the key replacement. 
+	-  **data.pending_key.entry_hash:** string </br> The hash of the entry that was made documenting the key replacement.
 
 
 
@@ -155,7 +164,7 @@ factom_client.identities.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd
 ##### <a name="keys_list"></a>list
 
 Returns all of the keys that were ever active for this Identity. Results
-are paginated. 
+are paginated.
 
 **Sample**
 ```python
@@ -169,6 +178,11 @@ factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d1
 | `identity_chain_id` | required | string </br> The unique identifier of the identity chain whose keys are being requested.                                                                                                                                                                                                                 | **identity_chain_id is required.** </br> `identity_chain_id` parameter was not provided.          | |
 | `limit`           | optional | integer </br> The maximum number of keys you would like to be returned. The default value is 15.                                                                                                                                                                                | **limit must be an integer.** </br> An invalid `limit` format was provided.                   |
 | `offset`          | optional | integer </br> The key index (in number of keys from the first key) to start from in the list of all keys. For example, if you have already received the first 15 keys and you would like the next set, you would send an offset of 15. Default value is 0 which represents the first item. | **offset must be an integer.** </br> An invalid `offset` format was provided.                 |
+| `app_id`             | optional | string </br> This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| `app_key `            | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| `base_url `           | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
+
+
 
 **Returns**
 
@@ -178,8 +192,8 @@ factom_client.identities.keys.list('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d1
 	-   **data[].activated_height:** integer </br> The height at which this key became active for this identity.
 	-   **data[].retired_height:** integer </br> The height at which this key was retired for this identity. The value will be null if the key is still active.
 	-   **data[].priority:** integer </br>
-The level of this key within the hierarchy. A lower number indicates a key that allows a holder </br> 
-to replace higher numbered keys. The master key is priority 0. 
+The level of this key within the hierarchy. A lower number indicates a key that allows a holder </br>
+to replace higher numbered keys. The master key is priority 0.
     - **data[].entry_hash:** string
  </br> The entry hash of the entry where this key was activated.
 
@@ -225,7 +239,7 @@ applicable.
 
 **Sample**
 ```python
-factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42', 
+factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d139c1cd0afaf608d1ae42',
 				  'idpub1zbpmSTnvErRkzoXus1hBmHSSFxvagqD3nZiMyna4JmnSnUDwF')
 ```
 
@@ -235,6 +249,11 @@ factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d13
 |--------------------------|----------|---------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `identity_chain_id` | required | string </br> The unique identifier for the Identity that the key belongs to.                                | **identity_chain_id is required.** </br> `identity_chain_d` parameter was not provided.                                                                       |
 | `key`             | required | string </br> The public key string to get information, which must be in base58 idpub format. | **key is required.** </br> `key` parameter was not provided. </br></br> **key is invalid.** </br> An invalid `key` format was provided. |
+| `app_id`             | optional | string </br> This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| `app_key `            | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| `base_url `           | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
+
+
 
 **Returns**
 
@@ -243,7 +262,7 @@ factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d13
 	-   **data.key:** string </br> The public key string in base58 idpub format.
 	-   **data.activated_height:** integer </br> The height at which this key became active for this identity.
 	-   **data.retired_height:** integer </br> The height at which this key was retired for this identity. The value can be null if key is still active.
-	-   **data.priority:** integer </br> The level of this key within the hierarchy. The master key is priority 0. 
+	-   **data.priority:** integer </br> The level of this key within the hierarchy. The master key is priority 0.
 	-   **data.entry_hash:** string </br> The entry hash of the entry where this key was activated.
 
 ```python
@@ -259,7 +278,7 @@ factom_client.identities.keys.get('107c8e488e95b63ca6fe1c409aa22c380b5c7be387d13
 ```
 ##### <a name="keys_replace"></a>replace
 
-Creates an entry in the Identity Chain for a key replacement, which means the old key will be deactivated (referred to as a “retired” key) and the new key will be activated. 
+Creates an entry in the Identity Chain for a key replacement, which means the old key will be deactivated (referred to as a “retired” key) and the new key will be activated.
 
 To do this, a user must send the key to be replaced (`old_public_key`), a signature authorizing the replacement and the public key that can be used to validate this signature. The signing key must be of an equal or higher level than the key that is being replaced.
 
@@ -282,19 +301,23 @@ This method will automatically generate a new key pair for you and return it. Op
 | `signer_private_key` | required | base58 string in Idsec format </br> The private key to use to create the signature, which must be the same or higher priority than the public key to be replaced.                                                                                                                                                                                                                                                                                                                                                                                                                                                          | **signer_private_key is required.** </br> `signer_private_key` parameter was not provided. </br></br>  **signer_private_key is invalid.** </br> An invalid `signer_private_key` parameter was provided or key’s byte length is not equal to 41. |
 | `callback_url`      | optional | string </br> The URL you would like the callbacks to be sent to. </br> **Note:** If this is not specified, callbacks will not be activated.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **callback_url is an invalid url format.** </br> An invalid `callback_url` format was provided.                                                                                                                                           |
 | `callback_stages`   | optional | array of strings </br> The immutability stages you'd like to be notified about. This list can include any or all of these three stages: `replicated`, `factom`, and `anchored`. For example: when you would like to trigger the callback from Connect from `replicated` and `factom` then you should send them in the format: [‘replicated’, ‘factom’].  </br> **Note:** For this field to matter, the URL must be provided. If callbacks are activated (URL has been specified) and this field is not sent, it will default to `factom` and `anchored`. | **callback_stages must be an array.** </br> An invalid `callback_stages` format was provided.                                                                                                                                             |
+| `app_id`             | optional | string </br> This is the override parameter that allows user to specify a different API Application ID (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).               |
+| `app_key `            | optional | string </br> This is the override parameter that allows user to specify a different API Application Key (which you can see by clicking on any of the applications in the application list that you see upon logging into  https://account.factom.com).              |
+| `base_url `           | optional | string </br> This is the override parameter that allows user to specify a different API Base URL for your application (which you can see by clicking on any of the applications in the application list the you see upon logging into  https://account.factom.com). |
+
 
 **Returns**
 
 **Response:** OK
 -   **entry_hash:** string </br> The entry hash that will point to the key replacement entry on the blockchain.
 -   **stage:** string </br> The current immutability stage of the new entry.
--   **key_pair:** object </br> The key pair generated automatically by the Factom SDK. This value will not be returned if the new public key is provided when calling this method. 
-    - **key_pair.private_key:** string</br> 
-    The private key in base58 Idsec format. 
-    - **key_pair.public_key:** string</br> 
-The public key in base58 Idpub format. 
+-   **key_pair:** object </br> The key pair generated automatically by the Factom SDK. This value will not be returned if the new public key is provided when calling this method.
+    - **key_pair.private_key:** string</br>
+    The private key in base58 Idsec format.
+    - **key_pair.public_key:** string</br>
+The public key in base58 Idpub format.
 
-    
+
 ```python
 {
    'stage':'replicated',

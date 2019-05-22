@@ -25,7 +25,7 @@ class TestValidateSignatureUtil(TestCase):
                 "content": "123"
             }
         }
-        result = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+        result = ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
         self.assertEqual("not_signed/invalid_chain_format", result)
 
         data = {
@@ -44,7 +44,7 @@ class TestValidateSignatureUtil(TestCase):
                 "content": "123"
             }
         }
-        result = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+        result = ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
         self.assertEqual("not_signed/invalid_chain_format", result)
 
         data = {
@@ -63,7 +63,7 @@ class TestValidateSignatureUtil(TestCase):
                 "content": "123"
             }
         }
-        result = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+        result = ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
         self.assertEqual("not_signed/invalid_chain_format", result)
 
         data = {
@@ -88,7 +88,7 @@ class TestValidateSignatureUtil(TestCase):
             mock_error.response = Mock()
             mock_error.response.status_code = 404
             mock_get.side_effect = mock_error
-            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+            response = ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
             self.assertEqual("key_not_found", response)
 
         with self.assertRaises(HTTPError) as cm:
@@ -97,7 +97,7 @@ class TestValidateSignatureUtil(TestCase):
                 mock_error.response = Mock()
                 mock_error.response.status_code = 500
                 mock_get.side_effect = mock_error
-                ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+                ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
         self.assertTrue("" in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
@@ -110,7 +110,7 @@ class TestValidateSignatureUtil(TestCase):
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
-            response = ValidateSignatureUtil.validate_signature(data, True, self.request_handler)
+            response = ValidateSignatureUtil.validate_signature(data, request_handler=self.request_handler)
             self.assertEqual("retired_key", response)
 
         data = {
@@ -140,7 +140,8 @@ class TestValidateSignatureUtil(TestCase):
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
-            response = ValidateSignatureUtil.validate_signature(data, False, self.request_handler)
+            response = ValidateSignatureUtil.validate_signature(data, validate_for_chain=False,
+                                                                request_handler=self.request_handler)
             self.assertEqual("retired_key", response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
@@ -153,5 +154,6 @@ class TestValidateSignatureUtil(TestCase):
             }
             mock_get.return_value.ok = True
             mock_get.return_value.json.return_value = json
-            response = ValidateSignatureUtil.validate_signature(data, False, self.request_handler)
+            response = ValidateSignatureUtil.validate_signature(data, validate_for_chain=False,
+                                                                request_handler=self.request_handler)
             self.assertEqual("invalid_signature", response)

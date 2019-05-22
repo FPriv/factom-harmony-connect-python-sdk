@@ -47,6 +47,15 @@ class TestRequestHandler(TestCase):
             mock_get.return_value.ok = True
             response = self.request_handler.get()
             self.assertIsNotNone(response)
+        with self.assertRaises(Exception) as cm:
+            self.request_handler.get(base_url="io.co")
+            self.assertTrue("The base_url provided for override is not valid." in str(cm.exception))
+        with self.assertRaises(Exception) as cm:
+            self.request_handler.get(app_id=1)
+            self.assertTrue("The app_id provided for override is not valid." in str(cm.exception))
+        with self.assertRaises(Exception) as cm:
+            self.request_handler.get(app_key=1)
+            self.assertTrue("The app_key provided for override is not valid." in str(cm.exception))
 
     def test_send_post_request(self):
         """Check Send post request successfully"""
