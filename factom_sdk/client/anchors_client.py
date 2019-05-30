@@ -19,15 +19,9 @@ class AnchorsClient:
         base_url = kwargs.get("base_url")
         app_id = kwargs.get("app_id")
         app_key = kwargs.get("app_key")
-        object_hash = kwargs.get("object_hash")
-        height = kwargs.get("height")
-        if object_hash is None:
-            assert height is not None, "either object_hash or height must not be None"
-            assert isinstance(height, int) and height > 0, "height must be a positive integer"
-            return self.request_handler.get("/".join([factom_sdk.utils.consts.ANCHORS_URL, str(height)]),
-                                            base_url=base_url, app_id=app_id, app_key=app_key)
-        else:
-            assert isinstance(object_hash, str) and len(object_hash) == 64, "object_hash must be a string of length 64"
-            assert height is None, "object_hash provided, height must be None"
-            return self.request_handler.get("/".join([factom_sdk.utils.consts.ANCHORS_URL, object_hash]),
-                                            base_url=base_url, app_id=app_id, app_key=app_key)
+        param = kwargs.get("object_identifier")
+        is_valid_param = (isinstance(param, int) and param >= 0) or (isinstance(param, str) and len(param) == 64)
+        assert is_valid_param, "object identifier must be a positive int or a string of length 64"
+
+        return self.request_handler.get("/".join([factom_sdk.utils.consts.ANCHORS_URL, str(param)]),
+                                        base_url=base_url, app_id=app_id, app_key=app_key)

@@ -19,25 +19,26 @@ class TestAnchorsClient(TestCase):
 
     def test_get(self):
         """Check get anchors"""
+        error_expected = "object identifier must be a positive int or a string of length 64"
         with self.assertRaises(AssertionError) as cm:
-            self.anchors_client.get(object_hash=None, height=None)
-        self.assertTrue("either object_hash or height must not be None" in str(cm.exception))
+            self.anchors_client.get(object_identifier=None)
+        self.assertTrue(error_expected in str(cm.exception))
 
         with self.assertRaises(AssertionError) as cm:
-            self.anchors_client.get(object_hash="")
-        self.assertTrue("object_hash must be a string of length 64" in str(cm.exception))
+            self.anchors_client.get(object_identifier="")
+        self.assertTrue(error_expected in str(cm.exception))
 
         with self.assertRaises(AssertionError) as cm:
-            self.anchors_client.get(height=-1)
-        self.assertTrue("height must be a positive integer" in str(cm.exception))
+            self.anchors_client.get(object_identifier=-1)
+        self.assertTrue(error_expected in str(cm.exception))
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
             h = "1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef"
-            response = self.anchors_client.get(object_hash=h)
+            response = self.anchors_client.get(object_identifier=h)
             self.assertIsNotNone(response)
 
         with patch("factom_sdk.request_handler.request_handler.requests.request") as mock_get:
             mock_get.return_value.ok = True
-            response = self.anchors_client.get(height=123)
+            response = self.anchors_client.get(object_identifier=123)
             self.assertIsNotNone(response)
