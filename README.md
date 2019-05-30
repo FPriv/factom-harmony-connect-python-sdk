@@ -111,7 +111,7 @@ When the Factom SDK is initialized, there will be an optional
     as per the [Factom Signing Standard](https://docs.harmony.factom.com/docs/factom-signing-standard).
 
 -   When this initial config is set to `false`, the FactomSDK will not sign the chains and entries that are
-    created and therefore it does not require the params: `signer_private_key` and `signer_chain_id`.  
+    created and therefore it does not require the params: `signer_private_key` and `signer_chain_id`.
 
 The primary benefit of `automatic_signing` param is to encourage you to
 create chains and entries with unique signatures. Later on, you can
@@ -122,7 +122,7 @@ certain message that you see in your chain.
 Now that you have initialized the SDK, you can use the SDK's Methods,
 which will execute the necessary REST API calls on your behalf.
 
-**Note:** The SDK requires to pass all optional parameters with `**kwargs` added as final arguments. Please refer to [**Methods**](#METHODS) section to get the correct parameter names. 
+**Note:** The SDK requires to pass all optional parameters with `**kwargs` added as final arguments. Please refer to [**Methods**](#METHODS) section to get the correct parameter names.
 
 Patterns to utilize the Factom SDK:
 ```python
@@ -153,7 +153,7 @@ Example:
    external_ids = ['TestOverrides', 'CustomerChain', 'cust123'],
    automatic_signing = False
  )
- 
+
 # Return a JSON chain object as is from the API with new app_id, app_key and base_url.
 chain = factom_client.chains.get('5dc94c605769d8e9dac1423048f8e5a1182e575aab6d923207a3a8d15771ad63',
   base_url = 'https://ephemeral.api.factom.com/v1',
@@ -212,6 +212,12 @@ The Harmony Connect SDK is provided with an [MIT License](LICENSE).
      - <a name="entries_first"></a>[get_first](documentation/chains.md#entries_first)
      - <a name="entries_last"></a>[get_last](documentation/chains.md#entries_last)
      - <a name="entries_search"></a>[search](documentation/chains.md#entries_search)
+
+<a name="anchors"></a>[anchors](documentation/chains.md)
+  - <a name="anchors_get"></a>[get](documentation/anchors.md#anchors_get)
+
+<a name="receipts"></a>[receipts](documentation/receipts.md)
+  - <a name="receipts_get"></a>[get](documentation/receipts.md#receipts_get)
 
 # <a name="sampleapplication"></a> SAMPLE APPLICATION
 
