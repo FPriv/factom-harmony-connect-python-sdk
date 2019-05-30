@@ -19,7 +19,7 @@ class TestAnchorsClient(TestCase):
 
     def test_get(self):
         """Check get anchors"""
-        error_expected = "object identifier must be a positive int or a string of length 64"
+        error_expected = "object_identifier parameter must be a positive int or a string of length 64"
         with self.assertRaises(AssertionError) as cm:
             self.anchors_client.get(object_identifier=None)
         self.assertTrue(error_expected in str(cm.exception))
