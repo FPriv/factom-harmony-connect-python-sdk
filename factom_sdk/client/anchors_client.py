@@ -6,7 +6,7 @@ class AnchorsClient:
     def __init__(self, base_url: str, app_id: str, app_key: str):
         self.request_handler = RequestHandler(base_url, app_id, app_key)
 
-    def get(self, **kwargs):
+    def get(self, object_identifier, **kwargs):
         """Gets the anchors for a specific entry or directory block from Connect.
 
         Args:
@@ -19,9 +19,10 @@ class AnchorsClient:
         base_url = kwargs.get("base_url")
         app_id = kwargs.get("app_id")
         app_key = kwargs.get("app_key")
-        param = kwargs.get("object_identifier")
-        is_valid_param = (isinstance(param, int) and param >= 0) or (isinstance(param, str) and len(param) == 64)
-        assert is_valid_param, "object_identifier parameter must be a positive int or a string of length 64"
 
-        return self.request_handler.get("/".join([factom_sdk.utils.consts.ANCHORS_URL, str(param)]),
+        is_valid_height = isinstance(object_identifier, int) and object_identifier >= 0
+        is_valid_hash = isinstance(object_identifier, str) and len(object_identifier) == 64
+        assert is_valid_height or is_valid_hash, "object_identifier must be a positive int or a string of length 64"
+
+        return self.request_handler.get("/".join([factom_sdk.utils.consts.ANCHORS_URL, str(object_identifier)]),
                                         base_url=base_url, app_id=app_id, app_key=app_key)
