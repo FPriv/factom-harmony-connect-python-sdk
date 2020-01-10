@@ -8,6 +8,12 @@ class TestKeyCommon(TestCase):
         key_pair = KeyCommon.create_key_pair()
         self.assertTrue("private_key" in key_pair)
         self.assertTrue("public_key" in key_pair)
+        key_pair_with_data = KeyCommon.create_key_pair("abcdefghijklmnopqrstuvwxyz123456")
+        self.assertTrue("private_key" in key_pair_with_data)
+        self.assertTrue("public_key" in key_pair_with_data)
+        with self.assertRaises(Exception) as cm:
+            KeyCommon.create_key_pair("abc")
+            self.assertTrue("provided ed25519 private key is invalid." in str(cm.exception))
 
     def test_validate_checksum(self):
         """Check validate checksum"""

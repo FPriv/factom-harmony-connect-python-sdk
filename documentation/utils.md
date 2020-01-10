@@ -1,6 +1,14 @@
 utils
 -----
 
+### Table of Contents
+
+- [utils](#utils)
+  - [Table of Contents](#table-of-contents)
+  - [generate_key_pair ](#generatekeypair)
+  - [convert_raw_to_key_pair ](#convertrawtokeypair)
+  - [convert_to_raw ](#converttoraw)
+
 ### generate_key_pair <a name="generate_key_pair"></a>
 
 Creates a Public/Private Key Pair which can be applied to Identities
@@ -31,4 +39,91 @@ The public key in base58 Idpub format.</br>
    'private_key':'idsec2rk3MH1kwZVeKD4Br3UTaU2VHxZF99kdkx27ryAhfMGYBgPgQH',
    'public_key':'idpub2WL2aH5Y2s7atB1LwjEyaKa62pnuJXUaL5kcbahzwahc1Hiba6'
 }
+```
+
+### convert_raw_to_key_pair <a name="convert_raw_to_key_pair"></a>
+Very similar to `generateKeyPair()` in that it creates a public/private key pair which can be applied to Identity creation or replacement. However, this method allows you to pass in your own standard ed25519 key, which is converted into a key pair.
+
+**Sample**
+```python
+factom_client.utils.convert_raw_to_key_pair("abcdefghijklmnopqrstuvwxyz123456")
+```
+
+**Parameters**
+
+| **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                       | **SDK Error Message & Description**       <img width=400/>                          |
+|------------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `raw_private_key`             | string <br> `Required` | The ed25519 key to be converted                                                                                                                                                                                                | **provided ed25519 private key is invalid**<br>The `raw_private_key` parameter is not a properly ed25519 key.
+|
+|
+
+**Returns**</br>
+A key pair object with public and private keys.
+- **privateKey:** string</br>
+The private key in base58 Idsec format.
+- **publicKey:** string</br>
+The public key in base58 Idpub format.</br>
+
+Response
+```python
+{
+  'private_key': 'idseaoBBq4DskQwXGffkKQgYxT7zCuQFAPqVic3ZFayDZThXas1z2jv',
+  'public_key': 'idpub3g5z2JPJCRqvPB1S4NtD6BWiVhDtV15CxdrgQadX1L9qzYzQKC'
+}
+```
+
+### convert_to_raw <a name="convert_to_raw"></a>
+
+This method converts an idpub/idsec key to a raw Uint8Array.
+
+**Sample**
+```python
+factom_client.utils.covert_to_raw("idsec2ioPQqJvJzzwqskEW67yrWd2GwQMs1oCuLHsLHxejmBbEFpEY8")
+```
+
+**Parameters**
+
+| **Name**                     | **Type** | **Description**                                                                                                                                                                                                                                                                       | **SDK Error Message & Description**       <img width=400/>                          |
+|------------------------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|
+| `signerKey`             | string <br> `Required` | The idsec/idpub key to be converted                                                                                                                                                                                                |**key is invalid**<br>The provided value for the key is not a properly formatted idsec or idpub key.|
+|
+
+**Returns**</br>
+A key bytes array
+
+Response
+```python
+[
+  206,
+  52,
+  64,
+  7,
+  230,
+  61,
+  24,
+  192,
+  43,
+  186,
+  215,
+  44,
+  182,
+  4,
+  8,
+  81,
+  1,
+  203,
+  226,
+  186,
+  148,
+  125,
+  4,
+  67,
+  251,
+  60,
+  240,
+  170,
+  194,
+  252,
+  23,
+  203 ]
 ```
