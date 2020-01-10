@@ -32,4 +32,3 @@ class Utils:
             A key bytes array
         """
         return KeyCommon.get_key_bytes_from_key(signer_key)
-
