@@ -14,7 +14,7 @@ class Utils:
             A key pair object with Public and Private keys.
         """
         return KeyCommon.create_key_pair()
-raw_private_key: str = None
+
     @staticmethod
     def convert_raw_to_key_pair(raw_private_key):
         """Convert standard ed25519 keys into idpub/idsec formatted keys.
