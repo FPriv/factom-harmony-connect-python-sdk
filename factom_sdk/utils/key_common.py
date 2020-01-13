@@ -8,8 +8,15 @@ import factom_sdk.utils.consts
 
 class KeyCommon:
     @staticmethod
-    def create_key_pair():
-        private_key_bytes = os.urandom(32)
+    def create_key_pair(raw_private_key: str = None):
+        if raw_private_key is not None:
+            if len(raw_private_key) == 32:
+                private_key_bytes = raw_private_key.encode()
+            else:
+                raise Exception("provided ed25519 private key is invalid.")
+        else:
+            private_key_bytes = os.urandom(32)
+
         tmp = hashlib.sha256(hashlib.sha256(factom_sdk.utils.consts.PRIVATE_PREFIX_BYTES +
                                             private_key_bytes).digest()).digest()
         checksum = tmp[:4]

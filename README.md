@@ -188,6 +188,8 @@ The Harmony Connect SDK is provided with an [MIT License](LICENSE).
 
 <a name="utils"></a>[utils](documentation/utils.md)
  - <a name="generate_key_pair"></a>[generate_key_pair](documentation/utils.md#generate_key_pair)
+ - <a name="convert_raw_to_key_pair"></a>[convert_raw_to_key_pair](documentation/utils.md#convert_raw_to_key_pair)
+ - <a name="convert_to_raw"></a>[convert_to_raw](documentation/utils.md#convert_to_raw)
 
 <a name="identities"></a>[identities](documentation/identities.md)
   - <a name="identities_create"></a>[create](documentation/identities.md#identities_create)
